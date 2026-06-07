@@ -7,6 +7,23 @@
 <meta name="description" content="VelaOra is a science-backed women's health platform for NZ and Australian women navigating perimenopause, menopause, fertility, anxiety, and separation. Real guidance from real people who've been there.">
 <meta name="commission-factory-verification" content="f700e40601a7437395a9e1491c555857" />
 <meta name="google-site-verification" content="lrcAb8eFR4w0p1RvjbyfnCkViudx7rQaGApUIU5q88s" />
+
+<!-- Open Graph — controls how this page looks when shared on Pinterest, Facebook, iMessage etc -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="VelaOra" />
+<meta property="og:url" content="https://velaora.co.nz/" />
+<meta property="og:title" content="VelaOra — Navigating Life. Because Some Journeys No One Prepares You For." />
+<meta property="og:description" content="Science-backed women's health for NZ and Australian women navigating perimenopause, menopause, fertility, anxiety, and separation. Real guidance from women who've been there." />
+<meta property="og:image" content="https://velaora.co.nz/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_NZ" />
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="VelaOra — Navigating Life." />
+<meta name="twitter:description" content="Science-backed women's health for NZ and Australian women. Perimenopause, menopause, fertility, anxiety and separation." />
+<meta name="twitter:image" content="https://velaora.co.nz/og-image.png" />
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WS37E8T1E5"></script>
 <script>
@@ -1519,8 +1536,8 @@ body::before {
 
 <!-- NEWS BANNER — Update this with current news -->
 <div class="news-banner">
-  🌿 <strong>Breaking:</strong> Australia just launched its first ever National Menopause & Perimenopause Campaign —
-  <a href="https://www.health.gov.au/perimenopause" target="_blank">read more at health.gov.au →</a>
+  🌿 <strong>New on VelaOra:</strong> The Wellness Club is here — join NZ women getting early access to expert guides, community, and partner offers.
+  <a href="#wellness-club">Find out more →</a>
 </div>
 
 
@@ -3190,7 +3207,7 @@ body::before {
           <!-- ABOUT VELAORA COMMUNITY NOTE -->
 <div style="background:var(--cream);border-radius:14px;padding:24px 28px;margin-top:36px;border-left:4px solid var(--sage);">
             <strong style="font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:10px;">About VelaOra</strong>
-            <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin:0;">VelaOra celebrates health, wellbeing, connection, community and living life with purpose. We believe the strongest communities are built when people support each other, stay active and continue growing at every stage of life. If you have a story like The Handles that we should be telling — <a href="#contact" style="color:var(--teal);font-weight:600;">get in touch.</a></p>
+            <p style="font-size:14px;color:var(--text-mid);line-height:1.75;margin:0;">VelaOra celebrates health, wellbeing, connection, community and living life with purpose. We believe the strongest communities are built when people support each other, stay active and continue growing at every stage of life. If you have a story like The Handles that we should be telling — <a href="mailto:velaorawomen@gmail.com" style="color:var(--teal);font-weight:600;">get in touch.</a></p>
           </div>
 
           <!-- SUBSCRIBE CTA -->
@@ -3817,8 +3834,7 @@ body::before {
     </div>
   </div>
 </section>
-         Edit: all links, copyright year, social URLs
-     
+
 <footer class="footer">
   <div class="container">
 
@@ -3863,7 +3879,7 @@ body::before {
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#subscribe">Join Free</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about">Contact</a></li>
           <li><a href="mailto:velaorawomen@gmail.com" style="color:rgba(255,255,255,0.4);font-size:12px;">velaorawomen@gmail.com</a></li>
         </ul>
       </div>
@@ -3961,23 +3977,6 @@ window.addEventListener('scroll', function() {
   if (backBtn) backBtn.style.display = window.scrollY > 600 ? 'flex' : 'none';
 });
 
-// Nav shadow on scroll
-window.addEventListener('scroll', function() {
-  document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 20);
-});
-
-// Mobile menu toggle
-function toggleMenu() {
-  document.getElementById('mobile-menu').classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  var menu = document.getElementById('mobile-menu');
-  var burger = document.querySelector('.nav-burger');
-  if (!menu.contains(e.target) && !burger.contains(e.target)) {
-    menu.classList.remove('open');
-  }
-});
-
 // Open article from card and scroll to it
 function openArticle(id) {
   var wrapper = document.getElementById(id + '-collapse');
@@ -3995,7 +3994,36 @@ function openArticle(id) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 80);
   }
+  // GA4 — track article opens
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'article_open', { article_id: id });
+  }
 }
+
+// GA4 — track iHerb affiliate link clicks
+document.querySelectorAll('a.pick-link').forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'affiliate_click', {
+        affiliate: 'iherb',
+        product: link.closest('.pick-card') ? link.closest('.pick-card').querySelector('.pick-name') ? link.closest('.pick-card').querySelector('.pick-name').textContent : 'unknown' : 'unknown',
+        url: link.href
+      });
+    }
+  });
+});
+
+// GA4 — track email signup form submissions
+document.querySelectorAll('form').forEach(function(form) {
+  form.addEventListener('submit', function() {
+    var source = form.querySelector('[name="source"]');
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'email_signup', {
+        form_location: source ? source.value : (form.closest('section') ? (form.closest('section').id || 'page') : 'page')
+      });
+    }
+  });
+});
 
 // Toggle article open/close from Read More button inside article
 function toggleOldArticle(id) {
