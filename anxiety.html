@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing Anxiety — VelaOra</title>
+<meta name="description" content="Understanding hormonal, situational, and clinical anxiety in women. Science-backed guidance, nutrition, and supplements for NZ and Australian women.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WS37E8T1E5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WS37E8T1E5');</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ivory:#FDFAF4;--cream:#F5EFE3;--teal:#3D6B61;--teal-pale:#EAF2F0;--teal-dark:#2C5248;--gold:#B8895A;--gold-light:#D4A96A;--gold-pale:#F7EFE3;--sage:#7A9E7E;--sage-pale:#EFF5EF;--plum:#6B4E7A;--plum-pale:#F5EFF8;--plum-dark:#4A3057;--text-dark:#1E1E1A;--text-mid:#444440;--text-light:#7A7A72;--border:#DDD5C8;--shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-lg:0 12px 48px rgba(0,0,0,0.12);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--ivory);color:var(--text-dark);font-family:'Nunito',sans-serif;font-weight:300;font-size:16px;line-height:1.8;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.2;}
+h1{font-size:clamp(36px,5vw,64px);}h2{font-size:clamp(24px,4vw,40px);}h3{font-size:clamp(19px,3vw,26px);margin:28px 0 12px;}h4{font-size:20px;}
+p{color:var(--text-mid);line-height:1.85;margin-bottom:18px;}p:last-child{margin-bottom:0;}
+a{color:var(--teal);text-decoration:none;transition:color 0.2s;}a:hover{color:var(--gold);}
+strong{font-weight:600;color:var(--text-dark);}
+.container{max-width:1160px;margin:0 auto;padding:0 32px;}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:16px;}
+.tag-plum{background:var(--plum-pale);color:var(--plum);}
+.tag-teal{background:var(--teal-pale);color:var(--teal);}
+.tag-gold{background:var(--gold-pale);color:var(--gold);}
+.tag-sage{background:var(--sage-pale);color:var(--sage);}
+.btn{display:inline-block;padding:13px 30px;border-radius:40px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.25s;text-decoration:none;}
+.btn-plum{background:var(--plum);color:white;}.btn-plum:hover{background:var(--plum-dark);color:white;transform:translateY(-2px);}
+.btn-teal{background:var(--teal);color:white;}.btn-teal:hover{background:var(--teal-dark);color:white;transform:translateY(-2px);}
+.btn-gold{background:var(--gold);color:white;}.btn-gold:hover{background:var(--gold-light);color:white;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(253,250,244,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow 0.3s;}
+.nav.scrolled{box-shadow:var(--shadow);}
+.nav-logo-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--teal);}
+.nav-logo-sub{font-size:9px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-light);display:block;margin-top:2px;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:11px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-mid);padding:8px 12px;border-radius:8px;transition:color 0.2s,background 0.2s;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--teal);background:var(--teal-pale);}
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--text-dark);}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:var(--ivory);border-bottom:1px solid var(--border);padding:20px 32px;z-index:999;box-shadow:var(--shadow);}
+.mobile-menu a{display:block;font-size:13px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-mid);padding:12px 0;border-bottom:1px solid var(--border);text-decoration:none;}
+.mobile-menu.open{display:block;}
+.page-hero{min-height:60vh;display:flex;align-items:flex-end;position:relative;overflow:hidden;padding-top:72px;}
+.page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.page-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(74,48,87,0.9) 0%,rgba(107,78,122,0.55) 40%,rgba(0,0,0,0.15) 100%);}
+.page-hero-content{position:relative;z-index:2;padding:60px 32px;max-width:1160px;margin:0 auto;width:100%;}
+.page-hero-content .tag{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:white;}
+.page-hero-content h1{color:white;margin-bottom:16px;}
+.page-hero-content p{color:rgba(255,255,255,0.85);font-size:18px;max-width:600px;margin-bottom:28px;}
+.page-hero-nav a{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);border:1px solid rgba(255,255,255,0.35);padding:8px 20px;border-radius:30px;text-decoration:none;display:inline-block;margin:0 6px 6px 0;transition:all 0.2s;}
+.page-hero-nav a:hover{background:rgba(255,255,255,0.2);color:white;}
+.breadcrumb{background:var(--plum-pale);padding:14px 0;border-bottom:1px solid rgba(107,78,122,0.15);}
+.breadcrumb-inner{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-light);}
+.breadcrumb-inner a{color:var(--plum);text-decoration:none;font-weight:600;}
+.section-pad{padding:80px 0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.two-col-img{border-radius:20px;overflow:hidden;aspect-ratio:4/3;}
+.two-col-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.content-label{display:block;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--plum);margin-bottom:12px;}
+.section-anchor{scroll-margin-top:90px;}
+.section-divider{height:4px;background:linear-gradient(to right,var(--plum),var(--gold),var(--plum-pale));opacity:0.4;}
+.pull-quote{border-left:3px solid var(--plum);padding:20px 24px;background:var(--plum-pale);border-radius:0 12px 12px 0;margin:28px 0;}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--plum);margin:0 0 8px;line-height:1.5;}
+.pull-quote cite{font-size:12px;color:var(--text-light);font-style:normal;}
+.callout{border-radius:16px;padding:24px 28px;margin:24px 0;}
+.callout-plum{background:var(--plum-pale);border:1px solid rgba(107,78,122,0.2);}
+.callout-teal{background:var(--teal-pale);border:1px solid rgba(61,107,97,0.2);}
+.callout h4{margin-bottom:8px;font-size:17px;}
+.callout-plum h4{color:var(--plum);}
+.callout-teal h4{color:var(--teal);}
+.callout p{margin:0;font-size:14px;}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+.info-card{background:white;border:1px solid var(--border);border-radius:16px;padding:28px;transition:box-shadow 0.2s;}
+.info-card:hover{box-shadow:var(--shadow);}
+.info-card .tag{margin-bottom:12px;}
+.info-card h4{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text-dark);margin-bottom:10px;}
+.info-card p{font-size:14px;color:var(--text-mid);margin:0;}
+.nutrition-box{background:linear-gradient(135deg,var(--plum) 0%,var(--plum-dark) 100%);border-radius:20px;padding:40px;margin-top:56px;color:white;}
+.nut-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);display:block;margin-bottom:8px;}
+.nutrition-box h3{color:white;margin:0 0 8px;}
+.nutrition-box>p{color:rgba(255,255,255,0.8);margin-bottom:28px;}
+.nut-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.nut-item{background:rgba(255,255,255,0.1);border-radius:12px;padding:20px;}
+.nut-item strong{display:block;color:white;font-size:14px;margin-bottom:6px;}
+.nut-item span{font-size:13px;color:rgba(255,255,255,0.78);line-height:1.65;}
+.picks-panel{background:white;border-radius:20px;border:1px solid var(--border);padding:36px;margin-top:40px;box-shadow:var(--shadow);}
+.picks-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;flex-wrap:wrap;gap:8px;}
+.picks-label-wrap{display:flex;align-items:center;gap:10px;}
+.picks-dot{width:10px;height:10px;border-radius:50%;background:var(--plum);flex-shrink:0;}
+.picks-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--text-dark);}
+.picks-disclosure{font-size:11px;color:var(--text-light);}
+.picks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.pick-card{border:1px solid var(--border);border-radius:14px;padding:20px;transition:border-color 0.2s,box-shadow 0.2s;}
+.pick-card:hover{border-color:var(--plum);box-shadow:var(--shadow);}
+.pick-brand{display:block;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;}
+.pick-name{display:block;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--text-dark);margin-bottom:10px;line-height:1.3;}
+.pick-why{display:block;font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;}
+.pick-link{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:white;background:var(--teal);padding:8px 18px;border-radius:30px;text-decoration:none;transition:background 0.2s;}
+.pick-link:hover{background:var(--teal-dark);color:white;}
+.pick-note{font-size:12px;color:var(--text-light);margin-top:20px;line-height:1.7;border-top:1px solid var(--border);padding-top:16px;}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px;}
+.article-card{background:white;border-radius:16px;overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;}
+.article-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent;}
+.article-img{width:100%;height:190px;object-fit:cover;display:block;}
+.article-body{padding:22px;flex:1;display:flex;flex-direction:column;}
+.article-body .tag{margin-bottom:8px;}
+.article-body h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--text-dark);margin-bottom:6px;line-height:1.35;}
+.read-time{font-size:11px;color:var(--text-light);margin-bottom:8px;}
+.article-body p{font-size:14px;color:var(--text-light);line-height:1.65;flex:1;margin-bottom:16px;}
+.article-link{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--plum);display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
+.article-link::after{content:'→';}
+.subscribe-section{background:var(--plum-dark);padding:80px 0;text-align:center;}
+.subscribe-form{display:flex;gap:12px;justify-content:center;max-width:480px;margin:0 auto;}
+.subscribe-form input{flex:1;padding:14px 20px;border:1.5px solid rgba(255,255,255,0.2);border-radius:40px;background:rgba(255,255,255,0.1);font-family:'Nunito',sans-serif;font-size:15px;color:white;outline:none;}
+.subscribe-form input::placeholder{color:rgba(255,255,255,0.45);}
+.subscribe-note{font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px;}
+footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28px;}
+.footer-inner{display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:white;display:block;margin-bottom:4px;}
+.footer-brand-sub{font-size:9px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:10px;}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;}
+.footer-col h5{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:14px;}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;padding:4px 0;transition:color 0.2s;}
+.footer-col a:hover{color:white;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,0.3);}
+.footer-bottom a{color:rgba(255,255,255,0.4);text-decoration:none;}
+#back-to-top{position:fixed;bottom:32px;right:32px;width:48px;height:48px;border-radius:50%;background:var(--plum);color:white;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:none;z-index:500;align-items:center;justify-content:center;}
+@media(max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.two-col,.three-col,.footer-inner{grid-template-columns:1fr;gap:28px;}.nut-grid,.picks-grid,.articles-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.container{padding:0 20px;}.nut-grid,.picks-grid,.articles-grid{grid-template-columns:1fr;}.subscribe-form{flex-direction:column;}.footer-inner{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="main-nav">
+  <a href="index.html" style="text-decoration:none;"><span class="nav-logo-name">VelaOra</span><span class="nav-logo-sub">Navigating Life</span></a>
+  <ul class="nav-links">
+    <li><a href="perimenopause.html">Perimenopause</a></li>
+    <li><a href="fertility.html">Fertility</a></li>
+    <li><a href="anxiety.html" class="active">Anxiety</a></li>
+    <li><a href="separation.html">Separation</a></li>
+    <li><a href="articles.html">Articles</a></li>
+    <li><a href="index.html#wellness" style="color:var(--gold);border:1px solid rgba(184,137,90,0.3);border-radius:20px;padding:8px 14px;">Wellness Club ✦</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="index.html#subscribe" class="btn btn-teal">Join VelaOra</a>
+    <button class="mobile-menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="currentColor"/><rect y="10" width="22" height="2" rx="1" fill="currentColor"/><rect y="16" width="22" height="2" rx="1" fill="currentColor"/></svg></button>
+  </div>
+</nav>
+<div id="mobile-menu" class="mobile-menu">
+  <a href="index.html">Home</a><a href="perimenopause.html">Perimenopause &amp; Menopause</a><a href="fertility.html">Fertility</a><a href="anxiety.html">Anxiety</a><a href="separation.html">Separation</a><a href="articles.html">Articles</a><a href="index.html#subscribe">Join VelaOra →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80');"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content container">
+    <span class="tag">Managing Anxiety</span>
+    <h1>When Anxiety Arrives Uninvited</h1>
+    <p>Understanding whether it's hormonal, situational, or clinical — and what genuinely helps each one.</p>
+    <div class="page-hero-nav">
+      <a href="#hormonal">Hormonal Anxiety</a>
+      <a href="#distinguishing">Types of Anxiety</a>
+      <a href="#what-helps">What Genuinely Helps</a>
+      <a href="#nutrition">Nutrition</a>
+      <a href="#supplements">Supplements</a>
+      <a href="#articles-section">Articles</a>
+    </div>
+  </div>
+</div>
+
+<div class="breadcrumb"><div class="container breadcrumb-inner"><a href="index.html">Home</a><span>/</span><span style="color:var(--plum);font-weight:600;">Managing Anxiety</span></div></div>
+
+<!-- MAIN CONTENT -->
+<section id="hormonal" class="section-anchor section-pad">
+  <div class="container">
+    <div class="two-col">
+      <div class="two-col-img">
+        <img src="https://images.unsplash.com/photo-1602192509154-0b900ee1f851?auto=format&fit=crop&w=800&q=80" alt="Anxiety and women's health" loading="lazy">
+      </div>
+      <div class="content-body">
+        <span class="content-label">Understanding Anxiety</span>
+        <h2>Hormonal Anxiety Is Real — And Different</h2>
+        <p>Anxiety that arrives in the perimenopausal years often has a different quality to the anxiety most women recognise from earlier life. It may arrive overnight, without a clear trigger, and feel biochemical rather than psychological — because it often is.</p>
+        <p>Oestrogen modulates serotonin, GABA, and the stress response system. As it fluctuates and declines, the nervous system becomes more reactive. This is not a mental health crisis. It is a hormonal shift — and it responds to hormonal treatment, lifestyle intervention, and targeted nutritional support.</p>
+
+        <div class="pull-quote">
+          <p>The anxiety you feel at 3am that has no name and no cause is not weakness. It is a nervous system working with a different hormonal landscape than it had last year.</p>
+          <cite>— VelaOra</cite>
+        </div>
+
+        <div class="callout callout-plum">
+          <h4>Common presentations of hormonal anxiety</h4>
+          <p>Racing thoughts at 3–4am · Heart palpitations · Sudden dread with no trigger · Irritability and rage that feels unlike you · Overwhelm at things that never bothered you before · Heightened startle response</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="distinguishing" class="section-anchor section-pad" style="background:var(--cream);">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto 48px;">
+      <span class="tag tag-plum">Understanding Anxiety</span>
+      <h2>Three Types. Different Approaches.</h2>
+      <p>Many women need support across more than one type — and there is no shame in that. The goal is accurate identification so the right support can be offered.</p>
+    </div>
+    <div class="three-col">
+      <div class="info-card">
+        <span class="tag tag-plum">Hormonal</span>
+        <h4>Cyclical, Biochemical</h4>
+        <p>Tends to be cyclical (worse around ovulation or before a period). Arrives alongside other perimenopause symptoms. Often responds meaningfully to HRT. Began in the 40s without prior anxiety history.</p>
+      </div>
+      <div class="info-card">
+        <span class="tag tag-teal">Situational</span>
+        <h4>Context-Driven</h4>
+        <p>Linked to specific stressors — separation, work, grief, uncertainty. Proportionate to what's happening, even if intense. Usually resolves as circumstances change. May benefit from targeted support during the crisis.</p>
+      </div>
+      <div class="info-card">
+        <span class="tag tag-gold">Clinical</span>
+        <h4>Persistent, Independent</h4>
+        <p>Persists independent of hormonal cycle or circumstances. Often has a longer history. May require psychological support (CBT, therapy) alongside any hormonal treatment. Worth getting a formal assessment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="what-helps" class="section-anchor section-pad">
+  <div class="container">
+    <div class="two-col">
+      <div class="content-body">
+        <span class="content-label">What Genuinely Helps</span>
+        <h2>Evidence-Based, Honestly Ranked</h2>
+        <p><strong>Address the underlying hormonal driver.</strong> For women whose anxiety began in perimenopause, HRT often produces the most substantial and rapid relief — because the root cause is hormonal, not psychological. This is the conversation many NZ GPs still aren't having.</p>
+        <p><strong>Magnesium glycinate before bed</strong> has meaningful evidence for anxiety reduction, particularly for the 3am wake-up pattern. Not magnesium oxide — the glycinate form is the one that crosses the blood-brain barrier.</p>
+        <p><strong>Address sleep disruption first.</strong> Sleep deprivation is one of the most powerful drivers of anxiety — and for perimenopausal women, much of the anxiety is significantly worsened by chronic, disrupted sleep. Treating the sleep often treats the anxiety.</p>
+        <p><strong>Resistance training</strong> has robust evidence for anxiety regulation in midlife women. Stacy Sims' research is particularly compelling on this. Three sessions per week changes the neurochemistry meaningfully.</p>
+
+        <div class="callout callout-teal">
+          <h4>What to say to your GP</h4>
+          <p>"I'd like to explore whether my anxiety has a hormonal component before going down the antidepressant route. Can we discuss HRT?" — This is a reasonable, evidence-based request. You are entitled to ask it.</p>
+        </div>
+      </div>
+      <div class="two-col-img">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80" alt="Managing anxiety naturally" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="nutrition" class="section-anchor section-pad" style="background:var(--cream);">
+  <div class="container">
+    <div class="nutrition-box">
+      <span class="nut-label">🥗 Nutrition for Anxiety</span>
+      <h3>Feeding your nervous system</h3>
+      <p>The gut-brain axis is real — what you eat directly influences your anxiety levels through neurotransmitter production, inflammation regulation, and blood sugar stability.</p>
+      <div class="nut-grid">
+        <div class="nut-item">
+          <strong>Blood Sugar Stability</strong>
+          <span>Blood sugar crashes amplify anxiety significantly. Protein and healthy fat at every meal, reducing refined carbohydrates, and never skipping breakfast.</span>
+        </div>
+        <div class="nut-item">
+          <strong>Magnesium-Rich Foods</strong>
+          <span>Dark chocolate, pumpkin seeds, spinach, and almonds. Most women in perimenopause are deficient — food alone often isn't enough, but it's the foundation.</span>
+        </div>
+        <div class="nut-item">
+          <strong>Gut Health Foundation</strong>
+          <span>90% of serotonin is produced in the gut. Fermented foods, prebiotic fibre, and reducing ultra-processed foods supports the gut-brain axis that regulates mood and anxiety.</span>
+        </div>
+        <div class="nut-item">
+          <strong>Reduce Caffeine After Noon</strong>
+          <span>Caffeine has a 5–7 hour half-life and directly activates the stress response system. Particularly disruptive for hormonal anxiety. Try matcha or green tea for a gentler lift.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PICKS -->
+    <div id="supplements" class="section-anchor picks-panel">
+      <div class="picks-header">
+        <div class="picks-label-wrap"><div class="picks-dot"></div><span class="picks-title">VelaOra Picks — Anxiety</span></div>
+        <span class="picks-disclosure">Affiliate links — <a href="#affiliate-disclosure">how this works</a></span>
+      </div>
+      <div class="picks-grid">
+        <div class="pick-card">
+          <span class="pick-brand">Doctor's Best</span>
+          <span class="pick-name">Magnesium Glycinate</span>
+          <span class="pick-why">The most evidence-backed supplement for anxiety. 300–400mg before bed. The glycinate form crosses the blood-brain barrier — magnesium oxide simply doesn't work the same way.</span>
+          <a href="https://nz.iherb.com/pr/doctor-s-best-high-absorption-magnesium-lysinate-glycinate-chelated-albion-traacs-240-tablets-100-mg-per-tablet/16567?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
+        </div>
+        <div class="pick-card">
+          <span class="pick-brand">Life Extension</span>
+          <span class="pick-name">B Complex with Methylfolate</span>
+          <span class="pick-why">B6 is directly involved in GABA and serotonin synthesis — two main neurotransmitters that regulate anxiety. Choose methylfolate not folic acid. Supports nervous system function and energy.</span>
+          <a href="https://nz.iherb.com/pr/life-extension-bioactive-complete-b-complex-60-vegetarian-capsules/67051?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
+        </div>
+        <div class="pick-card">
+          <span class="pick-brand">Nordic Naturals</span>
+          <span class="pick-name">Ultimate Omega</span>
+          <span class="pick-why">EPA specifically has meaningful evidence for mood regulation and anxiety. Nordic Naturals delivers high-potency EPA/DHA in the triglyceride form that actually absorbs — third-party tested.</span>
+          <a href="https://nz.iherb.com/pr/nordic-naturals-ultimate-omega-2x-lemon-60-softgels-1-075-mg-per-softgel/65085?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
+        </div>
+      </div>
+      <p class="pick-note">VelaOra earns a small commission on iHerb purchases at no extra cost to you. Supplements support the foundation — but if anxiety is significantly impacting your life, please speak with your GP or a counsellor. Addressing the hormonal driver (if relevant) is often more powerful than any supplement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles-section" class="section-anchor section-pad" style="background:var(--ivory);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <span class="tag tag-plum">From the Journal</span>
+      <h2 style="color:var(--text-dark);margin-bottom:12px;">Anxiety — Read On</h2>
+      <p style="max-width:480px;margin:0 auto;color:var(--text-light);">Honest articles on hormonal anxiety, brain health, and what actually helps.</p>
+    </div>
+    <div class="articles-grid">
+      <a href="https://velaora.substack.com" target="_blank" class="article-card">
+        <img class="article-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="Brain fog anxiety perimenopause" loading="lazy">
+        <div class="article-body">
+          <span class="tag tag-plum">Brain Health</span>
+          <h4>Brain Fog, Forgetfulness and Perimenopause — You Are Not Getting Dementia</h4>
+          <div class="read-time">⏱ 6 min read</div>
+          <p>You lost a word mid-sentence. You forgot why you walked in. Please read this first.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card">
+        <img class="article-img" src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=600&q=80" alt="NZ blackcurrant pine bark brain health" loading="lazy">
+        <div class="article-body">
+          <span class="tag tag-plum">Brain Health &amp; NZ</span>
+          <h4>The NZ Brain Health Secret — Blackcurrants and Pine Bark Beating Global Supplements</h4>
+          <div class="read-time">⏱ 7 min read</div>
+          <p>The most researched cognitive health ingredients on the planet grow right here.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card">
+        <img class="article-img" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Magnesium anxiety" loading="lazy">
+        <div class="article-body">
+          <span class="tag tag-sage">Supplements</span>
+          <h4>The Magnesium Gap — Why Most NZ Women in Perimenopause Are Deficient</h4>
+          <div class="read-time">⏱ 6 min read</div>
+          <p>Oestrogen helps your cells hold magnesium. As it drops, so does magnesium.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:12px;"><a href="articles.html" class="btn btn-plum">View All Articles →</a></div>
+  </div>
+</section>
+
+<div id="affiliate-disclosure" style="background:var(--cream);padding:32px 0;border-top:1px solid var(--border);">
+  <div class="container"><p style="font-size:13px;color:var(--text-light);max-width:800px;margin:0 auto;text-align:center;line-height:1.8;"><strong style="color:var(--text-dark);">Affiliate disclosure:</strong> VelaOra participates in the iHerb affiliate programme. If you purchase through our links, we receive a small commission at no extra cost to you. We only recommend products with meaningful evidence.</p></div>
+</div>
+
+<section class="subscribe-section">
+  <div class="container">
+    <span class="tag" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);">Free to Join</span>
+    <h2 style="color:white;margin-bottom:16px;">You Deserve to Feel Like Yourself Again</h2>
+    <p style="color:rgba(255,255,255,0.75);max-width:460px;margin:0 auto 36px;font-size:17px;">Science-backed guidance on anxiety, hormones, and everything else nobody warned you about.</p>
+    <form class="subscribe-form" action="https://formspree.io/f/mrevbyoa" method="POST">
+      <input type="email" name="email" placeholder="Your email address" required>
+      <input type="hidden" name="source" value="anxiety-page">
+      <button type="submit" class="btn btn-gold" style="white-space:nowrap;">Join Free →</button>
+    </form>
+    <p class="subscribe-note">No spam. Unsubscribe any time.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="footer-brand-name">VelaOra</span><span class="footer-brand-sub">Navigating Life</span><p>Science-backed women's health for NZ and Australian women.</p></div>
+      <div class="footer-col"><h5>Topics</h5><a href="perimenopause.html">Perimenopause</a><a href="perimenopause.html#menopause">Menopause</a><a href="fertility.html">Fertility Over 40</a><a href="anxiety.html">Anxiety</a><a href="separation.html">Separation</a></div>
+      <div class="footer-col"><h5>Content</h5><a href="articles.html">All Articles</a><a href="index.html#wellness">Wellness Club</a><a href="index.html#subscribe">Join Free</a></div>
+      <div class="footer-col"><h5>VelaOra</h5><a href="index.html#about">About Sarah</a><a href="https://velaora.substack.com" target="_blank">Substack</a><a href="https://www.instagram.com/velaora" target="_blank">Instagram</a><a href="mailto:hello@velaora.co.nz">Contact</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 VelaOra. Navigating Life.</span><span><a href="#affiliate-disclosure">Affiliate disclosure</a> · <a href="mailto:hello@velaora.co.nz">hello@velaora.co.nz</a></span></div>
+  </div>
+</footer>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+<script>
+window.addEventListener('scroll',function(){document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>20);var btn=document.getElementById('back-to-top');if(btn)btn.style.display=window.scrollY>600?'flex':'none';});
+document.querySelector('.subscribe-form').addEventListener('submit',function(e){e.preventDefault();var form=this,btn=form.querySelector('button[type="submit"]');btn.textContent='Sending…';btn.disabled=true;fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){form.innerHTML='<p style="color:rgba(255,255,255,0.9);font-size:16px;padding:16px 0;">You\'re in. Welcome to VelaOra. ✦</p>';}else{btn.textContent='Try again';btn.disabled=false;}}).catch(function(){btn.textContent='Try again';btn.disabled=false;});});
+</script>
+</body>
+</html>

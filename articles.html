@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — VelaOra</title>
+<meta name="description" content="Science-backed articles on perimenopause, menopause, fertility, anxiety, separation, supplements and women's health. Written by women who've been there.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WS37E8T1E5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WS37E8T1E5');</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ivory:#FDFAF4;--cream:#F5EFE3;--teal:#3D6B61;--teal-pale:#EAF2F0;--teal-dark:#2C5248;--gold:#B8895A;--gold-pale:#F7EFE3;--gold-dark:#8A6032;--sage:#7A9E7E;--sage-pale:#EFF5EF;--plum:#6B4E7A;--plum-pale:#F5EFF8;--rust:#B85C3A;--rust-pale:#FCF0EB;--text-dark:#1E1E1A;--text-mid:#444440;--text-light:#7A7A72;--border:#DDD5C8;--shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-lg:0 12px 48px rgba(0,0,0,0.12);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--ivory);color:var(--text-dark);font-family:'Nunito',sans-serif;font-weight:300;font-size:16px;line-height:1.8;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.2;}
+h1{font-size:clamp(36px,5vw,64px);}h2{font-size:clamp(24px,4vw,40px);}h3{font-size:24px;}h4{font-size:20px;}
+p{color:var(--text-mid);line-height:1.85;margin-bottom:18px;}p:last-child{margin-bottom:0;}
+a{color:var(--teal);text-decoration:none;transition:color 0.2s;}a:hover{color:var(--gold);}
+strong{font-weight:600;color:var(--text-dark);}
+.container{max-width:1160px;margin:0 auto;padding:0 32px;}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:0;}
+.tag-teal{background:var(--teal-pale);color:var(--teal);}
+.tag-gold{background:var(--gold-pale);color:var(--gold);}
+.tag-sage{background:var(--sage-pale);color:var(--sage);}
+.tag-plum{background:var(--plum-pale);color:var(--plum);}
+.tag-rust{background:var(--rust-pale);color:var(--rust);}
+.btn{display:inline-block;padding:13px 30px;border-radius:40px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.25s;text-decoration:none;}
+.btn-teal{background:var(--teal);color:white;}.btn-teal:hover{background:var(--teal-dark);color:white;transform:translateY(-2px);}
+.btn-gold{background:var(--gold);color:white;}.btn-gold:hover{color:white;transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--teal);border:2px solid var(--teal);}.btn-outline:hover{background:var(--teal);color:white;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(253,250,244,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:72px;display:flex;align-items:center;justify-content:space-between;}
+.nav.scrolled{box-shadow:var(--shadow);}
+.nav-logo-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--teal);}
+.nav-logo-sub{font-size:9px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-light);display:block;margin-top:2px;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:11px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-mid);padding:8px 12px;border-radius:8px;transition:color 0.2s,background 0.2s;text-decoration:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--teal);background:var(--teal-pale);}
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:var(--ivory);border-bottom:1px solid var(--border);padding:20px 32px;z-index:999;box-shadow:var(--shadow);}
+.mobile-menu a{display:block;font-size:13px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-mid);padding:12px 0;border-bottom:1px solid var(--border);text-decoration:none;}
+.mobile-menu.open{display:block;}
+
+/* PAGE HERO */
+.page-hero{background:var(--teal-dark);padding:120px 0 72px;text-align:center;}
+.page-hero h1{color:white;margin-bottom:16px;}
+.page-hero p{color:rgba(255,255,255,0.75);font-size:18px;max-width:560px;margin:0 auto 36px;}
+
+/* FILTER TABS */
+.filter-bar{background:white;border-bottom:1px solid var(--border);position:sticky;top:72px;z-index:90;padding:0 32px;}
+.filter-inner{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;max-width:1160px;margin:0 auto;}
+.filter-inner::-webkit-scrollbar{display:none;}
+.filter-btn{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:16px 20px;border:none;background:none;cursor:pointer;color:var(--text-light);border-bottom:3px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s;font-family:'Nunito',sans-serif;}
+.filter-btn:hover{color:var(--teal);}
+.filter-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+
+/* ARTICLES GRID */
+.articles-section{padding:64px 0;}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.article-card{background:white;border-radius:18px;overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;}
+.article-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:transparent;}
+.article-img{width:100%;height:200px;object-fit:cover;display:block;}
+.article-body{padding:24px;flex:1;display:flex;flex-direction:column;}
+.article-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.article-body h4{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--text-dark);line-height:1.35;margin-bottom:10px;}
+.read-time{font-size:11px;color:var(--text-light);font-weight:500;}
+.article-body p{font-size:14px;color:var(--text-light);line-height:1.65;flex:1;margin-bottom:20px;}
+.article-link{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
+.article-link::after{content:'→';}
+.article-card:hover .article-link{gap:10px;}
+
+/* FEATURED ARTICLE */
+.featured-article{border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;margin-bottom:40px;border:1px solid var(--border);background:white;box-shadow:var(--shadow);text-decoration:none;transition:box-shadow 0.2s,transform 0.2s;}
+.featured-article:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);}
+.featured-img{aspect-ratio:4/3;overflow:hidden;}
+.featured-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.featured-body{padding:48px;display:flex;flex-direction:column;justify-content:center;}
+.featured-label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:8px;}
+.featured-body h3{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--text-dark);margin-bottom:16px;line-height:1.25;}
+.featured-body p{font-size:16px;color:var(--text-mid);flex:1;margin-bottom:24px;}
+.featured-link{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:6px;}
+.featured-link::after{content:'→';}
+
+/* SECTION LABELS */
+.section-label{padding:40px 0 24px;}
+.section-label h3{font-size:clamp(22px,3vw,32px);color:var(--text-dark);}
+.section-label .tag{margin-bottom:10px;}
+
+/* SUBSTACK CTA */
+.substack-cta{background:var(--teal);border-radius:20px;padding:44px;color:white;text-align:center;margin:56px 0;}
+.substack-cta h3{color:white;font-size:28px;margin-bottom:12px;}
+.substack-cta p{color:rgba(255,255,255,0.82);max-width:480px;margin:0 auto 28px;}
+
+/* SUBSCRIBE */
+.subscribe-section{background:var(--teal-dark);padding:80px 0;text-align:center;}
+.subscribe-form{display:flex;gap:12px;justify-content:center;max-width:480px;margin:0 auto;}
+.subscribe-form input{flex:1;padding:14px 20px;border:1.5px solid rgba(255,255,255,0.2);border-radius:40px;background:rgba(255,255,255,0.1);font-family:'Nunito',sans-serif;font-size:15px;color:white;outline:none;}
+.subscribe-form input::placeholder{color:rgba(255,255,255,0.45);}
+.subscribe-note{font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px;}
+footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28px;}
+.footer-inner{display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:white;display:block;margin-bottom:4px;}
+.footer-brand-sub{font-size:9px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:10px;}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;}
+.footer-col h5{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:14px;}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.6);text-decoration:none;padding:4px 0;transition:color 0.2s;}
+.footer-col a:hover{color:white;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,0.3);}
+.footer-bottom a{color:rgba(255,255,255,0.4);text-decoration:none;}
+#back-to-top{position:fixed;bottom:32px;right:32px;width:48px;height:48px;border-radius:50%;background:var(--teal);color:white;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:none;z-index:500;align-items:center;justify-content:center;}
+.hidden{display:none !important;}
+@media(max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.articles-grid{grid-template-columns:1fr 1fr;}.featured-article{grid-template-columns:1fr;}.footer-inner{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.container{padding:0 20px;}.articles-grid{grid-template-columns:1fr;}.subscribe-form{flex-direction:column;}.footer-inner{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="main-nav">
+  <a href="index.html" style="text-decoration:none;"><span class="nav-logo-name">VelaOra</span><span class="nav-logo-sub">Navigating Life</span></a>
+  <ul class="nav-links">
+    <li><a href="perimenopause.html">Perimenopause</a></li>
+    <li><a href="fertility.html">Fertility</a></li>
+    <li><a href="anxiety.html">Anxiety</a></li>
+    <li><a href="separation.html">Separation</a></li>
+    <li><a href="articles.html" class="active">Articles</a></li>
+    <li><a href="index.html#wellness" style="color:var(--gold);border:1px solid rgba(184,137,90,0.3);border-radius:20px;padding:8px 14px;">Wellness Club ✦</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="index.html#subscribe" class="btn btn-teal">Join VelaOra</a>
+    <button class="mobile-menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="currentColor"/><rect y="10" width="22" height="2" rx="1" fill="currentColor"/><rect y="16" width="22" height="2" rx="1" fill="currentColor"/></svg></button>
+  </div>
+</nav>
+<div id="mobile-menu" class="mobile-menu">
+  <a href="index.html">Home</a><a href="perimenopause.html">Perimenopause &amp; Menopause</a><a href="fertility.html">Fertility</a><a href="anxiety.html">Anxiety</a><a href="separation.html">Separation</a><a href="articles.html">Articles</a><a href="index.html#subscribe">Join VelaOra →</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero" style="padding-top:120px;">
+  <div class="container">
+    <span class="tag tag-teal" style="margin-bottom:20px;display:inline-block;">From the Journal</span>
+    <h1>Real Information. No Fluff.</h1>
+    <p>Science-backed articles written by women who have been there — published here first, and on Substack.</p>
+    <a href="https://velaora.substack.com" target="_blank" class="btn btn-gold" style="margin-right:12px;">Read on Substack →</a>
+    <a href="#all-articles" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;">Browse All →</a>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all">All Articles</button>
+    <button class="filter-btn" data-filter="perimenopause">Perimenopause</button>
+    <button class="filter-btn" data-filter="menopause">Menopause</button>
+    <button class="filter-btn" data-filter="supplements">Supplements</button>
+    <button class="filter-btn" data-filter="brain">Brain Health</button>
+    <button class="filter-btn" data-filter="fertility">Fertility</button>
+    <button class="filter-btn" data-filter="separation">Separation</button>
+    <button class="filter-btn" data-filter="nutrition">Nutrition &amp; NZ</button>
+  </div>
+</div>
+
+<!-- FEATURED -->
+<section class="articles-section" id="all-articles">
+  <div class="container">
+
+    <a href="https://velaora.substack.com/p/perimenopause-starts-earlier-than" target="_blank" class="featured-article" data-category="perimenopause">
+      <div class="featured-img">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80" alt="Perimenopause NZ" loading="lazy">
+      </div>
+      <div class="featured-body">
+        <span class="featured-label">Featured · Perimenopause</span>
+        <div style="margin-bottom:12px;"><span class="tag tag-teal">Perimenopause</span></div>
+        <h3>Perimenopause Starts Earlier Than You Think — And NZ Women Are Being Missed</h3>
+        <p>Three doctors. All women. Not one said the word. What I learned after I worked it out myself — and why 89% of NZ women in their 40s are experiencing symptoms that go unnamed.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+          <span style="font-size:11px;color:var(--text-light);">⏱ 8 min read</span>
+        </div>
+        <span class="featured-link">Read on Substack</span>
+      </div>
+    </a>
+
+    <!-- PERIMENOPAUSE -->
+    <div class="section-label">
+      <span class="tag tag-teal">Perimenopause</span>
+      <h3>Perimenopause</h3>
+    </div>
+    <div class="articles-grid">
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="perimenopause">
+        <img class="article-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-teal">Perimenopause</span><span class="read-time">⏱ 8 min</span></div>
+          <h4>Perimenopause Starts Earlier Than You Think</h4>
+          <p>Three doctors. Not one said the word. What I learned after I worked it out myself.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="brain perimenopause">
+        <img class="article-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-plum">Brain Health</span><span class="read-time">⏱ 6 min</span></div>
+          <h4>Brain Fog, Forgetfulness and Perimenopause — You Are Not Getting Dementia</h4>
+          <p>You lost a word mid-sentence. You forgot why you walked in. Please read this first.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="perimenopause supplements">
+        <img class="article-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-sage">Women Over 40</span><span class="read-time">⏱ 10 min</span></div>
+          <h4>Creatine — The Super Supplement Every Women's Health Expert Is Raving About</h4>
+          <p>Stacy Sims calls it number one. Steven Bartlett devoted two episodes to it. The 2025 science is extraordinary.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- SUPPLEMENTS -->
+    <div class="section-label">
+      <span class="tag tag-sage">Supplements</span>
+      <h3>Supplements</h3>
+    </div>
+    <div class="articles-grid">
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="supplements perimenopause">
+        <img class="article-img" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-sage">Supplements</span><span class="read-time">⏱ 6 min</span></div>
+          <h4>The Magnesium Gap — Why Most NZ Women in Perimenopause Are Deficient</h4>
+          <p>Oestrogen helps your cells hold magnesium. As it drops, so does magnesium — right when you need it most.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="supplements">
+        <img class="article-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-gold">Supplements</span><span class="read-time">⏱ 6 min</span></div>
+          <h4>Omega-3s and Perimenopause — Why Your Fish Oil Probably Isn't Working</h4>
+          <p>The oxidation problem, TG vs EE form, and why Nordic Naturals Ultimate Omega sets the benchmark.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="supplements">
+        <img class="article-img" src="https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-teal">Supplements</span><span class="read-time">⏱ 9 min</span></div>
+          <h4>The Complete Women Over 40 Supplement Stack — What Works, What Doesn't</h4>
+          <p>Four years of reading the actual science. The honest, evidence-ranked guide to supplements that matter.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- VITAMINS & NUTRITION -->
+    <div class="section-label">
+      <span class="tag tag-gold">Vitamins &amp; Nutrition</span>
+      <h3>Vitamins &amp; Nutrition</h3>
+    </div>
+    <div class="articles-grid">
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="supplements nutrition">
+        <img class="article-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-gold">Vitamins</span><span class="read-time">⏱ 5 min</span></div>
+          <h4>The Vitamin D Problem Nobody Is Talking About — And Why It Hits NZ Women Hardest</h4>
+          <p>Great sun safety culture, unexpected consequence. NZ women's vitamin D levels are consistently below optimal.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="nutrition brain">
+        <img class="article-img" src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-plum">Brain Health &amp; NZ</span><span class="read-time">⏱ 7 min</span></div>
+          <h4>The NZ Brain Health Secret — Blackcurrants and Pine Bark Beating Global Supplements</h4>
+          <p>The most researched cognitive health ingredients on the planet grow right here. Most NZ women have never heard of them.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="nutrition">
+        <img class="article-img" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-teal">Nutrition &amp; NZ</span><span class="read-time">⏱ 7 min</span></div>
+          <h4>The NZ Soil Advantage — Why Getting Your Greens In Has Never Mattered More</h4>
+          <p>Our soil grows some of the most nutrient-dense produce on earth. But most of us still aren't getting enough.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- FERTILITY & TECH -->
+    <div class="section-label">
+      <span class="tag tag-gold">Fertility &amp; Tech</span>
+      <h3>Fertility &amp; Technology</h3>
+    </div>
+    <div class="articles-grid">
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="fertility">
+        <img class="article-img" src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-gold">Fertility &amp; Tech</span><span class="read-time">⏱ 7 min</span></div>
+          <h4>Know Your Body — How Fertility Trackers and the Oura Ring Are Changing Women's Health</h4>
+          <p>What you can learn about your cycle, fertility and perimenopause from a ring on your finger while you sleep.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="https://velaora.substack.com" target="_blank" class="article-card" data-category="fertility supplements">
+        <img class="article-img" src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-gold">Fertility</span><span class="read-time">⏱ 8 min</span></div>
+          <h4>CoQ10 and Egg Quality — The Supplement That Changed the Conversation</h4>
+          <p>The mitochondria story, the ubiquinol difference, and why dosing matters more than most people realise.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- SEPARATION -->
+    <div class="section-label">
+      <span class="tag tag-rust">Separation &amp; New Beginnings</span>
+      <h3>Separation &amp; New Beginnings</h3>
+    </div>
+    <div class="articles-grid">
+      <a href="separation.html" class="article-card" data-category="separation">
+        <img class="article-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-rust">Separation</span><span class="read-time">⏱ 8 min</span></div>
+          <h4>The Handles — The Women Showing Us How It's Done</h4>
+          <p>Kick-ass North Shore women navigating life entirely on their own terms. Their stories.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="separation.html" class="article-card" data-category="separation">
+        <img class="article-img" src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-sage">New Beginnings</span><span class="read-time">⏱ 9 min</span></div>
+          <h4>The Other Side of Separation — What Nobody Tells You About Rebuilding</h4>
+          <p>The unexpected gifts that arrive when the dust settles. Life becomes your own again.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+      <a href="separation.html" class="article-card" data-category="separation">
+        <img class="article-img" src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+        <div class="article-body">
+          <div class="article-meta"><span class="tag tag-gold">Finance</span><span class="read-time">⏱ 7 min</span></div>
+          <h4>The 7 Financial Steps Every Woman Should Take When Separation Begins</h4>
+          <p>What to do first, what to document, and how to protect yourself from the start.</p>
+          <span class="article-link">Read Article</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- SUBSTACK CTA -->
+    <div class="substack-cta">
+      <span class="tag" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);display:inline-block;margin-bottom:16px;">Also on Substack</span>
+      <h3>Read More on Substack</h3>
+      <p>New articles published weekly — subscribe to get them direct to your inbox, with no algorithm between you and the content.</p>
+      <a href="https://velaora.substack.com" target="_blank" class="btn" style="background:white;color:var(--teal);">Follow on Substack →</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="subscribe-section">
+  <div class="container">
+    <span class="tag" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);display:inline-block;margin-bottom:20px;">Free to Join</span>
+    <h2 style="color:white;margin-bottom:16px;">Get New Articles Direct to Your Inbox</h2>
+    <p style="color:rgba(255,255,255,0.75);max-width:460px;margin:0 auto 36px;font-size:17px;">Science-backed, honestly written. New articles every week.</p>
+    <form class="subscribe-form" action="https://formspree.io/f/mrevbyoa" method="POST">
+      <input type="email" name="email" placeholder="Your email address" required>
+      <input type="hidden" name="source" value="articles-page">
+      <button type="submit" class="btn btn-gold" style="white-space:nowrap;">Subscribe Free →</button>
+    </form>
+    <p class="subscribe-note">No spam. Unsubscribe any time.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="footer-brand-name">VelaOra</span><span class="footer-brand-sub">Navigating Life</span><p>Science-backed women's health for NZ and Australian women.</p></div>
+      <div class="footer-col"><h5>Topics</h5><a href="perimenopause.html">Perimenopause</a><a href="perimenopause.html#menopause">Menopause</a><a href="fertility.html">Fertility Over 40</a><a href="anxiety.html">Anxiety</a><a href="separation.html">Separation</a></div>
+      <div class="footer-col"><h5>Content</h5><a href="articles.html">All Articles</a><a href="index.html#wellness">Wellness Club</a><a href="index.html#subscribe">Join Free</a></div>
+      <div class="footer-col"><h5>VelaOra</h5><a href="index.html#about">About Sarah</a><a href="https://velaora.substack.com" target="_blank">Substack</a><a href="https://www.instagram.com/velaora" target="_blank">Instagram</a><a href="mailto:hello@velaora.co.nz">Contact</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 VelaOra. Navigating Life.</span><span><a href="mailto:hello@velaora.co.nz">hello@velaora.co.nz</a></span></div>
+  </div>
+</footer>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script>
+// Filter
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+    this.classList.add('active');
+    var filter=this.dataset.filter;
+    document.querySelectorAll('.article-card, .featured-article').forEach(function(card){
+      if(filter==='all'||card.dataset.category.includes(filter)){
+        card.classList.remove('hidden');
+      }else{
+        card.classList.add('hidden');
+      }
+    });
+    document.querySelectorAll('.section-label').forEach(function(label){label.style.display='';});
+    if(filter!=='all'){
+      document.querySelectorAll('.section-label').forEach(function(label){
+        var next=label.nextElementSibling;
+        var hasVisible=false;
+        if(next){next.querySelectorAll('.article-card').forEach(function(c){if(!c.classList.contains('hidden'))hasVisible=true;});}
+        label.style.display=hasVisible?'':'none';
+      });
+    }
+  });
+});
+window.addEventListener('scroll',function(){
+  document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>20);
+  var btn=document.getElementById('back-to-top');
+  if(btn)btn.style.display=window.scrollY>600?'flex':'none';
+});
+document.querySelector('.subscribe-form').addEventListener('submit',function(e){
+  e.preventDefault();var form=this,btn=form.querySelector('button[type="submit"]');
+  btn.textContent='Sending…';btn.disabled=true;
+  fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+  .then(function(r){if(r.ok){form.innerHTML='<p style="color:rgba(255,255,255,0.9);font-size:16px;padding:16px 0;">You\'re in. ✦</p>';}else{btn.textContent='Try again';btn.disabled=false;}})
+  .catch(function(){btn.textContent='Try again';btn.disabled=false;});
+});
+</script>
+</body>
+</html>
