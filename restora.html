@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#090807" />
+  <title>Restora · by Velaora</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <style>
+    html, body, #root { margin: 0; padding: 0; min-height: 100%; background: #090807; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // ─── Design Tokens ────────────────────────────────────────────────────────
+    const C = {
+      bg:            "#0F0D0B",
+      bgDeep:        "#090807",
+      bgCard:        "#1A1714",
+      glass:         "rgba(255,255,255,0.038)",
+      glassBright:   "rgba(255,255,255,0.068)",
+      glassBorder:   "rgba(255,255,255,0.075)",
+      glassBorderHi: "rgba(255,255,255,0.18)",
+      sage:          "#8DD4B6",
+      sageDark:      "#68B098",
+      sageMid:       "#4A8A6E",
+      sageGlow:      "rgba(141,212,182,0.30)",
+      sageDeep:      "rgba(141,212,182,0.07)",
+      rose:          "#EBB2A8",
+      roseGlow:      "rgba(235,178,168,0.30)",
+      roseDeep:      "rgba(235,178,168,0.07)",
+      gold:          "#D8B76C",
+      goldGlow:      "rgba(216,183,108,0.30)",
+      goldDeep:      "rgba(216,183,108,0.07)",
+      charcoal:      "#EDE8E3",
+      mid:           "#9A8F87",
+      muted:         "#5E5550",
+      border:        "rgba(255,255,255,0.068)",
+      borderActive:  "rgba(141,212,182,0.38)",
+      white:         "#FFFFFF",
+    };
+
+    const PASSWORD = "Velaora2026";
+
+    // ─── Global CSS ───────────────────────────────────────────────────────────
+    const GLOBAL_CSS = `
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-text-size-adjust: 100%; }
+      body { background: ${C.bg}; }
+
+      @keyframes fadeUp   { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+
+      @keyframes orbIdle  {
+        0%,100% { transform:scale(1);    filter:brightness(1)    saturate(1);   }
+        33%     { transform:scale(1.045);filter:brightness(1.08) saturate(1.05);}
+        66%     { transform:scale(0.97); filter:brightness(0.97) saturate(0.97);}
+      }
+      @keyframes breatheIn  { from { transform:scale(1);    filter:brightness(1)    saturate(1);    }
+                               to   { transform:scale(1.40); filter:brightness(1.22) saturate(1.18); } }
+      @keyframes breatheOut { from { transform:scale(1.40); filter:brightness(1.22) saturate(1.18); }
+                               to   { transform:scale(1);    filter:brightness(0.88) saturate(0.90); } }
+      @keyframes holdPulse  { 0%,100%{transform:scale(1.40) rotate(0deg);} 50%{transform:scale(1.43) rotate(1deg);} }
+
+      @keyframes glowIdle  { 0%,100%{opacity:0.55;transform:scale(1);}   50%{opacity:0.9;transform:scale(1.18);} }
+      @keyframes glowIn    { from{opacity:0.55;transform:scale(1);}  to{opacity:1;transform:scale(1.55);} }
+      @keyframes glowOut   { from{opacity:1;transform:scale(1.55);}  to{opacity:0.45;transform:scale(0.9);} }
+      @keyframes glowHold  { 0%,100%{opacity:0.9;transform:scale(1.55);} 50%{opacity:1;transform:scale(1.65);} }
+
+      @keyframes shimmer { 0%{opacity:0;transform:rotate(0deg) translateX(36%) rotate(0deg);}
+        20%{opacity:0.55;} 80%{opacity:0.55;}
+        100%{opacity:0;transform:rotate(360deg) translateX(36%) rotate(-360deg);} }
+      @keyframes float     { 0%,100%{transform:translateY(0);}  50%{transform:translateY(-7px);} }
+      @keyframes dotBounce { 0%,100%{opacity:0.3;transform:translateY(0);} 50%{opacity:1;transform:translateY(-5px);} }
+      @keyframes slideIn   { from{opacity:0;transform:translateX(14px);} to{opacity:1;transform:translateX(0);} }
+
+      @keyframes aurora1 { 0%,100%{transform:translate(0,0) scale(1);opacity:0.7;} 33%{transform:translate(6%,10%) scale(1.12);opacity:1;} 66%{transform:translate(-4%,6%) scale(0.94);opacity:0.8;} }
+      @keyframes aurora2 { 0%,100%{transform:translate(0,0) scale(1);opacity:0.6;} 50%{transform:translate(-9%,-7%) scale(1.18);opacity:0.9;} }
+      @keyframes aurora3 { 0%,100%{transform:translate(0,0) scale(1);opacity:0.5;} 40%{transform:translate(7%,-9%) scale(1.1);opacity:0.85;} 80%{transform:translate(-5%,4%) scale(0.92);opacity:0.6;} }
+      @keyframes particleDrift { 0%{transform:translateY(0) translateX(0);opacity:0;} 20%{opacity:1;} 80%{opacity:0.6;} 100%{transform:translateY(-40px) translateX(12px);opacity:0;} }
+
+      input, button { font-family: inherit; }
+      input::placeholder { color: ${C.muted}; }
+      ::-webkit-scrollbar { width: 3px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 3px; }
+      button:focus-visible { outline: 2px solid ${C.sage}; outline-offset: 3px; }
+      input:focus { outline: none; }
+
+      .glass-card {
+        background: ${C.glass};
+        border: 1px solid ${C.glassBorder};
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .hover-lift {
+        transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-2px);
+        border-color: ${C.glassBorderHi} !important;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      }
+    `;
+
+    // ─── SVG Filters ──────────────────────────────────────────────────────────
+    function OrbFilters() {
+      return (
+        <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}>
+          <defs>
+            <filter id="orb-morph" x="-55%" y="-55%" width="210%" height="210%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.016 0.013" numOctaves="4" seed="7" result="noise">
+                <animate attributeName="baseFrequency" values="0.013 0.016;0.019 0.012;0.014 0.018;0.013 0.016" dur="14s" repeatCount="indefinite" />
+                <animate attributeName="seed" values="7;19;7" dur="22s" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+              <feComposite in="displaced" in2="SourceGraphic" operator="in" />
+            </filter>
+            <filter id="orb-morph-lg" x="-55%" y="-55%" width="210%" height="210%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.013 0.010" numOctaves="4" seed="12" result="noise">
+                <animate attributeName="baseFrequency" values="0.010 0.013;0.016 0.009;0.011 0.015;0.010 0.013" dur="12s" repeatCount="indefinite" />
+                <animate attributeName="seed" values="12;28;12" dur="18s" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+              <feComposite in="displaced" in2="SourceGraphic" operator="in" />
+            </filter>
+          </defs>
+        </svg>
+      );
+    }
+
+    // ─── Breathing Orb ────────────────────────────────────────────────────────
+    function BreathOrb({ phase = "idle", size = 100 }) {
+      const isLg = size >= 110;
+      const filterId = isLg ? "orb-morph-lg" : "orb-morph";
+      const phaseMap = {
+        idle:   { core: `radial-gradient(circle at 33% 28%, rgba(200,245,225,0.55), ${C.sage} 42%, ${C.sageMid} 85%)`, glow: C.sageGlow, glowAnim: "glowIdle 5s ease-in-out infinite",  bodyAnim: "orbIdle 6s ease-in-out infinite"    },
+        inhale: { core: `radial-gradient(circle at 33% 28%, rgba(220,255,240,0.65), ${C.sage} 38%, ${C.sageDark} 80%)`, glow: C.sageGlow, glowAnim: "glowIn 4s ease-in-out forwards",   bodyAnim: "breatheIn 4s ease-in-out forwards"  },
+        hold:   { core: `radial-gradient(circle at 33% 28%, rgba(255,240,200,0.55), ${C.gold} 40%, #A8823A 82%)`,       glow: C.goldGlow, glowAnim: "glowHold 2s ease-in-out infinite", bodyAnim: "holdPulse 2s ease-in-out infinite"   },
+        exhale: { core: `radial-gradient(circle at 33% 28%, rgba(255,220,215,0.45), ${C.rose} 40%, #C07870 82%)`,       glow: C.roseGlow, glowAnim: "glowOut 4s ease-in-out forwards",  bodyAnim: "breatheOut 4s ease-in-out forwards" },
+      };
+      const p = phaseMap[phase] || phaseMap.idle;
+      const orbSize = Math.round(size * 0.70);
+
+      return (
+        <div style={{ width: size, height: size, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", animation: "float 7s ease-in-out infinite" }}>
+          <div style={{ position:"absolute", width:"185%", height:"185%", borderRadius:"50%", background:`radial-gradient(circle, ${p.glow} 0%, transparent 68%)`, animation:p.glowAnim, filter:`blur(${size*0.18}px)`, pointerEvents:"none", transition:"background 1.8s ease" }} />
+          <div style={{ position:"absolute", width:"130%", height:"130%", borderRadius:"50%", background:`radial-gradient(circle, ${p.glow.replace("0.30","0.18")} 0%, transparent 60%)`, filter:`blur(${size*0.09}px)`, pointerEvents:"none", transition:"background 1.8s ease" }} />
+          <div style={{ position:"absolute", width:orbSize*0.28, height:orbSize*0.28, borderRadius:"50%", background:"rgba(255,255,255,0.22)", filter:`blur(${size*0.04}px)`, animation:"shimmer 8s ease-in-out infinite", pointerEvents:"none" }} />
+          <div style={{ width:orbSize, height:orbSize, borderRadius:"50%", background:p.core, boxShadow:[`0 0 ${size*0.28}px ${p.glow}`,`0 0 ${size*0.12}px ${p.glow.replace("0.30","0.55")}`,`inset 0 1px 1px rgba(255,255,255,0.32)`,`inset 0 -2px 4px rgba(0,0,0,0.22)`].join(", "), animation:p.bodyAnim, filter:`url(#${filterId})`, position:"relative", transition:"background 1.8s ease", willChange:"transform, filter" }}>
+            <div style={{ position:"absolute", top:"13%", left:"20%", width:"30%", height:"21%", borderRadius:"50%", background:"rgba(255,255,255,0.50)", filter:"blur(3.5px)", transform:"rotate(-22deg)", pointerEvents:"none" }} />
+            <div style={{ position:"absolute", bottom:"20%", right:"17%", width:"13%", height:"9%", borderRadius:"50%", background:"rgba(255,255,255,0.18)", filter:"blur(2px)", pointerEvents:"none" }} />
+            <div style={{ position:"absolute", bottom:"8%", left:"20%", right:"20%", height:"6%", borderRadius:"50%", background:"rgba(255,255,255,0.10)", filter:"blur(3px)", pointerEvents:"none" }} />
+          </div>
+        </div>
+      );
+    }
+
+    function Card({ children, style = {}, className = "" }) {
+      return <div className={`glass-card ${className}`} style={{ borderRadius:22, padding:24, ...style }}>{children}</div>;
+    }
+    function Label({ children, color = C.muted }) {
+      return <p style={{ color, fontSize:10, fontWeight:600, letterSpacing:2.2, textTransform:"uppercase", marginBottom:14 }}>{children}</p>;
+    }
+
+    // ─── Password Gate ────────────────────────────────────────────────────────
+    const PARTICLES = [
+      { top:"12%", left:"8%",  color:C.sage, size:2.5, dur:9,  delay:0   },
+      { top:"22%", left:"85%", color:C.rose, size:2,   dur:12, delay:2   },
+      { top:"68%", left:"12%", color:C.gold, size:1.5, dur:10, delay:4   },
+      { top:"78%", left:"78%", color:C.sage, size:2,   dur:14, delay:1   },
+      { top:"45%", left:"92%", color:C.rose, size:1.5, dur:11, delay:3   },
+      { top:"88%", left:"40%", color:C.gold, size:2,   dur:13, delay:5   },
+      { top:"35%", left:"5%",  color:C.sage, size:1.5, dur:8,  delay:6   },
+      { top:"55%", left:"88%", color:C.rose, size:2.5, dur:15, delay:2.5 },
+    ];
+
+    function PasswordGate({ onUnlock }) {
+      const [val, setVal] = useState("");
+      const [error, setError] = useState(false);
+      const [show, setShow] = useState(false);
+      const [focused, setFocused] = useState(false);
+      const attempt = () => {
+        if (val === PASSWORD) { onUnlock(); }
+        else { setError(true); setTimeout(() => setError(false), 2200); setVal(""); }
+      };
+      return (
+        <div style={{ minHeight:"100vh", background:C.bgDeep, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:28, fontFamily:"Inter, sans-serif", position:"relative", overflow:"hidden" }}>
+          <style>{GLOBAL_CSS}</style>
+          <OrbFilters />
+          <div style={{ position:"absolute", inset:0, pointerEvents:"none", overflow:"hidden" }}>
+            <div style={{ position:"absolute", width:"75%", height:"55%", top:"-15%", left:"12%", background:`radial-gradient(ellipse, rgba(141,212,182,0.12) 0%, transparent 68%)`, filter:"blur(48px)", animation:"aurora1 14s ease-in-out infinite" }} />
+            <div style={{ position:"absolute", width:"55%", height:"45%", bottom:"5%", right:"0%", background:`radial-gradient(ellipse, rgba(235,178,168,0.09) 0%, transparent 68%)`, filter:"blur(55px)", animation:"aurora2 18s ease-in-out infinite" }} />
+            <div style={{ position:"absolute", width:"45%", height:"35%", bottom:"15%", left:"5%", background:`radial-gradient(ellipse, rgba(216,183,108,0.08) 0%, transparent 65%)`, filter:"blur(50px)", animation:"aurora3 22s ease-in-out infinite" }} />
+            <div style={{ position:"absolute", top:0, left:0, right:0, height:"40%", background:"radial-gradient(ellipse 60% 100% at 50% 0%, rgba(141,212,182,0.06) 0%, transparent 100%)" }} />
+          </div>
+          {PARTICLES.map((p, i) => (
+            <div key={i} style={{ position:"absolute", top:p.top, left:p.left, width:p.size, height:p.size, borderRadius:"50%", background:p.color, boxShadow:`0 0 6px ${p.color}`, animation:`particleDrift ${p.dur}s ease-in-out ${p.delay}s infinite`, pointerEvents:"none" }} />
+          ))}
+          {[[18,14],[32,76],[55,8],[70,88],[82,34],[91,62],[12,51],[44,92],[63,23],[77,5],[8,82],[50,44],[26,67],[88,18],[39,55]].map(([t,l], i) => (
+            <div key={`s${i}`} style={{ position:"absolute", top:`${t}%`, left:`${l}%`, width:1, height:1, borderRadius:"50%", background:"rgba(255,255,255,0.35)", pointerEvents:"none", animation:`glowIdle ${6+(i%4)}s ease-in-out ${i*0.4}s infinite` }} />
+          ))}
+          <div style={{ position:"relative", zIndex:1, animation:"fadeUp 0.8s ease", display:"flex", flexDirection:"column", alignItems:"center", width:"100%", maxWidth:360 }}>
+            <div style={{ marginBottom:32 }}><BreathOrb phase="idle" size={200} /></div>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:48, fontWeight:300, color:C.charcoal, letterSpacing:-1, marginBottom:4, textAlign:"center", lineHeight:1 }}>Restora</p>
+            <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+              <div style={{ width:28, height:1, background:C.glassBorder }} />
+              <p style={{ color:C.sage, fontSize:10, letterSpacing:3.5, textTransform:"uppercase" }}>by Velaora</p>
+              <div style={{ width:28, height:1, background:C.glassBorder }} />
+            </div>
+            <p style={{ color:C.muted, fontSize:13, marginBottom:52, textAlign:"center", maxWidth:260, lineHeight:1.85 }}>Evidence-based sleep therapy rooted in CBT-I, for women who deserve better rest.</p>
+            <div style={{ width:"100%", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:22, padding:"28px 24px", backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)" }}>
+              <div style={{ position:"relative", marginBottom:12 }}>
+                <input type={show?"text":"password"} value={val} onChange={e=>setVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&attempt()} onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)} placeholder="Enter access code"
+                  style={{ width:"100%", padding:"15px 50px 15px 20px", background:"rgba(255,255,255,0.04)", border:`1.5px solid ${error?C.rose+"90":focused?C.sage+"70":C.glassBorder}`, borderRadius:14, color:C.charcoal, fontSize:15, transition:"border-color 0.25s ease" }} />
+                <button onClick={()=>setShow(!show)} style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:12, padding:4 }}>{show?"Hide":"Show"}</button>
+              </div>
+              {error && <p style={{ color:C.rose, fontSize:13, marginBottom:10, textAlign:"center", animation:"fadeIn 0.3s ease" }}>Incorrect code — please try again</p>}
+              <button onClick={attempt} style={{ width:"100%", padding:"15px", background:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`, border:"none", borderRadius:14, color:C.bgDeep, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:0.5, boxShadow:`0 6px 32px ${C.sageGlow}`, transition:"transform 0.18s ease, box-shadow 0.18s ease" }}
+                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 12px 40px ${C.sageGlow}`;}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow=`0 6px 32px ${C.sageGlow}`;}}>Enter</button>
+            </div>
+            <p style={{ color:C.muted, fontSize:11, marginTop:32, textAlign:"center", lineHeight:1.7, opacity:0.7 }}>Access provided by Velaora · a women's health & wellness platform</p>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Tabs ─────────────────────────────────────────────────────────────────
+    const TABS = [
+      { id:"about",    label:"About",   icon:"✦" },
+      { id:"diagnose", label:"Assess",  icon:"◎" },
+      { id:"cbti",     label:"CBT-I",   icon:"◈" },
+      { id:"meditate", label:"Breathe", icon:"○" },
+      { id:"sounds",   label:"Sounds",  icon:"♪" },
+      { id:"coach",    label:"Coach",   icon:"◇" },
+    ];
+
+    // ─── About Tab ────────────────────────────────────────────────────────────
+    function AboutTab({ setTab }) {
+      return (
+        <div style={{ animation:"fadeUp 0.5s ease" }}>
+          <Card style={{ marginBottom:14, textAlign:"center", padding:"40px 24px" }}>
+            <BreathOrb phase="idle" size={110} />
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:34, fontWeight:300, color:C.charcoal, marginTop:24, marginBottom:8, letterSpacing:-0.3 }}>Sleep Differently.</p>
+            <p style={{ color:C.mid, fontSize:14, lineHeight:1.8, maxWidth:290, margin:"0 auto" }}>Restora brings the gold-standard CBT-I sleep therapy programme to you — clinically grounded, compassionately designed for women.</p>
+          </Card>
+          <Card style={{ marginBottom:14 }}>
+            <Label>Your Guide</Label>
+            <div style={{ display:"flex", gap:18, alignItems:"flex-start" }}>
+              <div style={{ minWidth:60, height:60, borderRadius:"50%", background:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 4px 20px ${C.sageGlow}` }}>
+                <span style={{ color:C.bg, fontSize:22, fontFamily:"Cormorant Garamond, serif", fontWeight:600 }}>E</span>
+              </div>
+              <div>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:24, fontWeight:600, color:C.charcoal, marginBottom:3 }}>Elena R.</p>
+                <p style={{ color:C.sage, fontSize:12, fontWeight:500, letterSpacing:0.5, marginBottom:12 }}>MSc(Hons) · Sleep Advocate</p>
+                <p style={{ color:C.mid, fontSize:13, lineHeight:1.8 }}>With a Masters (Hons) in science and years spent witnessing how profoundly poor sleep undermines women's health, Elena founded Restora to bring evidence-based sleep therapy to women who deserve better rest.</p>
+              </div>
+            </div>
+            <div style={{ marginTop:18, paddingTop:18, borderTop:`1px solid ${C.glassBorder}` }}>
+              <p style={{ color:C.mid, fontSize:13, lineHeight:1.85, fontStyle:"italic" }}>"Sleep deprivation isn't a badge of honour. It's a health crisis. CBT-I gave me my nights back — I built Restora so it could do the same for you."</p>
+            </div>
+          </Card>
+          <Card style={{ marginBottom:14 }}>
+            <Label>What's Inside</Label>
+            {[
+              { icon:"◎", label:"Sleep Assessment",       desc:"10-question diagnostic identifying your insomnia type and triggers", tab:"diagnose", color:C.sage },
+              { icon:"◈", label:"CBT-I Programme",        desc:"Six evidence-based techniques — the same used by sleep clinics",     tab:"cbti",     color:C.gold },
+              { icon:"○", label:"Breathing & Meditation", desc:"Guided breathwork with live orb animation to calm your nervous system", tab:"meditate", color:C.rose },
+              { icon:"♪", label:"Sleep Sounds",           desc:"Pink noise, ocean waves, binaural delta waves and more",             tab:"sounds",   color:C.sage },
+              { icon:"◇", label:"AI Sleep Coach",         desc:"Personalised CBT-I guidance, available whenever you need it",        tab:"coach",    color:C.gold },
+            ].map((item, i, arr) => (
+              <button key={item.tab} onClick={()=>setTab(item.tab)} className="hover-lift" style={{ display:"flex", gap:16, alignItems:"center", width:"100%", background:"none", border:"none", padding:"12px 0", cursor:"pointer", borderBottom:i<arr.length-1?`1px solid ${C.glassBorder}`:"none", textAlign:"left" }}>
+                <div style={{ width:40, height:40, borderRadius:12, background:`${item.color}18`, border:`1px solid ${item.color}28`, display:"flex", alignItems:"center", justifyContent:"center", minWidth:40 }}>
+                  <span style={{ color:item.color, fontSize:15 }}>{item.icon}</span>
+                </div>
+                <div style={{ flex:1 }}>
+                  <p style={{ color:C.charcoal, fontSize:14, fontWeight:500, marginBottom:3 }}>{item.label}</p>
+                  <p style={{ color:C.muted, fontSize:12, lineHeight:1.5 }}>{item.desc}</p>
+                </div>
+                <span style={{ color:C.muted, fontSize:18, opacity:0.6 }}>›</span>
+              </button>
+            ))}
+          </Card>
+          <p style={{ color:C.muted, fontSize:11, textAlign:"center", lineHeight:1.8 }}>Restora is an educational tool, not a medical service.<br/>For clinical concerns please speak with your GP.</p>
+        </div>
+      );
+    }
+
+    // ─── Diagnose Tab ─────────────────────────────────────────────────────────
+    const Qs = [
+      { id:"onset",    q:"How long have you had trouble sleeping?",                                 opts:["Less than 3 months","3–6 months","6–12 months","Over a year"] },
+      { id:"type",     q:"What best describes your sleep problem?",                                 opts:["Can't fall asleep","Wake during the night","Wake too early","Unrefreshing sleep","All of the above"] },
+      { id:"worry",    q:"How often do you lie in bed worrying about not sleeping?",                opts:["Rarely","Sometimes","Often","Almost every night"] },
+      { id:"anxiety",  q:"How anxious or stressed do you feel before bed?",                        opts:["Not at all","Mildly","Moderately","Very anxious"] },
+      { id:"screen",   q:"How much screen time in the hour before bed?",                           opts:["None","Under 15 mins","15–30 mins","Over 30 mins"] },
+      { id:"caffeine", q:"How late do you consume caffeine?",                                       opts:["Not at all","Before noon","Afternoon","Evening"] },
+      { id:"routine",  q:"Do you have a consistent sleep and wake time?",                          opts:["Yes, always","Mostly","Rarely","No"] },
+      { id:"naps",     q:"Do you nap during the day?",                                             opts:["Never","Occasionally","Most days","Daily, over an hour"] },
+      { id:"hormones", q:"Do hormonal changes affect your sleep? (e.g. cycle, perimenopause)",     opts:["Not applicable / unsure","Rarely","Sometimes","Yes, noticeably"] },
+      { id:"mood",     q:"How would you describe your general mood?",                              opts:["Good","Somewhat low","Persistently low","Anxious or overwhelmed"] },
+    ];
+
+    function DiagnoseTab({ onDiagnosis }) {
+      const [step, setStep] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [loading, setLoading] = useState(false);
+      const [result, setResult] = useState(null);
+      const q = Qs[step];
+      const progress = step / Qs.length;
+
+      const select = async (opt) => {
+        const updated = { ...answers, [q.id]: opt };
+        setAnswers(updated);
+        if (step < Qs.length - 1) { setStep(step + 1); return; }
+        setLoading(true);
+        try {
+          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000, messages:[{ role:"user", content:`You are a compassionate women's health sleep specialist and CBT-I therapist. A woman completed a sleep assessment. Provide a warm, clear diagnosis (2-3 sentences) identifying her likely insomnia type and key contributing factors. Include any relevant hormonal or lifestyle factors. Then give 4 specific, evidence-based recommendations. Respond ONLY as valid JSON: {"diagnosis":"...","type":"...","recommendations":["...","...","...","..."]}. Answers: ${JSON.stringify(updated)}` }] }) });
+          const data = await res.json();
+          const text = data.content?.find(b=>b.type==="text")?.text||"";
+          const parsed = JSON.parse(text.replace(/```json|```/g,"").trim());
+          setResult(parsed); onDiagnosis(parsed);
+        } catch {
+          const fb = { diagnosis:"Based on your answers, you appear to be experiencing psychophysiological insomnia with anxiety-related components — very common in women managing multiple life demands.", type:"Psychophysiological Insomnia", recommendations:["Begin Sleep Restriction Therapy to consolidate your sleep window","Practice Stimulus Control — use bed only for sleep","Try the 4-7-8 breathing technique each night before bed","Explore the Cognitive Restructuring module to address sleep anxiety"] };
+          setResult(fb); onDiagnosis(fb);
+        }
+        setLoading(false);
+      };
+
+      if (loading) return (
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:360, gap:24, animation:"fadeIn 0.4s ease" }}>
+          <BreathOrb phase="idle" size={110} />
+          <p style={{ color:C.sage, fontSize:15, fontFamily:"Cormorant Garamond, serif", letterSpacing:0.5, fontStyle:"italic" }}>Reading your sleep profile…</p>
+        </div>
+      );
+
+      if (result) return (
+        <div style={{ animation:"fadeUp 0.5s ease" }}>
+          <Card style={{ marginBottom:14, borderLeft:`3px solid ${C.sage}` }}>
+            <div style={{ display:"inline-block", background:C.sageDeep, border:`1px solid ${C.sage}40`, borderRadius:20, padding:"5px 14px", marginBottom:14 }}><span style={{ color:C.sage, fontSize:11, fontWeight:600 }}>{result.type}</span></div>
+            <p style={{ color:C.charcoal, fontSize:15, lineHeight:1.85 }}>{result.diagnosis}</p>
+          </Card>
+          <Label>Recommended Steps</Label>
+          {result.recommendations.map((r,i) => (
+            <div key={i} style={{ display:"flex", gap:14, alignItems:"flex-start", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"16px 18px", marginBottom:10 }}>
+              <div style={{ minWidth:30, height:30, borderRadius:"50%", background:C.sageDeep, border:`1px solid ${C.sage}50`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}><span style={{ color:C.sage, fontSize:12, fontWeight:600 }}>{i+1}</span></div>
+              <p style={{ color:C.mid, fontSize:14, lineHeight:1.75, paddingTop:4 }}>{r}</p>
+            </div>
+          ))}
+          <button onClick={()=>{setStep(0);setAnswers({});setResult(null);}} style={{ marginTop:10, background:"none", border:`1px solid ${C.glassBorder}`, color:C.muted, borderRadius:12, padding:"11px 22px", cursor:"pointer", fontSize:13 }}>Retake Assessment</button>
+        </div>
+      );
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <div style={{ height:2, background:C.glassBorder, borderRadius:2, marginBottom:32, overflow:"hidden" }}>
+            <div style={{ height:"100%", width:`${progress*100}%`, background:`linear-gradient(90deg, ${C.sage}, ${C.gold})`, borderRadius:2, transition:"width 0.45s cubic-bezier(0.4,0,0.2,1)" }} />
+          </div>
+          <p style={{ color:C.muted, fontSize:11, letterSpacing:1.5, textTransform:"uppercase", marginBottom:10 }}>Question {step+1} of {Qs.length}</p>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:28, fontWeight:300, color:C.charcoal, lineHeight:1.45, marginBottom:32 }}>{q.q}</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            {q.opts.map(opt => (
+              <button key={opt} onClick={()=>select(opt)} className="hover-lift" style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"16px 20px", color:C.charcoal, fontSize:14, cursor:"pointer", textAlign:"left" }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=C.borderActive;e.currentTarget.style.background=C.sageDeep;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=C.glassBorder;e.currentTarget.style.background=C.glass;}}
+              >{opt}</button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── CBT-I Tab ────────────────────────────────────────────────────────────
+    const MODULES = [
+      { title:"Sleep Restriction",          icon:"⏰", color:C.sage, summary:"Build sleep pressure by compressing your time in bed.", steps:["Track average actual sleep time for one week (e.g. 5.5 hrs)","Set your time-in-bed to match that exactly","Keep a fixed wake time 7 days a week","Only go to bed when genuinely sleepy","Extend by 15 mins per week when sleep efficiency exceeds 85%"], why:"Restricting time in bed builds homeostatic sleep pressure, consolidating fragmented sleep into deeper, more restorative cycles." },
+      { title:"Stimulus Control",           icon:"🛏️", color:C.gold, summary:"Retrain your brain to associate bed with sleep — not wakefulness.", steps:["Use your bed only for sleep and sex","If awake after ~20 mins, get up and sit quietly in dim light","Return only when sleepy","Repeat as needed throughout the night","Keep the same wake time regardless of how you slept"], why:"Lying awake in bed for months teaches the brain that bed means arousal. Stimulus control breaks that conditioned wakefulness response." },
+      { title:"Cognitive Restructuring",    icon:"🧠", color:C.rose, summary:"Challenge the anxious thoughts that keep your mind racing at night.", steps:["Notice catastrophising: 'I'll never sleep', 'Tomorrow is ruined'","Ask: what's the actual evidence for and against this thought?","Reframe: 'I've managed on poor sleep before — I'll cope again'","Replace 'I must get 8 hours' with 'rest itself has value'","Write thoughts down before bed to offload them"], why:"Cognitive hyperarousal — the racing worried mind — is the central driver of chronic insomnia. Restructuring reduces the mental activation that blocks sleep onset." },
+      { title:"Sleep Hygiene",              icon:"🌙", color:C.sage, summary:"Optimise the habits and environment that underpin deep sleep.", steps:["No caffeine after 2pm — its half-life is 5–7 hours","Keep the bedroom cool: 16–18°C is optimal","Blackout curtains and white noise if your environment is noisy","Alcohol fragments deep sleep — limit evening intake","Exercise regularly but not within 3 hours of bedtime"], why:"Poor sleep hygiene undermines every other CBT-I technique. It's rarely the sole cause of insomnia — but it amplifies all the others." },
+      { title:"Worry Time",                 icon:"📓", color:C.gold, summary:"Contain anxiety by scheduling it — outside the bedroom.", steps:["Set aside 20 mins daily at the same time (not near bedtime)","Write every worry down during this window","Note one small action for each, or accept what's outside your control","When worries rise at night: 'I'll deal with this at worry time tomorrow'","Keep a notepad by the bed to write and release late thoughts"], why:"Designated worry time gives the anxious mind permission to defer. It reduces cognitive arousal at night by creating a bounded container for concerns." },
+      { title:"Progressive Muscle Relaxation", icon:"✨", color:C.rose, summary:"Release physical tension through a systematic body scan.", steps:["Lie on your back, eyes closed, in a comfortable position","Tense each muscle group firmly for 5 seconds, then release for 30","Progress: feet → calves → thighs → abdomen → hands → arms → shoulders → jaw → face","Notice and savour the contrast between tension and release","Complete with 2 minutes of slow, deep breathing"], why:"Physical tension and sleep anxiety are tightly coupled. PMR lowers physiological arousal and signals to the nervous system that safety — and rest — is available." },
+    ];
+
+    function CBTITab() {
+      const [selected, setSelected] = useState(null);
+      const [tip, setTip] = useState("");
+      const [loadingTip, setLoadingTip] = useState(false);
+
+      const open = async (m) => {
+        setSelected(m); setTip(""); setLoadingTip(true);
+        try {
+          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:300, messages:[{ role:"user", content:`Give one warm, specific, practical tip for a woman starting "${m.title}" as part of CBT-I for insomnia. 2–3 sentences. Be encouraging, concrete, and compassionate.` }] }) });
+          const data = await res.json();
+          setTip(data.content?.find(b=>b.type==="text")?.text||"");
+        } catch { setTip("Start with just one night. Consistency matters more than perfection — even partial implementation builds real momentum over time."); }
+        setLoadingTip(false);
+      };
+
+      if (selected) return (
+        <div style={{ animation:"slideIn 0.35s ease" }}>
+          <button onClick={()=>setSelected(null)} style={{ background:"none", border:"none", color:C.sage, cursor:"pointer", fontSize:14, marginBottom:22, padding:0, display:"flex", alignItems:"center", gap:6 }}>← All Techniques</button>
+          <div style={{ display:"flex", gap:14, alignItems:"center", marginBottom:18 }}>
+            <div style={{ width:50, height:50, borderRadius:15, background:`${selected.color}15`, border:`1px solid ${selected.color}30`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22 }}>{selected.icon}</div>
+            <div>
+              <p style={{ color:C.muted, fontSize:10, fontWeight:600, letterSpacing:2.2, textTransform:"uppercase", marginBottom:4 }}>CBT-I Technique</p>
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:24, color:C.charcoal, fontWeight:400 }}>{selected.title}</p>
+            </div>
+          </div>
+          <Card style={{ marginBottom:14 }}><p style={{ color:C.mid, fontSize:14, lineHeight:1.85 }}>{selected.summary}</p></Card>
+          <Label>How To Do It</Label>
+          {selected.steps.map((s,i) => (
+            <div key={i} style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:12 }}>
+              <div style={{ minWidth:28, height:28, borderRadius:"50%", background:`${selected.color}14`, border:`1px solid ${selected.color}40`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}><span style={{ color:selected.color, fontSize:11, fontWeight:600 }}>{i+1}</span></div>
+              <p style={{ color:C.mid, fontSize:14, lineHeight:1.75, paddingTop:3 }}>{s}</p>
+            </div>
+          ))}
+          <Card style={{ marginTop:20, borderLeft:`3px solid ${selected.color}` }}>
+            <Label color={selected.color}>Why This Works</Label>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.85 }}>{selected.why}</p>
+          </Card>
+          {(tip||loadingTip) && (
+            <div style={{ background:`${selected.color}09`, border:`1px solid ${selected.color}25`, borderRadius:18, padding:18, marginTop:14 }}>
+              <p style={{ color:selected.color, fontSize:10, fontWeight:600, letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>✦ From Elena</p>
+              <p style={{ color:C.charcoal, fontSize:14, lineHeight:1.85 }}>{loadingTip?"…":tip}</p>
+            </div>
+          )}
+        </div>
+      );
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>CBT-I Programme</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>The gold standard for chronic insomnia — more effective than sleep medication long-term. Tap any technique to begin.</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            {MODULES.map(m => (
+              <button key={m.title} onClick={()=>open(m)} className="hover-lift" style={{ display:"flex", gap:16, alignItems:"center", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:18, padding:"16px 18px", cursor:"pointer", textAlign:"left" }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=`${m.color}50`;e.currentTarget.style.background=`${m.color}07`;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=C.glassBorder;e.currentTarget.style.background=C.glass;}}>
+                <div style={{ width:46, height:46, borderRadius:14, background:`${m.color}14`, border:`1px solid ${m.color}25`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, minWidth:46 }}>{m.icon}</div>
+                <div style={{ flex:1 }}>
+                  <p style={{ color:C.charcoal, fontSize:14, fontWeight:500, marginBottom:4 }}>{m.title}</p>
+                  <p style={{ color:C.muted, fontSize:12, lineHeight:1.5 }}>{m.summary}</p>
+                </div>
+                <span style={{ color:C.muted, fontSize:18, opacity:0.5 }}>›</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Breathe Tab ──────────────────────────────────────────────────────────
+    const PATTERNS = [
+      { name:"4-7-8 Sleep",   i:4, h:7, e:8, desc:"Dr Andrew Weil's signature sleep technique" },
+      { name:"Box Breathing",  i:4, h:4, e:4, desc:"Balances the autonomic nervous system" },
+      { name:"Slow Exhale",    i:4, h:0, e:8, desc:"Triggers the parasympathetic relaxation response" },
+    ];
+
+    const GUIDED_VOICES = [
+      { id:"serena-sleep",    label:"Serena",    subtitle:"Warm · Sleep induction",  file:"serena-sleep.mp3",    color:C.sage, glow:C.sageGlow, gradient:`linear-gradient(135deg, ${C.sage}, ${C.sageDark})` },
+      { id:"serena-bodyscan", label:"Serena",    subtitle:"Warm · Body scan",        file:"serena-bodyscan.mp3", color:C.sage, glow:C.sageGlow, gradient:`linear-gradient(135deg, ${C.sage}, ${C.sageDark})` },
+      { id:"charlotte-stars", label:"Charlotte", subtitle:"Elegant · Night sky",     file:"charlotte-stars.mp3", color:C.gold, glow:C.goldGlow, gradient:`linear-gradient(135deg, ${C.gold}, #A8823A)` },
+      { id:"charlotte-forest",label:"Charlotte", subtitle:"Grounding · Forest",      file:"charlotte-forest.mp3",color:C.rose,  glow:C.roseGlow,  gradient:`linear-gradient(135deg, ${C.rose}, #C07870)` },
+      { id:"avani-garden",    label:"Avani",     subtitle:"Lyrical · Moonlit garden", file:"avani-garden.mp3",     color:"#B8A0D8", glow:"rgba(184,160,216,0.30)", gradient:`linear-gradient(135deg, #B8A0D8, #8A6AAE)` },
+    ];
+
+    function MeditateTab() {
+      const [pat, setPat] = useState(null);
+      const [phase, setPhase] = useState("ready");
+      const [count, setCount] = useState(0);
+      const [cycles, setCycles] = useState(0);
+      const [activeVoice, setActiveVoice] = useState(null);
+      const [playing, setPlaying] = useState(false);
+      const [paused, setPaused] = useState(false);
+      const [playbackRate, setPlaybackRate] = useState(1.0);
+      const audioRef = useRef(null);
+      const timerRef = useRef(null);
+
+      const stopBreathing = () => { clearTimeout(timerRef.current); setPhase("ready"); setCount(0); setPat(null); };
+
+      const start = (p) => {
+        stopBreathing(); setPat(p); setCycles(0);
+        const phases = [{ n:"inhale", d:p.i }, ...(p.h?[{ n:"hold", d:p.h }]:[]), { n:"exhale", d:p.e }];
+        let pi = 0;
+        const next = () => {
+          if (pi>=phases.length) { pi=0; setCycles(c=>c+1); }
+          const { n, d } = phases[pi++];
+          setPhase(n); setCount(d);
+          let rem=d;
+          const tick = () => { rem--; setCount(rem); timerRef.current=rem>0?setTimeout(tick,1000):setTimeout(next,300); };
+          timerRef.current=setTimeout(tick,1000);
+        };
+        next();
+      };
+
+      const stopAudio = () => {
+        if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime=0; audioRef.current=null; }
+        setPlaying(false); setPaused(false);
+      };
+
+      const toggleAudio = (voice) => {
+        if (activeVoice?.id===voice.id) {
+          if (playing && !paused) { audioRef.current?.pause(); setPaused(true); return; }
+          if (paused) { audioRef.current?.play(); setPaused(false); return; }
+        }
+        stopAudio();
+        setActiveVoice(voice);
+        const audio = new Audio(voice.file);
+        audioRef.current = audio;
+        audio.playbackRate = playbackRate;
+        audio.onended = () => { setPlaying(false); setPaused(false); };
+        audio.onerror = () => { setPlaying(false); setPaused(false); };
+        audio.play();
+        setPlaying(true); setPaused(false);
+      };
+
+      useEffect(()=>()=>{ clearTimeout(timerRef.current); stopAudio(); },[]);
+
+      const phaseColour = { inhale:C.sage, hold:C.gold, exhale:C.rose, ready:C.muted };
+      const phaseLabel  = { inhale:"Breathe In", hold:"Hold", exhale:"Breathe Out", ready:"" };
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>Breathe & Rest</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>Slow your nervous system before sleep with guided breathwork.</p>
+
+          <Card style={{ marginBottom:18, textAlign:"center", padding:"36px 24px" }}>
+            <BreathOrb phase={phase==="ready"?"idle":phase} size={130} />
+            {phase!=="ready" ? (
+              <div style={{ marginTop:24 }}>
+                <p style={{ color:phaseColour[phase], fontFamily:"Cormorant Garamond, serif", fontSize:28, fontWeight:300, marginBottom:4, transition:"color 0.6s ease" }}>{phaseLabel[phase]}</p>
+                <p style={{ color:C.charcoal, fontSize:52, fontWeight:200, letterSpacing:-3, lineHeight:1 }}>{count}</p>
+                <p style={{ color:C.muted, fontSize:11, marginTop:10, letterSpacing:1.5, textTransform:"uppercase" }}>Cycle {cycles+1}</p>
+                <button onClick={stopBreathing} style={{ marginTop:18, background:"none", border:`1px solid ${C.glassBorder}`, color:C.muted, borderRadius:12, padding:"9px 22px", cursor:"pointer", fontSize:13 }}>Stop</button>
+              </div>
+            ) : (
+              <p style={{ color:C.muted, fontSize:13, marginTop:18 }}>Choose a pattern below to begin</p>
+            )}
+          </Card>
+
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:28 }}>
+            {PATTERNS.map(p => (
+              <button key={p.name} onClick={()=>start(p)} className="hover-lift" style={{ background:pat?.name===p.name?C.sageDeep:C.glass, border:`1px solid ${pat?.name===p.name?C.borderActive:C.glassBorder}`, borderRadius:16, padding:"16px 20px", cursor:"pointer", textAlign:"left" }}>
+                <p style={{ color:C.charcoal, fontSize:14, fontWeight:500, marginBottom:4 }}>{p.name}</p>
+                <p style={{ color:C.muted, fontSize:12 }}>{p.desc} · {p.i}-{p.h?p.h+"-":""}{p.e}</p>
+              </button>
+            ))}
+          </div>
+
+          <div style={{ borderTop:`1px solid ${C.glassBorder}`, paddingTop:24 }}>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:C.charcoal, fontWeight:300, marginBottom:6 }}>Guided Meditations</p>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.75, marginBottom:20 }}>Professional recordings by Serena &amp; Charlotte — press play and let go.</p>
+            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              {GUIDED_VOICES.map(voice => {
+                const isActive = activeVoice?.id===voice.id;
+                const isPlaying = isActive && playing && !paused;
+                const isPaused = isActive && paused;
+                return (
+                  <div key={voice.id} style={{ background:isActive?`${voice.color}09`:C.glass, border:`1px solid ${isActive?voice.color+"40":C.glassBorder}`, borderRadius:20, padding:18, transition:"all 0.3s ease" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:isActive?14:0 }}>
+                      <div style={{ width:44, height:44, borderRadius:"50%", background:voice.gradient, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 4px 16px ${voice.glow}`, flexShrink:0 }}>
+                        <span style={{ color:C.bg, fontSize:16, fontWeight:600 }}>{voice.label[0]}</span>
+                      </div>
+                      <div style={{ flex:1 }}>
+                        <p style={{ color:C.charcoal, fontSize:14, fontWeight:600 }}>{voice.label}</p>
+                        <p style={{ color:voice.color, fontSize:11, marginTop:2 }}>{voice.subtitle}</p>
+                      </div>
+                      {isPlaying && (
+                        <div style={{ display:"flex", gap:3, alignItems:"flex-end", marginRight:8 }}>
+                          {[0,1,2,3].map(i=><div key={i} style={{ width:3, borderRadius:2, background:voice.color, animation:`dotBounce 1s ease-in-out ${i*0.15}s infinite`, height:14 }} />)}
+                        </div>
+                      )}
+                      <button onClick={()=>toggleAudio(voice)}
+                        style={{ width:44, height:44, borderRadius:"50%", background:isPlaying?voice.color:voice.gradient, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 4px 20px ${voice.glow}`, fontSize:16, transition:"all 0.25s ease", flexShrink:0 }}>
+                        <span style={{ color:C.bg }}>{isPlaying?"⏸":isPaused?"▶":"▶"}</span>
+                      </button>
+                    </div>
+                    {isActive && (
+                      <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:2 }}>
+                          <span style={{ color:C.mid, fontSize:12 }}>Speed</span>
+                          <span style={{ color:C.charcoal, fontSize:12, fontWeight:500 }}>{playbackRate<=0.75?"Very slow":playbackRate<=0.88?"Gentle":playbackRate<=1.0?"Normal":"Brisk"}</span>
+                        </div>
+                        <input type="range" min="0.65" max="1.1" step="0.05" value={playbackRate}
+                          onChange={e=>{ const r=+e.target.value; setPlaybackRate(r); if(audioRef.current) audioRef.current.playbackRate=r; }}
+                          style={{ width:"100%", accentColor:voice.color, marginBottom:4 }} />
+                        <button onClick={stopAudio} style={{ background:"none", border:`1px solid ${C.glassBorder}`, borderRadius:12, padding:"9px", color:C.muted, cursor:"pointer", fontSize:12 }}>■ Stop</button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Sounds Tab ───────────────────────────────────────────────────────────
+    const SOUNDS = [
+      { name:"Gentle Rain",  icon:"🌧️", type:"pink",     desc:"Soft pink noise" },
+      { name:"Ocean Waves",  icon:"🌊", type:"brown",    desc:"Deep brown noise" },
+      { name:"Forest Night", icon:"🌲", type:"pink2",    desc:"Layered pink noise" },
+      { name:"White Noise",  icon:"☁️", type:"white",    desc:"Broadband masking" },
+      { name:"Tibetan Bowl", icon:"🔔", type:"sine",     freq:432, desc:"432 Hz resonance" },
+      { name:"Delta Waves",  icon:"🧠", type:"binaural", freq:2,   desc:"Deep sleep binaural" },
+    ];
+
+    function SoundsTab() {
+      const [active, setActive] = useState(null);
+      const [vol, setVol] = useState(0.35);
+      const ctxRef = useRef(null);
+      const gainRef = useRef(null);
+      const nodesRef = useRef([]);
+
+      const stop = () => {
+        nodesRef.current.forEach(n => { try { n.stop(); } catch {} });
+        nodesRef.current = [];
+        try { ctxRef.current?.close(); } catch {}
+        ctxRef.current = null;
+        setActive(null);
+      };
+
+      const makeNoiseBuffer = (ctx, type) => {
+        const sr = ctx.sampleRate;
+        const frames = sr * 5;
+        const buf = ctx.createBuffer(1, frames, sr);
+        const d = buf.getChannelData(0);
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,lo=0;
+        for (let i=0; i<frames; i++) {
+          const w = Math.random()*2-1;
+          if (type==="white") { d[i]=w*0.45; }
+          else if (type==="brown") { lo=(lo+(0.02*w))/1.02; d[i]=lo*3.5; }
+          else { b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;d[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11;b6=w*0.115926; }
+        }
+        return buf;
+      };
+
+      const play = (s) => {
+        stop();
+        const ctx = new (window.AudioContext||window.webkitAudioContext)();
+        ctxRef.current = ctx;
+        ctx.resume();
+        const gain = ctx.createGain(); gain.gain.value=vol; gainRef.current=gain;
+        gain.connect(ctx.destination);
+
+        if (["white","pink","pink2","brown"].includes(s.type)) {
+          const src = ctx.createBufferSource();
+          src.buffer = makeNoiseBuffer(ctx, s.type);
+          src.loop = true;
+          src.connect(gain);
+          src.start();
+          nodesRef.current = [src];
+        } else if (s.type==="sine") {
+          const o=ctx.createOscillator(); o.frequency.value=s.freq; o.type="sine"; o.connect(gain); o.start();
+          nodesRef.current = [o];
+        } else if (s.type==="binaural") {
+          const merger=ctx.createChannelMerger(2);
+          merger.connect(gain);
+          const o1=ctx.createOscillator(), o2=ctx.createOscillator();
+          const g1=ctx.createGain(), g2=ctx.createGain();
+          o1.frequency.value=100; o2.frequency.value=100+s.freq;
+          o1.connect(g1); g1.connect(merger,0,0);
+          o2.connect(g2); g2.connect(merger,0,1);
+          o1.start(); o2.start();
+          nodesRef.current = [o1,o2];
+        }
+        setActive(s.name);
+      };
+
+      const changeVol=v=>{setVol(v);if(gainRef.current)gainRef.current.gain.value=v;};
+      useEffect(()=>()=>stop(),[]);
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>Sleep Sounds</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>Mask noise and cue your nervous system that it's safe to rest.</p>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:20 }}>
+            {SOUNDS.map(s => (
+              <button key={s.name} onClick={()=>active===s.name?stop():play(s)} className="hover-lift" style={{ background:active===s.name?C.sageDeep:C.glass, border:`1px solid ${active===s.name?C.borderActive:C.glassBorder}`, borderRadius:18, padding:"20px 14px", cursor:"pointer", textAlign:"center" }}>
+                <div style={{ fontSize:28, marginBottom:10 }}>{s.icon}</div>
+                <p style={{ color:active===s.name?C.sage:C.charcoal, fontSize:13, fontWeight:500, marginBottom:4 }}>{s.name}</p>
+                <p style={{ color:active===s.name?C.sageDark:C.muted, fontSize:11 }}>{active===s.name?"▶ Playing":s.desc}</p>
+              </button>
+            ))}
+          </div>
+          <Card>
+            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:14 }}>
+              <span style={{ color:C.mid, fontSize:13 }}>Volume</span>
+              <span style={{ color:C.charcoal, fontSize:13, fontWeight:500 }}>{Math.round(vol*100)}%</span>
+            </div>
+            <input type="range" min="0" max="1" step="0.01" value={vol} onChange={e=>changeVol(+e.target.value)} style={{ width:"100%", accentColor:C.sage }} />
+          </Card>
+          <p style={{ color:C.muted, fontSize:12, marginTop:16, lineHeight:1.7 }}>💡 Use headphones for binaural delta waves. Delta frequencies (0.5–4 Hz) are associated with deep, restorative sleep stages.</p>
+        </div>
+      );
+    }
+
+    // ─── Coach Tab ────────────────────────────────────────────────────────────
+    function CoachTab({ diagnosis }) {
+      const [msgs, setMsgs] = useState([{ role:"assistant", text:"Hello — I'm here as your sleep coach. I draw on CBT-I principles, sleep science, and women's health research. What's on your mind tonight?" }]);
+      const [input, setInput] = useState("");
+      const [loading, setLoading] = useState(false);
+      const bottomRef = useRef(null);
+      useEffect(()=>{ bottomRef.current?.scrollIntoView({ behavior:"smooth" }); },[msgs]);
+
+      const send = async () => {
+        if (!input.trim()||loading) return;
+        const userMsg={role:"user",text:input};
+        const next=[...msgs,userMsg];
+        setMsgs(next); setInput(""); setLoading(true);
+        try {
+          const system=`You are a warm, expert CBT-I sleep therapist and women's health coach. Use evidence-based CBT-I: sleep restriction, stimulus control, cognitive restructuring, sleep hygiene, worry time, progressive muscle relaxation. Be concise (3–5 sentences), empathetic, and practical. Address hormonal and lifestyle factors relevant to women where appropriate. Never diagnose medically. ${diagnosis?`Context: user's sleep assessment found ${diagnosis.type} — ${diagnosis.diagnosis}`:""}`;
+          const res=await fetch("https://restora-api.velaorawomen.workers.dev",{ method:"POST", headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:500, system, messages:next.map(m=>({ role:m.role==="assistant"?"assistant":"user", content:m.text })) }) });
+          const data=await res.json();
+          setMsgs(m=>[...m,{ role:"assistant", text:data.content?.find(b=>b.type==="text")?.text||"I'm here. Tell me more about what's happening for you." }]);
+        } catch { setMsgs(m=>[...m,{ role:"assistant", text:"I'm having trouble connecting just now. While I reconnect, try the 4-7-8 breathing in the Breathe tab — even three cycles can settle the nervous system." }]); }
+        setLoading(false);
+      };
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>Sleep Coach</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:20 }}>AI-powered CBT-I guidance, personalised to you.</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:16, maxHeight:380, overflowY:"auto", paddingRight:4 }}>
+            {msgs.map((m,i) => (
+              <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start", animation:"fadeUp 0.3s ease" }}>
+                <div style={{ maxWidth:"86%", background:m.role==="user"?C.sageDeep:C.glass, border:`1px solid ${m.role==="user"?C.borderActive:C.glassBorder}`, borderRadius:m.role==="user"?"20px 20px 5px 20px":"20px 20px 20px 5px", padding:"13px 17px" }}>
+                  <p style={{ color:C.charcoal, fontSize:14, lineHeight:1.8 }}>{m.text}</p>
+                </div>
+              </div>
+            ))}
+            {loading && (
+              <div style={{ display:"flex", gap:6, padding:"14px 18px", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:"20px 20px 20px 5px", width:"fit-content" }}>
+                {[0,1,2].map(i=><div key={i} style={{ width:7, height:7, borderRadius:"50%", background:C.sage, animation:`dotBounce 1.2s ease-in-out ${i*0.2}s infinite` }} />)}
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+          <div style={{ display:"flex", gap:10 }}>
+            <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask about sleep, anxiety, habits…"
+              style={{ flex:1, background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"14px 18px", color:C.charcoal, fontSize:14, transition:"border-color 0.2s" }}
+              onFocus={e=>e.target.style.borderColor=C.glassBorderHi}
+              onBlur={e=>e.target.style.borderColor=C.glassBorder} />
+            <button onClick={send} disabled={!input.trim()||loading} style={{ background:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`, border:"none", borderRadius:16, padding:"14px 20px", color:C.bg, cursor:"pointer", fontSize:18, opacity:!input.trim()?0.4:1, boxShadow:`0 4px 16px ${C.sageGlow}`, transition:"opacity 0.2s" }}>↑</button>
+          </div>
+          <p style={{ color:C.muted, fontSize:11, marginTop:12, textAlign:"center", lineHeight:1.7 }}>Not a substitute for medical advice. For clinical support, speak with your GP or a registered sleep clinician.</p>
+        </div>
+      );
+    }
+
+    // ─── Main App ─────────────────────────────────────────────────────────────
+    function App() {
+      const [unlocked, setUnlocked] = useState(false);
+      const [tab, setTab] = useState("about");
+      const [diagnosis, setDiagnosis] = useState(null);
+
+      if (!unlocked) return <PasswordGate onUnlock={()=>setUnlocked(true)} />;
+
+      return (
+        <div style={{ minHeight:"100vh", background:C.bg, fontFamily:"Inter, sans-serif" }}>
+          <style>{GLOBAL_CSS}</style>
+          <OrbFilters />
+          <div style={{ background:"rgba(15,13,11,0.85)", borderBottom:`1px solid ${C.glassBorder}`, padding:"14px 20px", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)", position:"sticky", top:0, zIndex:100 }}>
+            <div style={{ maxWidth:520, margin:"0 auto", display:"flex", alignItems:"center", gap:14 }}>
+              <div style={{ width:34, height:34, position:"relative", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <div style={{ position:"absolute", inset:"-6px", borderRadius:"50%", background:C.sageGlow, filter:"blur(8px)", animation:"glowIdle 5s ease-in-out infinite" }} />
+                <div style={{ width:34, height:34, borderRadius:"50%", background:`radial-gradient(circle at 33% 28%, rgba(200,245,225,0.5), ${C.sage} 45%, ${C.sageDark})`, boxShadow:`0 0 16px ${C.sageGlow}`, animation:"orbIdle 6s ease-in-out infinite" }} />
+              </div>
+              <div>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:C.charcoal, fontWeight:400, letterSpacing:-0.2, lineHeight:1 }}>Restora</p>
+                <p style={{ color:C.muted, fontSize:10, letterSpacing:2, textTransform:"uppercase", marginTop:2 }}>by Velaora</p>
+              </div>
+              {diagnosis && <div style={{ marginLeft:"auto", background:C.sageDeep, border:`1px solid ${C.sage}45`, borderRadius:20, padding:"5px 13px" }}><span style={{ color:C.sage, fontSize:11, fontWeight:600 }}>✓ Assessed</span></div>}
+            </div>
+          </div>
+          <div style={{ background:"rgba(15,13,11,0.70)", borderBottom:`1px solid ${C.glassBorder}`, overflowX:"auto", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", position:"sticky", top:63, zIndex:99 }}>
+            <div style={{ display:"flex", maxWidth:520, margin:"0 auto", minWidth:"max-content" }}>
+              {TABS.map(t => (
+                <button key={t.id} onClick={()=>setTab(t.id)} style={{ background:"none", border:"none", padding:"13px 16px", cursor:"pointer", color:tab===t.id?C.sage:C.muted, fontWeight:tab===t.id?600:400, fontSize:13, whiteSpace:"nowrap", borderBottom:`2px solid ${tab===t.id?C.sage:"transparent"}`, transition:"color 0.22s ease, border-color 0.22s ease", letterSpacing:0.2 }}>
+                  <span style={{ marginRight:5, fontSize:10 }}>{t.icon}</span>{t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div style={{ maxWidth:520, margin:"0 auto", padding:"28px 18px 80px" }}>
+            {tab==="about"    && <AboutTab setTab={setTab} />}
+            {tab==="diagnose" && <DiagnoseTab onDiagnosis={d=>setDiagnosis(d)} />}
+            {tab==="cbti"     && <CBTITab />}
+            {tab==="meditate" && <MeditateTab />}
+            {tab==="sounds"   && <SoundsTab />}
+            {tab==="coach"    && <CoachTab diagnosis={diagnosis} />}
+          </div>
+          <div style={{ borderTop:`1px solid ${C.glassBorder}`, padding:"20px 18px", textAlign:"center", background:"rgba(9,8,7,0.8)" }}>
+            <p style={{ color:C.muted, fontSize:11 }}>© 2025 Velaora · Restora Sleep Programme · <span style={{ fontStyle:"italic" }}>For women who deserve better rest</span></p>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
