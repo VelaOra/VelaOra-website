@@ -606,12 +606,13 @@
 
     // ─── Sounds Tab ───────────────────────────────────────────────────────────
     const SOUNDS = [
-      { name:"Gentle Rain",  icon:"🌧️", type:"pink",     desc:"Soft pink noise" },
-      { name:"Ocean Waves",  icon:"🌊", type:"brown",    desc:"Deep brown noise" },
-      { name:"Forest Night", icon:"🌲", type:"pink2",    desc:"Layered pink noise" },
-      { name:"White Noise",  icon:"☁️", type:"white",    desc:"Broadband masking" },
-      { name:"Tibetan Bowl", icon:"🔔", type:"sine",     freq:432, desc:"432 Hz resonance" },
-      { name:"Delta Waves",  icon:"🧠", type:"binaural", freq:2,   desc:"Deep sleep binaural" },
+      { name:"Pink Noise",   icon:"🌸", type:"pink",     desc:"Classic sleep noise · warm & balanced" },
+      { name:"Brown Noise",  icon:"🌫️", type:"brown",    desc:"Deep low rumble · very soothing" },
+      { name:"White Noise",  icon:"☁️", type:"white",    desc:"Full spectrum · masks all sounds" },
+      { name:"Gentle Rain",  icon:"🌧️", type:"rain",     desc:"Soft rainfall with natural variation" },
+      { name:"Ocean Waves",  icon:"🌊", type:"ocean",    desc:"Rolling waves with slow rhythm" },
+      { name:"Tibetan Bowl", icon:"🔔", type:"sine",     freq:432, desc:"432 Hz pure tone · deeply calming" },
+      { name:"Delta Waves",  icon:"🧠", type:"binaural", freq:2,   desc:"Deep sleep · headphones required" },
     ];
 
     function SoundsTab() {
@@ -652,13 +653,51 @@
         const gain = ctx.createGain(); gain.gain.value=vol; gainRef.current=gain;
         gain.connect(ctx.destination);
 
-        if (["white","pink","pink2","brown"].includes(s.type)) {
+        if (["white","pink","brown"].includes(s.type)) {
           const src = ctx.createBufferSource();
           src.buffer = makeNoiseBuffer(ctx, s.type);
           src.loop = true;
-          src.connect(gain);
+          if (s.type==="brown") {
+            const lpf = ctx.createBiquadFilter();
+            lpf.type="lowpass"; lpf.frequency.value=400; lpf.Q.value=0.5;
+            src.connect(lpf); lpf.connect(gain);
+          } else if (s.type==="pink") {
+            const lpf = ctx.createBiquadFilter();
+            lpf.type="lowpass"; lpf.frequency.value=8000;
+            src.connect(lpf); lpf.connect(gain);
+          } else {
+            src.connect(gain);
+          }
           src.start();
           nodesRef.current = [src];
+        } else if (s.type==="rain") {
+          const src = ctx.createBufferSource();
+          src.buffer = makeNoiseBuffer(ctx, "pink");
+          src.loop = true;
+          const hpf = ctx.createBiquadFilter();
+          hpf.type="highpass"; hpf.frequency.value=1200;
+          const lfo = ctx.createOscillator();
+          const lfoGain = ctx.createGain();
+          lfo.frequency.value=0.3; lfo.type="sine";
+          lfoGain.gain.value=0.12;
+          lfo.connect(lfoGain); lfoGain.connect(gain.gain);
+          src.connect(hpf); hpf.connect(gain);
+          src.start(); lfo.start();
+          nodesRef.current = [src, lfo];
+        } else if (s.type==="ocean") {
+          const src = ctx.createBufferSource();
+          src.buffer = makeNoiseBuffer(ctx, "brown");
+          src.loop = true;
+          const lpf = ctx.createBiquadFilter();
+          lpf.type="lowpass"; lpf.frequency.value=600;
+          const lfo = ctx.createOscillator();
+          const lfoGain = ctx.createGain();
+          lfo.frequency.value=0.08; lfo.type="sine";
+          lfoGain.gain.value=0.28;
+          lfo.connect(lfoGain); lfoGain.connect(gain.gain);
+          src.connect(lpf); lpf.connect(gain);
+          src.start(); lfo.start();
+          nodesRef.current = [src, lfo];
         } else if (s.type==="sine") {
           const o=ctx.createOscillator(); o.frequency.value=s.freq; o.type="sine"; o.connect(gain); o.start();
           nodesRef.current = [o];
