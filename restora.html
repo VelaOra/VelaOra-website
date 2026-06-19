@@ -61,9 +61,8 @@
       @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
 
       @keyframes orbIdle  {
-        0%,100% { transform:scale(1);    filter:brightness(1)    saturate(1);   }
-        33%     { transform:scale(1.045);filter:brightness(1.08) saturate(1.05);}
-        66%     { transform:scale(0.97); filter:brightness(0.97) saturate(0.97);}
+        0%,100% { transform:scale(0.90); filter:brightness(0.92) saturate(0.92); }
+        50%     { transform:scale(1.14); filter:brightness(1.16) saturate(1.10); }
       }
       @keyframes breatheIn  { from { transform:scale(1);    filter:brightness(1)    saturate(1);    }
                                to   { transform:scale(1.40); filter:brightness(1.22) saturate(1.18); } }
@@ -210,12 +209,12 @@
             <div key={`s${i}`} style={{ position:"absolute", top:`${t}%`, left:`${l}%`, width:1, height:1, borderRadius:"50%", background:"rgba(255,255,255,0.35)", pointerEvents:"none", animation:`glowIdle ${6+(i%4)}s ease-in-out ${i*0.4}s infinite` }} />
           ))}
           <div style={{ position:"relative", zIndex:1, animation:"fadeUp 0.8s ease", display:"flex", flexDirection:"column", alignItems:"center", width:"100%", maxWidth:360 }}>
-            <div style={{ marginBottom:24 }}><BreathOrb phase="idle" size={220} /></div>
-            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:48, fontWeight:300, color:C.charcoal, letterSpacing:-1, marginBottom:4, textAlign:"center", lineHeight:1 }}>Restora</p>
+            <div style={{ marginBottom:16 }}><BreathOrb phase="idle" size={260} /></div>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:48, fontWeight:300, letterSpacing:-1, marginBottom:4, textAlign:"center", lineHeight:1, background:`linear-gradient(135deg, ${C.charcoal} 0%, ${C.gold} 50%, ${C.charcoal} 100%)`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>Restora</p>
             <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
-              <div style={{ width:28, height:1, background:C.glassBorder }} />
-              <p style={{ color:C.sage, fontSize:10, letterSpacing:3.5, textTransform:"uppercase" }}>by Velaora</p>
-              <div style={{ width:28, height:1, background:C.glassBorder }} />
+              <div style={{ width:28, height:1, background:`linear-gradient(90deg, transparent, ${C.gold})` }} />
+              <p style={{ background:`linear-gradient(90deg, ${C.gold}, ${C.rose})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:10, letterSpacing:3.5, textTransform:"uppercase" }}>by Velaora</p>
+              <div style={{ width:28, height:1, background:`linear-gradient(90deg, ${C.rose}, transparent)` }} />
             </div>
             <p style={{ color:C.muted, fontSize:13, marginBottom:52, textAlign:"center", maxWidth:260, lineHeight:1.85 }}>Evidence-based sleep therapy rooted in CBT-I, for women who deserve better rest.</p>
             <div style={{ width:"100%", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:22, padding:"28px 24px", backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)" }}>
@@ -225,9 +224,9 @@
                 <button onClick={()=>setShow(!show)} style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:12, padding:4 }}>{show?"Hide":"Show"}</button>
               </div>
               {error && <p style={{ color:C.rose, fontSize:13, marginBottom:10, textAlign:"center", animation:"fadeIn 0.3s ease" }}>Incorrect code — please try again</p>}
-              <button onClick={attempt} style={{ width:"100%", padding:"15px", background:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`, border:"none", borderRadius:14, color:C.bgDeep, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:0.5, boxShadow:`0 6px 32px ${C.sageGlow}`, transition:"transform 0.18s ease, box-shadow 0.18s ease" }}
-                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 12px 40px ${C.sageGlow}`;}}
-                onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow=`0 6px 32px ${C.sageGlow}`;}}>Enter</button>
+              <button onClick={attempt} style={{ width:"100%", padding:"15px", background:`linear-gradient(140deg, ${C.gold}, #C49A2A, ${C.rose})`, border:"none", borderRadius:14, color:C.bgDeep, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:0.5, boxShadow:`0 6px 32px rgba(216,183,108,0.45)`, transition:"transform 0.18s ease, box-shadow 0.18s ease" }}
+                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 12px 40px rgba(216,183,108,0.60)`;}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow=`0 6px 32px rgba(216,183,108,0.45)`;}}>Enter</button>
             </div>
             <p style={{ color:C.muted, fontSize:11, marginTop:32, textAlign:"center", lineHeight:1.7, opacity:0.7 }}>Access provided by Velaora · a women's health & wellness platform</p>
           </div>
