@@ -210,7 +210,7 @@
             <div key={`s${i}`} style={{ position:"absolute", top:`${t}%`, left:`${l}%`, width:1, height:1, borderRadius:"50%", background:"rgba(255,255,255,0.35)", pointerEvents:"none", animation:`glowIdle ${6+(i%4)}s ease-in-out ${i*0.4}s infinite` }} />
           ))}
           <div style={{ position:"relative", zIndex:1, animation:"fadeUp 0.8s ease", display:"flex", flexDirection:"column", alignItems:"center", width:"100%", maxWidth:360 }}>
-            <div style={{ marginBottom:32 }}><BreathOrb phase="idle" size={200} /></div>
+            <div style={{ marginBottom:24 }}><BreathOrb phase="idle" size={220} /></div>
             <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:48, fontWeight:300, color:C.charcoal, letterSpacing:-1, marginBottom:4, textAlign:"center", lineHeight:1 }}>Restora</p>
             <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
               <div style={{ width:28, height:1, background:C.glassBorder }} />
@@ -250,7 +250,7 @@
       return (
         <div style={{ animation:"fadeUp 0.5s ease" }}>
           <Card style={{ marginBottom:14, textAlign:"center", padding:"40px 24px" }}>
-            <BreathOrb phase="idle" size={110} />
+            <BreathOrb phase="idle" size={150} />
             <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:34, fontWeight:300, color:C.charcoal, marginTop:24, marginBottom:8, letterSpacing:-0.3 }}>Sleep Differently.</p>
             <p style={{ color:C.mid, fontSize:14, lineHeight:1.8, maxWidth:290, margin:"0 auto" }}>Restora brings the gold-standard CBT-I sleep therapy programme to you — clinically grounded, compassionately designed for women.</p>
           </Card>
@@ -338,7 +338,7 @@
 
       if (loading) return (
         <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:360, gap:24, animation:"fadeIn 0.4s ease" }}>
-          <BreathOrb phase="idle" size={110} />
+          <BreathOrb phase="idle" size={150} />
           <p style={{ color:C.sage, fontSize:15, fontFamily:"Cormorant Garamond, serif", letterSpacing:0.5, fontStyle:"italic" }}>Reading your sleep profile…</p>
         </div>
       );
@@ -533,7 +533,7 @@
           <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>Slow your nervous system before sleep with guided breathwork.</p>
 
           <Card style={{ marginBottom:18, textAlign:"center", padding:"36px 24px" }}>
-            <BreathOrb phase={phase==="ready"?"idle":phase} size={130} />
+            <BreathOrb phase={phase==="ready"?"idle":phase} size={160} />
             {phase!=="ready" ? (
               <div style={{ marginTop:24 }}>
                 <p style={{ color:phaseColour[phase], fontFamily:"Cormorant Garamond, serif", fontSize:28, fontWeight:300, marginBottom:4, transition:"color 0.6s ease" }}>{phaseLabel[phase]}</p>
