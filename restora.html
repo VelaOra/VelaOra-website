@@ -324,7 +324,7 @@
         if (step < Qs.length - 1) { setStep(step + 1); return; }
         setLoading(true);
         try {
-          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000, messages:[{ role:"user", content:`You are a compassionate women's health sleep specialist and CBT-I therapist. A woman completed a sleep assessment. Provide a warm, clear diagnosis (2-3 sentences) identifying her likely insomnia type and key contributing factors. Include any relevant hormonal or lifestyle factors. Then give 4 specific, evidence-based recommendations. Respond ONLY as valid JSON: {"diagnosis":"...","type":"...","recommendations":["...","...","...","..."]}. Answers: ${JSON.stringify(updated)}` }] }) });
+          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000, messages:[{ role:"user", content:`You are a compassionate women's health sleep specialist and CBT-I therapist. A woman completed a sleep assessment. Provide a warm, clear diagnosis (2-3 sentences) identifying her likely insomnia type and key contributing factors. Include any relevant hormonal or lifestyle factors. Then give 4 specific, evidence-based recommendations. Respond ONLY as valid JSON: {"diagnosis":"...","type":"...","recommendations":["...","...","...","..."]}. Answers: ${JSON.stringify(updated)}` }] }) });
           const data = await res.json();
           const text = data.content?.find(b=>b.type==="text")?.text||"";
           const parsed = JSON.parse(text.replace(/```json|```/g,"").trim());
@@ -397,7 +397,7 @@
       const open = async (m) => {
         setSelected(m); setTip(""); setLoadingTip(true);
         try {
-          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:300, messages:[{ role:"user", content:`Give one warm, specific, practical tip for a woman starting "${m.title}" as part of CBT-I for insomnia. 2–3 sentences. Be encouraging, concrete, and compassionate.` }] }) });
+          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:300, messages:[{ role:"user", content:`Give one warm, specific, practical tip for a woman starting "${m.title}" as part of CBT-I for insomnia. 2–3 sentences. Be encouraging, concrete, and compassionate.` }] }) });
           const data = await res.json();
           setTip(data.content?.find(b=>b.type==="text")?.text||"");
         } catch { setTip("Start with just one night. Consistency matters more than perfection — even partial implementation builds real momentum over time."); }
@@ -632,7 +632,7 @@
 
       const makeNoiseBuffer = (ctx, type) => {
         const sr = ctx.sampleRate;
-        const frames = sr * 5;
+        const frames = sr * 2;
         const buf = ctx.createBuffer(1, frames, sr);
         const d = buf.getChannelData(0);
         let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,lo=0;
@@ -645,11 +645,11 @@
         return buf;
       };
 
-      const play = (s) => {
+      const play = async (s) => {
         stop();
         const ctx = new (window.AudioContext||window.webkitAudioContext)();
         ctxRef.current = ctx;
-        ctx.resume();
+        await ctx.resume();
         const gain = ctx.createGain(); gain.gain.value=vol; gainRef.current=gain;
         gain.connect(ctx.destination);
 
@@ -758,7 +758,7 @@
         setMsgs(next); setInput(""); setLoading(true);
         try {
           const system=`You are a warm, expert CBT-I sleep therapist and women's health coach. Use evidence-based CBT-I: sleep restriction, stimulus control, cognitive restructuring, sleep hygiene, worry time, progressive muscle relaxation. Be concise (3–5 sentences), empathetic, and practical. Address hormonal and lifestyle factors relevant to women where appropriate. Never diagnose medically. ${diagnosis?`Context: user's sleep assessment found ${diagnosis.type} — ${diagnosis.diagnosis}`:""}`;
-          const res=await fetch("https://restora-api.velaorawomen.workers.dev",{ method:"POST", headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:500, system, messages:next.map(m=>({ role:m.role==="assistant"?"assistant":"user", content:m.text })) }) });
+          const res=await fetch("https://restora-api.velaorawomen.workers.dev",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:500, system, messages:next.map(m=>({ role:m.role==="assistant"?"assistant":"user", content:m.text })) }) });
           const data=await res.json();
           setMsgs(m=>[...m,{ role:"assistant", text:data.content?.find(b=>b.type==="text")?.text||"I'm here. Tell me more about what's happening for you." }]);
         } catch { setMsgs(m=>[...m,{ role:"assistant", text:"I'm having trouble connecting just now. While I reconnect, try the 4-7-8 breathing in the Breathe tab — even three cycles can settle the nervous system." }]); }
