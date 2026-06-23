@@ -4514,22 +4514,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Smooth reveal on scroll (IntersectionObserver)
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.pillar-card, .article-card, .news-card, .resource-group').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  observer.observe(el);
-});
+// Scroll reveal handled in DOMContentLoaded below
 </script>
 <!-- SEPARATION SERVICE CONTACT POPUP -->
 <!-- Sends message to sarah.velaora@gmail.com via Formspree -->
@@ -4715,21 +4700,30 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Scroll reveal for cards
-  var observer = new IntersectionObserver(function(entries) {
+  var revealObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.style.opacity = '1';
         entry.target.style.transform = 'translateY(0)';
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 });
 
   document.querySelectorAll('.pillar-card, .article-card, .news-card, .resource-group').forEach(function(el) {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
+    revealObserver.observe(el);
   });
+
+  // Fallback: guarantee all cards visible after 2.5s if observer hasn't fired
+  setTimeout(function() {
+    document.querySelectorAll('.pillar-card, .article-card, .news-card, .resource-group').forEach(function(el) {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+  }, 2500);
 });
 </script>
 
