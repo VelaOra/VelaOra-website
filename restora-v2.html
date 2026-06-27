@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#090807" />
+  <title>Restora · by Velaora</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <style>
+    html, body, #root { margin: 0; padding: 0; min-height: 100%; background: #090807; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // ─── Design Tokens ────────────────────────────────────────────────────────
+    const C = {
+      bg:            "#0F0D0B",
+      bgDeep:        "#090807",
+      bgCard:        "#1A1714",
+      glass:         "rgba(255,255,255,0.038)",
+      glassBright:   "rgba(255,255,255,0.068)",
+      glassBorder:   "rgba(255,255,255,0.075)",
+      glassBorderHi: "rgba(255,255,255,0.18)",
+      sage:          "#8DD4B6",
+      sageDark:      "#68B098",
+      sageMid:       "#4A8A6E",
+      sageGlow:      "rgba(141,212,182,0.30)",
+      sageDeep:      "rgba(141,212,182,0.07)",
+      rose:          "#EBB2A8",
+      roseGlow:      "rgba(235,178,168,0.30)",
+      roseDeep:      "rgba(235,178,168,0.07)",
+      gold:          "#D8B76C",
+      goldGlow:      "rgba(216,183,108,0.30)",
+      goldDeep:      "rgba(216,183,108,0.07)",
+      charcoal:      "#EDE8E3",
+      mid:           "#9A8F87",
+      muted:         "#5E5550",
+      border:        "rgba(255,255,255,0.068)",
+      borderActive:  "rgba(141,212,182,0.38)",
+      white:         "#FFFFFF",
+    };
+
+    const PASSWORD = "Velaora2026";
+
+    // ─── Global CSS ───────────────────────────────────────────────────────────
+    const GLOBAL_CSS = `
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-text-size-adjust: 100%; }
+      body { background: ${C.bg}; }
+
+      @keyframes fadeUp   { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+
+      @keyframes orbIdle  {
+        0%,100% { transform:scale(0.90); filter:brightness(0.92) saturate(0.92); }
+        50%     { transform:scale(1.14); filter:brightness(1.16) saturate(1.10); }
+      }
+      @keyframes breatheIn  { from { transform:scale(1);    filter:brightness(1)    saturate(1);    }
+                               to   { transform:scale(1.40); filter:brightness(1.22) saturate(1.18); } }
+      @keyframes breatheOut { from { transform:scale(1.40); filter:brightness(1.22) saturate(1.18); }
+                               to   { transform:scale(1);    filter:brightness(0.88) saturate(0.90); } }
+      @keyframes holdPulse  { 0%,100%{transform:scale(1.40) rotate(0deg);} 50%{transform:scale(1.43) rotate(1deg);} }
+
+      @keyframes glowIdle  { 0%,100%{opacity:0.55;transform:scale(1);}   50%{opacity:0.9;transform:scale(1.18);} }
+      @keyframes glowIn    { from{opacity:0.55;transform:scale(1);}  to{opacity:1;transform:scale(1.55);} }
+      @keyframes glowOut   { from{opacity:1;transform:scale(1.55);}  to{opacity:0.45;transform:scale(0.9);} }
+      @keyframes glowHold  { 0%,100%{opacity:0.9;transform:scale(1.55);} 50%{opacity:1;transform:scale(1.65);} }
+
+      @keyframes shimmer { 0%{opacity:0;transform:rotate(0deg) translateX(36%) rotate(0deg);}
+        20%{opacity:0.55;} 80%{opacity:0.55;}
+        100%{opacity:0;transform:rotate(360deg) translateX(36%) rotate(-360deg);} }
+      @keyframes float     { 0%,100%{transform:translateY(0);}  50%{transform:translateY(-7px);} }
+      @keyframes dotBounce { 0%,100%{opacity:0.3;transform:translateY(0);} 50%{opacity:1;transform:translateY(-5px);} }
+      @keyframes slideIn   { from{opacity:0;transform:translateX(14px);} to{opacity:1;transform:translateX(0);} }
+      @keyframes tabEnter  { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+      @keyframes aurora1 { 0%,100%{transform:translate(0,0) scale(1);opacity:0.7;} 33%{transform:translate(6%,10%) scale(1.12);opacity:1;} 66%{transform:translate(-4%,6%) scale(0.94);opacity:0.8;} }
+      @keyframes aurora2 { 0%,100%{transform:translate(0,0) scale(1);opacity:0.6;} 50%{transform:translate(-9%,-7%) scale(1.18);opacity:0.9;} }
+      @keyframes aurora3 { 0%,100%{transform:translate(0,0) scale(1);opacity:0.5;} 40%{transform:translate(7%,-9%) scale(1.1);opacity:0.85;} 80%{transform:translate(-5%,4%) scale(0.92);opacity:0.6;} }
+      @keyframes particleDrift { 0%{transform:translateY(0) translateX(0);opacity:0;} 20%{opacity:1;} 80%{opacity:0.6;} 100%{transform:translateY(-40px) translateX(12px);opacity:0;} }
+
+      input, button { font-family: inherit; }
+      input::placeholder { color: ${C.muted}; }
+      ::-webkit-scrollbar { width: 3px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 3px; }
+      button:focus-visible { outline: 2px solid ${C.sage}; outline-offset: 3px; }
+      input:focus { outline: none; }
+
+      .glass-card {
+        background: ${C.glass};
+        border: 1px solid ${C.glassBorder};
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .hover-lift {
+        transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-2px);
+        border-color: ${C.glassBorderHi} !important;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      }
+    `;
+
+    // ─── SVG Filters ──────────────────────────────────────────────────────────
+    function OrbFilters() {
+      return (
+        <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}>
+          <defs>
+            <filter id="orb-morph" x="-55%" y="-55%" width="210%" height="210%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.016 0.013" numOctaves="4" seed="7" result="noise">
+                <animate attributeName="baseFrequency" values="0.013 0.016;0.019 0.012;0.014 0.018;0.013 0.016" dur="14s" repeatCount="indefinite" />
+                <animate attributeName="seed" values="7;19;7" dur="22s" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+              <feComposite in="displaced" in2="SourceGraphic" operator="in" />
+            </filter>
+            <filter id="orb-morph-lg" x="-55%" y="-55%" width="210%" height="210%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.013 0.010" numOctaves="4" seed="12" result="noise">
+                <animate attributeName="baseFrequency" values="0.010 0.013;0.016 0.009;0.011 0.015;0.010 0.013" dur="12s" repeatCount="indefinite" />
+                <animate attributeName="seed" values="12;28;12" dur="18s" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+              <feComposite in="displaced" in2="SourceGraphic" operator="in" />
+            </filter>
+          </defs>
+        </svg>
+      );
+    }
+
+    // ─── Breathing Orb ────────────────────────────────────────────────────────
+    function BreathOrb({ phase = "idle", size = 100 }) {
+      const isLg = size >= 110;
+      const filterId = isLg ? "orb-morph-lg" : "orb-morph";
+      const phaseMap = {
+        idle:   { core: `radial-gradient(circle at 33% 28%, rgba(200,245,225,0.55), ${C.sage} 42%, ${C.sageMid} 85%)`, glow: C.sageGlow, glowAnim: "glowIdle 5s ease-in-out infinite",  bodyAnim: "orbIdle 6s ease-in-out infinite"    },
+        inhale: { core: `radial-gradient(circle at 33% 28%, rgba(220,255,240,0.65), ${C.sage} 38%, ${C.sageDark} 80%)`, glow: C.sageGlow, glowAnim: "glowIn 4s ease-in-out forwards",   bodyAnim: "breatheIn 4s ease-in-out forwards"  },
+        hold:   { core: `radial-gradient(circle at 33% 28%, rgba(255,240,200,0.55), ${C.gold} 40%, #A8823A 82%)`,       glow: C.goldGlow, glowAnim: "glowHold 2s ease-in-out infinite", bodyAnim: "holdPulse 2s ease-in-out infinite"   },
+        exhale: { core: `radial-gradient(circle at 33% 28%, rgba(255,220,215,0.45), ${C.rose} 40%, #C07870 82%)`,       glow: C.roseGlow, glowAnim: "glowOut 4s ease-in-out forwards",  bodyAnim: "breatheOut 4s ease-in-out forwards" },
+      };
+      const p = phaseMap[phase] || phaseMap.idle;
+      const orbSize = Math.round(size * 0.70);
+
+      return (
+        <div style={{ width: size, height: size, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", animation: "float 7s ease-in-out infinite" }}>
+          <div style={{ position:"absolute", width:"185%", height:"185%", borderRadius:"50%", background:`radial-gradient(circle, ${p.glow} 0%, transparent 68%)`, animation:p.glowAnim, filter:`blur(${size*0.18}px)`, pointerEvents:"none", transition:"background 1.8s ease" }} />
+          <div style={{ position:"absolute", width:"130%", height:"130%", borderRadius:"50%", background:`radial-gradient(circle, ${p.glow.replace("0.30","0.18")} 0%, transparent 60%)`, filter:`blur(${size*0.09}px)`, pointerEvents:"none", transition:"background 1.8s ease" }} />
+          <div style={{ position:"absolute", width:orbSize*0.28, height:orbSize*0.28, borderRadius:"50%", background:"rgba(255,255,255,0.22)", filter:`blur(${size*0.04}px)`, animation:"shimmer 8s ease-in-out infinite", pointerEvents:"none" }} />
+          <div style={{ width:orbSize, height:orbSize, borderRadius:"50%", background:p.core, boxShadow:[`0 0 ${size*0.28}px ${p.glow}`,`0 0 ${size*0.12}px ${p.glow.replace("0.30","0.55")}`,`inset 0 1px 1px rgba(255,255,255,0.32)`,`inset 0 -2px 4px rgba(0,0,0,0.22)`].join(", "), animation:p.bodyAnim, filter:`url(#${filterId})`, position:"relative", transition:"background 1.8s ease", willChange:"transform, filter" }}>
+            <div style={{ position:"absolute", top:"13%", left:"20%", width:"30%", height:"21%", borderRadius:"50%", background:"rgba(255,255,255,0.50)", filter:"blur(3.5px)", transform:"rotate(-22deg)", pointerEvents:"none" }} />
+            <div style={{ position:"absolute", bottom:"20%", right:"17%", width:"13%", height:"9%", borderRadius:"50%", background:"rgba(255,255,255,0.18)", filter:"blur(2px)", pointerEvents:"none" }} />
+            <div style={{ position:"absolute", bottom:"8%", left:"20%", right:"20%", height:"6%", borderRadius:"50%", background:"rgba(255,255,255,0.10)", filter:"blur(3px)", pointerEvents:"none" }} />
+          </div>
+        </div>
+      );
+    }
+
+    function Card({ children, style = {}, className = "" }) {
+      return <div className={`glass-card ${className}`} style={{ borderRadius:22, padding:24, ...style }}>{children}</div>;
+    }
+    function Label({ children, color = C.muted, gradient = null }) {
+      const style = gradient
+        ? { background:gradient, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:10, fontWeight:600, letterSpacing:2.2, textTransform:"uppercase", marginBottom:14 }
+        : { color, fontSize:10, fontWeight:600, letterSpacing:2.2, textTransform:"uppercase", marginBottom:14 };
+      return <p style={style}>{children}</p>;
+    }
+
+    // ─── Password Gate ────────────────────────────────────────────────────────
+    const PARTICLES = [
+      { top:"12%", left:"8%",  color:C.sage, size:2.5, dur:9,  delay:0   },
+      { top:"22%", left:"85%", color:C.rose, size:2,   dur:12, delay:2   },
+      { top:"68%", left:"12%", color:C.gold, size:1.5, dur:10, delay:4   },
+      { top:"78%", left:"78%", color:C.sage, size:2,   dur:14, delay:1   },
+      { top:"45%", left:"92%", color:C.rose, size:1.5, dur:11, delay:3   },
+      { top:"88%", left:"40%", color:C.gold, size:2,   dur:13, delay:5   },
+      { top:"35%", left:"5%",  color:C.sage, size:1.5, dur:8,  delay:6   },
+      { top:"55%", left:"88%", color:C.rose, size:2.5, dur:15, delay:2.5 },
+    ];
+
+    function PasswordGate({ onUnlock }) {
+      const [val, setVal] = useState("");
+      const [error, setError] = useState(false);
+      const [show, setShow] = useState(false);
+      const [focused, setFocused] = useState(false);
+      const attempt = () => {
+        if (val === PASSWORD) { onUnlock(); }
+        else { setError(true); setTimeout(() => setError(false), 2200); setVal(""); }
+      };
+      return (
+        <div style={{ minHeight:"100vh", background:C.bgDeep, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:28, fontFamily:"Inter, sans-serif", position:"relative", overflow:"hidden" }}>
+          <style>{GLOBAL_CSS}</style>
+          <OrbFilters />
+          <div style={{ position:"absolute", inset:0, pointerEvents:"none", overflow:"hidden" }}>
+            <div style={{ position:"absolute", width:"75%", height:"55%", top:"-15%", left:"12%", background:`radial-gradient(ellipse, rgba(141,212,182,0.12) 0%, transparent 68%)`, filter:"blur(48px)", animation:"aurora1 14s ease-in-out infinite" }} />
+            <div style={{ position:"absolute", width:"55%", height:"45%", bottom:"5%", right:"0%", background:`radial-gradient(ellipse, rgba(235,178,168,0.09) 0%, transparent 68%)`, filter:"blur(55px)", animation:"aurora2 18s ease-in-out infinite" }} />
+            <div style={{ position:"absolute", width:"45%", height:"35%", bottom:"15%", left:"5%", background:`radial-gradient(ellipse, rgba(216,183,108,0.08) 0%, transparent 65%)`, filter:"blur(50px)", animation:"aurora3 22s ease-in-out infinite" }} />
+            <div style={{ position:"absolute", top:0, left:0, right:0, height:"40%", background:"radial-gradient(ellipse 60% 100% at 50% 0%, rgba(141,212,182,0.06) 0%, transparent 100%)" }} />
+          </div>
+          {PARTICLES.map((p, i) => (
+            <div key={i} style={{ position:"absolute", top:p.top, left:p.left, width:p.size, height:p.size, borderRadius:"50%", background:p.color, boxShadow:`0 0 6px ${p.color}`, animation:`particleDrift ${p.dur}s ease-in-out ${p.delay}s infinite`, pointerEvents:"none" }} />
+          ))}
+          {[[18,14],[32,76],[55,8],[70,88],[82,34],[91,62],[12,51],[44,92],[63,23],[77,5],[8,82],[50,44],[26,67],[88,18],[39,55]].map(([t,l], i) => (
+            <div key={`s${i}`} style={{ position:"absolute", top:`${t}%`, left:`${l}%`, width:1, height:1, borderRadius:"50%", background:"rgba(255,255,255,0.35)", pointerEvents:"none", animation:`glowIdle ${6+(i%4)}s ease-in-out ${i*0.4}s infinite` }} />
+          ))}
+          <div style={{ position:"relative", zIndex:1, animation:"fadeUp 0.8s ease", display:"flex", flexDirection:"column", alignItems:"center", width:"100%", maxWidth:360 }}>
+            <div style={{ marginBottom:16 }}><BreathOrb phase="idle" size={260} /></div>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:48, fontWeight:300, letterSpacing:-1, marginBottom:4, textAlign:"center", lineHeight:1, background:`linear-gradient(135deg, ${C.charcoal} 0%, ${C.gold} 50%, ${C.charcoal} 100%)`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>Restora</p>
+            <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+              <div style={{ width:28, height:1, background:`linear-gradient(90deg, transparent, ${C.gold})` }} />
+              <p style={{ background:`linear-gradient(90deg, ${C.gold}, ${C.rose})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:10, letterSpacing:3.5, textTransform:"uppercase" }}>by Velaora</p>
+              <div style={{ width:28, height:1, background:`linear-gradient(90deg, ${C.rose}, transparent)` }} />
+            </div>
+            <p style={{ color:C.muted, fontSize:13, marginBottom:52, textAlign:"center", maxWidth:260, lineHeight:1.85 }}>Evidence-based sleep therapy rooted in CBT-I, for women who deserve better rest.</p>
+            <div style={{ width:"100%", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:22, padding:"28px 24px", backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)" }}>
+              <div style={{ position:"relative", marginBottom:12 }}>
+                <input type={show?"text":"password"} value={val} onChange={e=>setVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&attempt()} onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)} placeholder="Enter access code"
+                  style={{ width:"100%", padding:"15px 50px 15px 20px", background:"rgba(255,255,255,0.04)", border:`1.5px solid ${error?C.rose+"90":focused?C.sage+"70":C.glassBorder}`, borderRadius:14, color:C.charcoal, fontSize:15, transition:"border-color 0.25s ease" }} />
+                <button onClick={()=>setShow(!show)} style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:12, padding:4 }}>{show?"Hide":"Show"}</button>
+              </div>
+              {error && <p style={{ color:C.rose, fontSize:13, marginBottom:10, textAlign:"center", animation:"fadeIn 0.3s ease" }}>Incorrect code — please try again</p>}
+              <button onClick={attempt} style={{ width:"100%", padding:"15px", background:`linear-gradient(140deg, ${C.gold}, #C49A2A, ${C.rose})`, border:"none", borderRadius:14, color:C.bgDeep, fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:0.5, boxShadow:`0 6px 32px rgba(216,183,108,0.45)`, transition:"transform 0.18s ease, box-shadow 0.18s ease" }}
+                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 12px 40px rgba(216,183,108,0.60)`;}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow=`0 6px 32px rgba(216,183,108,0.45)`;}}>Enter</button>
+            </div>
+            <p style={{ color:C.muted, fontSize:11, marginTop:32, textAlign:"center", lineHeight:1.7, opacity:0.7 }}>Access provided by Velaora · a women's health & wellness platform</p>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Tabs ─────────────────────────────────────────────────────────────────
+    const TABS = [
+      { id:"about",    label:"About",   icon:"✦" },
+      { id:"journey",  label:"Journey", icon:"⬡" },
+      { id:"diagnose", label:"Assess",  icon:"◎" },
+      { id:"cbti",     label:"CBT-I",   icon:"◈" },
+      { id:"meditate", label:"Breathe", icon:"○" },
+      { id:"sounds",   label:"Sounds",  icon:"♪" },
+      { id:"coach",    label:"Coach",   icon:"◇" },
+    ];
+
+    // ─── Lotus SVG ───────────────────────────────────────────────────────────
+    function LotusIcon({ size = 60 }) {
+      const s = size;
+      return (
+        <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="lotusPetal1" cx="50%" cy="80%" r="70%">
+              <stop offset="0%" stopColor="#EBB2A8" stopOpacity="0.9"/>
+              <stop offset="100%" stopColor="#D8B76C" stopOpacity="0.7"/>
+            </radialGradient>
+            <radialGradient id="lotusPetal2" cx="50%" cy="80%" r="70%">
+              <stop offset="0%" stopColor="#D8B76C" stopOpacity="0.85"/>
+              <stop offset="100%" stopColor="#EBB2A8" stopOpacity="0.6"/>
+            </radialGradient>
+            <radialGradient id="lotusCenter" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#EDE8E3" stopOpacity="1"/>
+              <stop offset="100%" stopColor="#D8B76C" stopOpacity="0.9"/>
+            </radialGradient>
+          </defs>
+          {/* Back petals */}
+          <ellipse cx="30" cy="52" rx="13" ry="26" fill="url(#lotusPetal2)" transform="rotate(-35 30 52)" opacity="0.7"/>
+          <ellipse cx="70" cy="52" rx="13" ry="26" fill="url(#lotusPetal2)" transform="rotate(35 70 52)" opacity="0.7"/>
+          <ellipse cx="50" cy="30" rx="10" ry="22" fill="url(#lotusPetal1)" opacity="0.65"/>
+          {/* Mid petals */}
+          <ellipse cx="22" cy="60" rx="12" ry="24" fill="url(#lotusPetal1)" transform="rotate(-55 22 60)" opacity="0.85"/>
+          <ellipse cx="78" cy="60" rx="12" ry="24" fill="url(#lotusPetal1)" transform="rotate(55 78 60)" opacity="0.85"/>
+          <ellipse cx="37" cy="38" rx="11" ry="23" fill="url(#lotusPetal2)" transform="rotate(-18 37 38)" opacity="0.9"/>
+          <ellipse cx="63" cy="38" rx="11" ry="23" fill="url(#lotusPetal2)" transform="rotate(18 63 38)" opacity="0.9"/>
+          {/* Front center petal */}
+          <ellipse cx="50" cy="58" rx="13" ry="26" fill="url(#lotusPetal1)" opacity="0.95"/>
+          {/* Center */}
+          <circle cx="50" cy="68" r="8" fill="url(#lotusCenter)" opacity="0.95"/>
+          <circle cx="50" cy="68" r="4" fill="#D8B76C" opacity="0.8"/>
+          {/* Stamens */}
+          <circle cx="44" cy="62" r="1.5" fill="#EDE8E3" opacity="0.9"/>
+          <circle cx="50" cy="60" r="1.5" fill="#EDE8E3" opacity="0.9"/>
+          <circle cx="56" cy="62" r="1.5" fill="#EDE8E3" opacity="0.9"/>
+        </svg>
+      );
+    }
+
+    // ─── About Tab ────────────────────────────────────────────────────────────
+    function AboutTab({ setTab }) {
+      return (
+        <div style={{ animation:"fadeUp 0.5s ease" }}>
+          <Card style={{ marginBottom:14, textAlign:"center", padding:"40px 24px" }}>
+            <BreathOrb phase="idle" size={150} />
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:34, fontWeight:300, background:`linear-gradient(135deg, ${C.charcoal}, ${C.gold})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", marginTop:24, marginBottom:8, letterSpacing:-0.3 }}>Sleep Differently.</p>
+            <p style={{ color:C.mid, fontSize:14, lineHeight:1.8, maxWidth:290, margin:"0 auto" }}>Restora brings the gold-standard CBT-I sleep therapy programme to you — clinically grounded, compassionately designed for women.</p>
+          </Card>
+
+          <Card style={{ marginBottom:14 }}>
+            <Label color={C.gold}>Your Guide</Label>
+            <div style={{ display:"flex", gap:18, alignItems:"flex-start" }}>
+              <div style={{ minWidth:72, height:72, borderRadius:"50%", background:`linear-gradient(140deg, #2A1F14, #1A1714)`, border:`1.5px solid rgba(216,183,108,0.35)`, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 4px 24px rgba(216,183,108,0.25), inset 0 1px 1px rgba(255,255,255,0.06)`, flexShrink:0 }}>
+                <LotusIcon size={46} />
+              </div>
+              <div>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:24, fontWeight:600, background:`linear-gradient(135deg, ${C.charcoal}, ${C.gold})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", marginBottom:3 }}>Elena R.</p>
+                <p style={{ background:`linear-gradient(90deg, ${C.gold}, ${C.rose})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:12, fontWeight:500, letterSpacing:0.5, marginBottom:6 }}>MSc(Hons) · Sleep Scientist · CBT-I Practitioner</p>
+                <p style={{ color:C.muted, fontSize:11, lineHeight:1.7, marginBottom:12, fontStyle:"italic" }}>Developed using current CBT-I research and clinical practice from leading sleep programmes in New Zealand and the United States — built specifically for women.</p>
+                <p style={{ color:C.mid, fontSize:13, lineHeight:1.8 }}>With a Masters (Hons) in science and years spent witnessing how profoundly poor sleep undermines women's health, Elena founded Restora to bring evidence-based sleep therapy to women who deserve better rest.</p>
+              </div>
+            </div>
+            <div style={{ marginTop:18, paddingTop:18, borderTop:`1px solid ${C.glassBorder}`, position:"relative" }}>
+              <span style={{ position:"absolute", top:-10, left:"50%", transform:"translateX(-50%)", background:C.bgCard, padding:"0 12px", color:C.gold, fontSize:13 }}>✦</span>
+              <p style={{ color:C.mid, fontSize:13, lineHeight:1.85, fontStyle:"italic" }}>"Sleep deprivation isn't a badge of honour. It's a health crisis. CBT-I gave me my nights back — I built Restora so it could do the same for you."</p>
+            </div>
+          </Card>
+
+          <Card style={{ marginBottom:14 }}>
+            <Label color={C.rose}>What's Inside</Label>
+            {[
+              { icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>, label:"6-Week Sleep Journey", desc:"Guided daily CBT-I pathway — structured week by week, no getting lost", tab:"journey", color:C.gold, grad:`linear-gradient(140deg,${C.gold},#B8923A)` },
+              { icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 9 9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><path d="M12 7v5l3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><circle cx="19" cy="5" r="3" fill="currentColor" opacity="0.4"/></svg>, label:"Sleep Assessment", desc:"10-question diagnostic identifying your insomnia type and key triggers", tab:"diagnose", color:C.sage,  grad:`linear-gradient(140deg,${C.sage},${C.sageDark})` },
+              { icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>, label:"CBT-I Programme", desc:"Six evidence-based techniques — the same used by sleep clinics worldwide", tab:"cbti", color:C.gold, grad:`linear-gradient(140deg,${C.gold},#B8923A)` },
+              { icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/></svg>, label:"Breathing & Meditation", desc:"Guided breathwork with live orb and professional voice meditations", tab:"meditate", color:C.rose, grad:`linear-gradient(140deg,${C.rose},#C07870)` },
+              { icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><circle cx="6" cy="18" r="3" stroke="currentColor" strokeWidth="1.8"/><circle cx="18" cy="16" r="3" stroke="currentColor" strokeWidth="1.8"/></svg>, label:"Sleep Sounds", desc:"Pink noise, ocean waves, binaural delta waves and more", tab:"sounds", color:C.sage, grad:`linear-gradient(140deg,#68B0D8,#4A7A9A)` },
+              { icon:<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M8 10h8M8 14h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/></svg>, label:"AI Sleep Coach", desc:"Personalised CBT-I guidance from your own AI sleep therapist", tab:"coach", color:"#B8A0D8", grad:`linear-gradient(140deg,#B8A0D8,#8A6AAE)` },
+            ].map((item, i, arr) => (
+              <button key={item.tab} onClick={()=>setTab(item.tab)} className="hover-lift" style={{ display:"flex", gap:16, alignItems:"center", width:"100%", background:"none", border:"none", padding:"13px 0", cursor:"pointer", borderBottom:i<arr.length-1?`1px solid ${C.glassBorder}`:"none", textAlign:"left" }}>
+                <div style={{ width:44, height:44, borderRadius:14, background:`${item.color}14`, border:`1px solid ${item.color}30`, display:"flex", alignItems:"center", justifyContent:"center", minWidth:44, color:item.color, boxShadow:`0 2px 12px ${item.color}20` }}>
+                  {item.icon}
+                </div>
+                <div style={{ flex:1 }}>
+                  <p style={{ color:C.charcoal, fontSize:14, fontWeight:500, marginBottom:3 }}>{item.label}</p>
+                  <p style={{ color:C.muted, fontSize:12, lineHeight:1.5 }}>{item.desc}</p>
+                </div>
+                <div style={{ width:28, height:28, borderRadius:"50%", background:`${item.color}12`, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <span style={{ color:item.color, fontSize:14 }}>›</span>
+                </div>
+              </button>
+            ))}
+          </Card>
+          <p style={{ color:C.muted, fontSize:11, textAlign:"center", lineHeight:1.8 }}>Restora is an educational tool, not a medical service.<br/>For clinical concerns please speak with your GP.</p>
+        </div>
+      );
+    }
+
+    // ─── Diagnose Tab ─────────────────────────────────────────────────────────
+    const Qs = [
+      { id:"onset",    q:"How long have you had trouble sleeping?",                                 opts:["Less than 3 months","3–6 months","6–12 months","Over a year"] },
+      { id:"type",     q:"What best describes your sleep problem?",                                 opts:["Can't fall asleep","Wake during the night","Wake too early","Unrefreshing sleep","All of the above"] },
+      { id:"worry",    q:"How often do you lie in bed worrying about not sleeping?",                opts:["Rarely","Sometimes","Often","Almost every night"] },
+      { id:"anxiety",  q:"How anxious or stressed do you feel before bed?",                        opts:["Not at all","Mildly","Moderately","Very anxious"] },
+      { id:"screen",   q:"How much screen time in the hour before bed?",                           opts:["None","Under 15 mins","15–30 mins","Over 30 mins"] },
+      { id:"caffeine", q:"How late do you consume caffeine?",                                       opts:["Not at all","Before noon","Afternoon","Evening"] },
+      { id:"routine",  q:"Do you have a consistent sleep and wake time?",                          opts:["Yes, always","Mostly","Rarely","No"] },
+      { id:"naps",     q:"Do you nap during the day?",                                             opts:["Never","Occasionally","Most days","Daily, over an hour"] },
+      { id:"hormones", q:"Do hormonal changes affect your sleep? (e.g. cycle, perimenopause)",     opts:["Not applicable / unsure","Rarely","Sometimes","Yes, noticeably"] },
+      { id:"mood",     q:"How would you describe your general mood?",                              opts:["Good","Somewhat low","Persistently low","Anxious or overwhelmed"] },
+    ];
+
+    function DiagnoseTab({ onDiagnosis, setTab }) {
+      const [step, setStep] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [loading, setLoading] = useState(false);
+      const [result, setResult] = useState(null);
+      const q = Qs[step];
+      const progress = step / Qs.length;
+
+      const select = async (opt) => {
+        const updated = { ...answers, [q.id]: opt };
+        setAnswers(updated);
+        if (step < Qs.length - 1) { setStep(step + 1); return; }
+        setLoading(true);
+        try {
+          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000, messages:[{ role:"user", content:`You are a compassionate women's health sleep specialist and CBT-I therapist. A woman completed a sleep assessment. Provide a warm, clear diagnosis (2-3 sentences) identifying her likely insomnia type and key contributing factors. Include any relevant hormonal or lifestyle factors. Then give 4 specific, evidence-based recommendations. Respond ONLY as valid JSON: {"diagnosis":"...","type":"...","recommendations":["...","...","...","..."]}. Answers: ${JSON.stringify(updated)}` }] }) });
+          const data = await res.json();
+          const text = data.content?.find(b=>b.type==="text")?.text||"";
+          const parsed = JSON.parse(text.replace(/```json|```/g,"").trim());
+          setResult(parsed); onDiagnosis(parsed);
+        } catch {
+          const fb = { diagnosis:"Based on your answers, you appear to be experiencing psychophysiological insomnia with anxiety-related components — very common in women managing multiple life demands.", type:"Psychophysiological Insomnia", recommendations:["Begin Sleep Restriction Therapy to consolidate your sleep window","Practice Stimulus Control — use bed only for sleep","Try the 4-7-8 breathing technique each night before bed","Explore the Cognitive Restructuring module to address sleep anxiety"] };
+          setResult(fb); onDiagnosis(fb);
+        }
+        setLoading(false);
+      };
+
+      if (loading) return (
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:360, gap:24, animation:"fadeIn 0.4s ease" }}>
+          <BreathOrb phase="idle" size={150} />
+          <p style={{ color:C.sage, fontSize:15, fontFamily:"Cormorant Garamond, serif", letterSpacing:0.5, fontStyle:"italic" }}>Reading your sleep profile…</p>
+        </div>
+      );
+
+      if (result) return (
+        <div style={{ animation:"fadeUp 0.5s ease" }}>
+          <Card style={{ marginBottom:14, borderLeft:`3px solid ${C.sage}` }}>
+            <div style={{ display:"inline-block", background:C.sageDeep, border:`1px solid ${C.sage}40`, borderRadius:20, padding:"5px 14px", marginBottom:14 }}><span style={{ color:C.sage, fontSize:11, fontWeight:600 }}>{result.type}</span></div>
+            <p style={{ color:C.charcoal, fontSize:15, lineHeight:1.85 }}>{result.diagnosis}</p>
+          </Card>
+          <Label>Recommended Steps</Label>
+          {result.recommendations.map((r,i) => (
+            <div key={i} style={{ display:"flex", gap:14, alignItems:"flex-start", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"16px 18px", marginBottom:10 }}>
+              <div style={{ minWidth:30, height:30, borderRadius:"50%", background:C.sageDeep, border:`1px solid ${C.sage}50`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}><span style={{ color:C.sage, fontSize:12, fontWeight:600 }}>{i+1}</span></div>
+              <p style={{ color:C.mid, fontSize:14, lineHeight:1.75, paddingTop:4 }}>{r}</p>
+            </div>
+          ))}
+          <div style={{ marginTop:18, background:`${C.gold}0D`, border:`1px solid ${C.gold}30`, borderRadius:18, padding:"18px 18px" }}>
+            <p style={{ background:`linear-gradient(135deg, ${C.gold}, ${C.rose})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:10, fontWeight:700, letterSpacing:2.5, textTransform:"uppercase", marginBottom:8 }}>Ready to take action?</p>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:14 }}>Your 4-week journey uses these results to guide you through CBT-I day by day — built specifically for women.</p>
+            <button onClick={()=>setTab&&setTab("journey")} style={{ background:`linear-gradient(140deg, ${C.gold}, #C49A2A)`, border:"none", borderRadius:12, padding:"12px 22px", color:"#0F0D0B", fontSize:14, fontWeight:600, cursor:"pointer", letterSpacing:0.3, boxShadow:`0 4px 16px ${C.gold}40` }}>Start My 4-Week Journey ›</button>
+          </div>
+          <button onClick={()=>{setStep(0);setAnswers({});setResult(null);}} style={{ marginTop:12, background:"none", border:`1px solid ${C.glassBorder}`, color:C.muted, borderRadius:12, padding:"11px 22px", cursor:"pointer", fontSize:13 }}>Retake Assessment</button>
+        </div>
+      );
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <div style={{ height:2, background:C.glassBorder, borderRadius:2, marginBottom:32, overflow:"hidden" }}>
+            <div style={{ height:"100%", width:`${progress*100}%`, background:`linear-gradient(90deg, ${C.sage}, ${C.gold})`, borderRadius:2, transition:"width 0.45s cubic-bezier(0.4,0,0.2,1)" }} />
+          </div>
+          <p style={{ color:C.muted, fontSize:11, letterSpacing:1.5, textTransform:"uppercase", marginBottom:10 }}>Question {step+1} of {Qs.length}</p>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:28, fontWeight:300, color:C.charcoal, lineHeight:1.45, marginBottom:32 }}>{q.q}</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            {q.opts.map(opt => (
+              <button key={opt} onClick={()=>select(opt)} className="hover-lift" style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"16px 20px", color:C.charcoal, fontSize:14, cursor:"pointer", textAlign:"left" }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=C.borderActive;e.currentTarget.style.background=C.sageDeep;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=C.glassBorder;e.currentTarget.style.background=C.glass;}}
+              >{opt}</button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── CBT-I Tab ────────────────────────────────────────────────────────────
+    const MODULES = [
+      { title:"Sleep Restriction",          icon:"⏰", color:C.sage, summary:"Build sleep pressure by compressing your time in bed.", steps:["Track average actual sleep time for one week (e.g. 5.5 hrs)","Set your time-in-bed to match that exactly","Keep a fixed wake time 7 days a week","Only go to bed when genuinely sleepy","Extend by 15 mins per week when sleep efficiency exceeds 85%"], why:"Restricting time in bed builds homeostatic sleep pressure, consolidating fragmented sleep into deeper, more restorative cycles." },
+      { title:"Stimulus Control",           icon:"🛏️", color:C.gold, summary:"Retrain your brain to associate bed with sleep — not wakefulness.", steps:["Use your bed only for sleep and sex","If awake after ~20 mins, get up and sit quietly in dim light","Return only when sleepy","Repeat as needed throughout the night","Keep the same wake time regardless of how you slept"], why:"Lying awake in bed for months teaches the brain that bed means arousal. Stimulus control breaks that conditioned wakefulness response." },
+      { title:"Cognitive Restructuring",    icon:"🧠", color:C.rose, summary:"Challenge the anxious thoughts that keep your mind racing at night.", steps:["Notice catastrophising: 'I'll never sleep', 'Tomorrow is ruined'","Ask: what's the actual evidence for and against this thought?","Reframe: 'I've managed on poor sleep before — I'll cope again'","Replace 'I must get 8 hours' with 'rest itself has value'","Write thoughts down before bed to offload them"], why:"Cognitive hyperarousal — the racing worried mind — is the central driver of chronic insomnia. Restructuring reduces the mental activation that blocks sleep onset." },
+      { title:"Sleep Hygiene",              icon:"🌙", color:C.sage, summary:"Optimise the habits and environment that underpin deep sleep.", steps:["No caffeine after 2pm — its half-life is 5–7 hours","Keep the bedroom cool: 16–18°C is optimal","Blackout curtains and white noise if your environment is noisy","Alcohol fragments deep sleep — limit evening intake","Exercise regularly but not within 3 hours of bedtime"], why:"Poor sleep hygiene undermines every other CBT-I technique. It's rarely the sole cause of insomnia — but it amplifies all the others." },
+      { title:"Worry Time",                 icon:"📓", color:C.gold, summary:"Contain anxiety by scheduling it — outside the bedroom.", steps:["Set aside 20 mins daily at the same time (not near bedtime)","Write every worry down during this window","Note one small action for each, or accept what's outside your control","When worries rise at night: 'I'll deal with this at worry time tomorrow'","Keep a notepad by the bed to write and release late thoughts"], why:"Designated worry time gives the anxious mind permission to defer. It reduces cognitive arousal at night by creating a bounded container for concerns." },
+      { title:"Progressive Muscle Relaxation", icon:"✨", color:C.rose, summary:"Release physical tension through a systematic body scan.", steps:["Lie on your back, eyes closed, in a comfortable position","Tense each muscle group firmly for 5 seconds, then release for 30","Progress: feet → calves → thighs → abdomen → hands → arms → shoulders → jaw → face","Notice and savour the contrast between tension and release","Complete with 2 minutes of slow, deep breathing"], why:"Physical tension and sleep anxiety are tightly coupled. PMR lowers physiological arousal and signals to the nervous system that safety — and rest — is available." },
+    ];
+
+    function CBTITab() {
+      const [selected, setSelected] = useState(null);
+      const [tip, setTip] = useState("");
+      const [loadingTip, setLoadingTip] = useState(false);
+
+      const open = async (m) => {
+        setSelected(m); setTip(""); setLoadingTip(true);
+        try {
+          const res = await fetch("https://restora-api.velaorawomen.workers.dev", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:300, messages:[{ role:"user", content:`Give one warm, specific, practical tip for a woman starting "${m.title}" as part of CBT-I for insomnia. 2–3 sentences. Be encouraging, concrete, and compassionate.` }] }) });
+          const data = await res.json();
+          setTip(data.content?.find(b=>b.type==="text")?.text||"");
+        } catch { setTip("Start with just one night. Consistency matters more than perfection — even partial implementation builds real momentum over time."); }
+        setLoadingTip(false);
+      };
+
+      if (selected) return (
+        <div style={{ animation:"slideIn 0.35s ease" }}>
+          <button onClick={()=>setSelected(null)} style={{ background:"none", border:"none", color:C.sage, cursor:"pointer", fontSize:14, marginBottom:22, padding:0, display:"flex", alignItems:"center", gap:6 }}>← All Techniques</button>
+          <div style={{ display:"flex", gap:14, alignItems:"center", marginBottom:18 }}>
+            <div style={{ width:50, height:50, borderRadius:15, background:`${selected.color}15`, border:`1px solid ${selected.color}30`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22 }}>{selected.icon}</div>
+            <div>
+              <p style={{ color:C.muted, fontSize:10, fontWeight:600, letterSpacing:2.2, textTransform:"uppercase", marginBottom:4 }}>CBT-I Technique</p>
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:24, color:C.charcoal, fontWeight:400 }}>{selected.title}</p>
+            </div>
+          </div>
+          <Card style={{ marginBottom:14 }}><p style={{ color:C.mid, fontSize:14, lineHeight:1.85 }}>{selected.summary}</p></Card>
+          <Label>How To Do It</Label>
+          {selected.steps.map((s,i) => (
+            <div key={i} style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:12 }}>
+              <div style={{ minWidth:28, height:28, borderRadius:"50%", background:`${selected.color}14`, border:`1px solid ${selected.color}40`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}><span style={{ color:selected.color, fontSize:11, fontWeight:600 }}>{i+1}</span></div>
+              <p style={{ color:C.mid, fontSize:14, lineHeight:1.75, paddingTop:3 }}>{s}</p>
+            </div>
+          ))}
+          <Card style={{ marginTop:20, borderLeft:`3px solid ${selected.color}` }}>
+            <Label color={selected.color}>Why This Works</Label>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.85 }}>{selected.why}</p>
+          </Card>
+          {(tip||loadingTip) && (
+            <div style={{ background:`${selected.color}09`, border:`1px solid ${selected.color}25`, borderRadius:18, padding:18, marginTop:14 }}>
+              <p style={{ color:selected.color, fontSize:10, fontWeight:600, letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>✦ From Elena</p>
+              <p style={{ color:C.charcoal, fontSize:14, lineHeight:1.85 }}>{loadingTip?"…":tip}</p>
+            </div>
+          )}
+        </div>
+      );
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>CBT-I Programme</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>The gold standard for chronic insomnia — more effective than sleep medication long-term. Tap any technique to begin.</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            {MODULES.map(m => (
+              <button key={m.title} onClick={()=>open(m)} className="hover-lift" style={{ display:"flex", gap:16, alignItems:"center", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:18, padding:"16px 18px", cursor:"pointer", textAlign:"left" }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=`${m.color}50`;e.currentTarget.style.background=`${m.color}07`;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=C.glassBorder;e.currentTarget.style.background=C.glass;}}>
+                <div style={{ width:46, height:46, borderRadius:14, background:`${m.color}14`, border:`1px solid ${m.color}25`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, minWidth:46 }}>{m.icon}</div>
+                <div style={{ flex:1 }}>
+                  <p style={{ color:C.charcoal, fontSize:14, fontWeight:500, marginBottom:4 }}>{m.title}</p>
+                  <p style={{ color:C.muted, fontSize:12, lineHeight:1.5 }}>{m.summary}</p>
+                </div>
+                <span style={{ color:C.muted, fontSize:18, opacity:0.5 }}>›</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Breathe Tab ──────────────────────────────────────────────────────────
+    const PATTERNS = [
+      { name:"4-7-8 Sleep",   i:4, h:7, e:8, desc:"Dr Andrew Weil's signature sleep technique" },
+      { name:"Box Breathing",  i:4, h:4, e:4, desc:"Balances the autonomic nervous system" },
+      { name:"Slow Exhale",    i:4, h:0, e:8, desc:"Triggers the parasympathetic relaxation response" },
+    ];
+
+    const GUIDED_VOICES = [
+      { id:"serena-sleep",    label:"Serena",    subtitle:"Warm · Sleep induction",  file:"serena-sleep.mp3",    color:C.sage, glow:C.sageGlow, gradient:`linear-gradient(135deg, ${C.sage}, ${C.sageDark})` },
+      { id:"serena-bodyscan", label:"Serena",    subtitle:"Warm · Body scan",        file:"serena-bodyscan.mp3", color:C.sage, glow:C.sageGlow, gradient:`linear-gradient(135deg, ${C.sage}, ${C.sageDark})` },
+      { id:"charlotte-stars", label:"Charlotte", subtitle:"Elegant · Night sky",     file:"charlotte-stars.mp3", color:C.gold, glow:C.goldGlow, gradient:`linear-gradient(135deg, ${C.gold}, #A8823A)` },
+      { id:"charlotte-forest",label:"Charlotte", subtitle:"Grounding · Forest",      file:"charlotte-forest.mp3",color:C.rose,  glow:C.roseGlow,  gradient:`linear-gradient(135deg, ${C.rose}, #C07870)` },
+      { id:"avani-garden",    label:"Avani",     subtitle:"Lyrical · Moonlit garden", file:"avani-garden.mp3",     color:"#B8A0D8", glow:"rgba(184,160,216,0.30)", gradient:`linear-gradient(135deg, #B8A0D8, #8A6AAE)` },
+    ];
+
+    function MeditateTab() {
+      const [pat, setPat] = useState(null);
+      const [phase, setPhase] = useState("ready");
+      const [count, setCount] = useState(0);
+      const [cycles, setCycles] = useState(0);
+      const [activeVoice, setActiveVoice] = useState(null);
+      const [playing, setPlaying] = useState(false);
+      const [paused, setPaused] = useState(false);
+      const [playbackRate, setPlaybackRate] = useState(1.0);
+      const audioRef = useRef(null);
+      const timerRef = useRef(null);
+
+      const stopBreathing = () => { clearTimeout(timerRef.current); setPhase("ready"); setCount(0); setPat(null); };
+
+      const start = (p) => {
+        stopBreathing(); setPat(p); setCycles(0);
+        const phases = [{ n:"inhale", d:p.i }, ...(p.h?[{ n:"hold", d:p.h }]:[]), { n:"exhale", d:p.e }];
+        let pi = 0;
+        const next = () => {
+          if (pi>=phases.length) { pi=0; setCycles(c=>c+1); }
+          const { n, d } = phases[pi++];
+          setPhase(n); setCount(d);
+          let rem=d;
+          const tick = () => { rem--; setCount(rem); timerRef.current=rem>0?setTimeout(tick,1000):setTimeout(next,300); };
+          timerRef.current=setTimeout(tick,1000);
+        };
+        next();
+      };
+
+      const stopAudio = () => {
+        if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime=0; audioRef.current=null; }
+        setPlaying(false); setPaused(false);
+      };
+
+      const toggleAudio = (voice) => {
+        if (activeVoice?.id===voice.id) {
+          if (playing && !paused) { audioRef.current?.pause(); setPaused(true); return; }
+          if (paused) { audioRef.current?.play(); setPaused(false); return; }
+        }
+        stopAudio();
+        setActiveVoice(voice);
+        const audio = new Audio(voice.file);
+        audioRef.current = audio;
+        audio.playbackRate = playbackRate;
+        audio.onended = () => { setPlaying(false); setPaused(false); };
+        audio.onerror = () => { setPlaying(false); setPaused(false); };
+        audio.play();
+        setPlaying(true); setPaused(false);
+      };
+
+      useEffect(()=>()=>{ clearTimeout(timerRef.current); stopAudio(); },[]);
+
+      const phaseColour = { inhale:C.sage, hold:C.gold, exhale:C.rose, ready:C.muted };
+      const phaseLabel  = { inhale:"Breathe In", hold:"Hold", exhale:"Breathe Out", ready:"" };
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>Breathe & Rest</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>Slow your nervous system before sleep with guided breathwork.</p>
+
+          <Card style={{ marginBottom:18, textAlign:"center", padding:"36px 24px" }}>
+            <BreathOrb phase={phase==="ready"?"idle":phase} size={160} />
+            {phase!=="ready" ? (
+              <div style={{ marginTop:24 }}>
+                <p style={{ color:phaseColour[phase], fontFamily:"Cormorant Garamond, serif", fontSize:28, fontWeight:300, marginBottom:4, transition:"color 0.6s ease" }}>{phaseLabel[phase]}</p>
+                <p style={{ color:C.charcoal, fontSize:52, fontWeight:200, letterSpacing:-3, lineHeight:1 }}>{count}</p>
+                <p style={{ color:C.muted, fontSize:11, marginTop:10, letterSpacing:1.5, textTransform:"uppercase" }}>Cycle {cycles+1}</p>
+                <button onClick={stopBreathing} style={{ marginTop:18, background:"none", border:`1px solid ${C.glassBorder}`, color:C.muted, borderRadius:12, padding:"9px 22px", cursor:"pointer", fontSize:13 }}>Stop</button>
+              </div>
+            ) : (
+              <p style={{ color:C.muted, fontSize:13, marginTop:18 }}>Choose a pattern below to begin</p>
+            )}
+          </Card>
+
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:28 }}>
+            {PATTERNS.map(p => (
+              <button key={p.name} onClick={()=>start(p)} className="hover-lift" style={{ background:pat?.name===p.name?C.sageDeep:C.glass, border:`1px solid ${pat?.name===p.name?C.borderActive:C.glassBorder}`, borderRadius:16, padding:"16px 20px", cursor:"pointer", textAlign:"left" }}>
+                <p style={{ color:C.charcoal, fontSize:14, fontWeight:500, marginBottom:4 }}>{p.name}</p>
+                <p style={{ color:C.muted, fontSize:12 }}>{p.desc} · {p.i}-{p.h?p.h+"-":""}{p.e}</p>
+              </button>
+            ))}
+          </div>
+
+          <div style={{ borderTop:`1px solid ${C.glassBorder}`, paddingTop:24 }}>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:C.charcoal, fontWeight:300, marginBottom:6 }}>Guided Meditations</p>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.75, marginBottom:20 }}>Professional recordings by Serena &amp; Charlotte — press play and let go.</p>
+            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              {GUIDED_VOICES.map(voice => {
+                const isActive = activeVoice?.id===voice.id;
+                const isPlaying = isActive && playing && !paused;
+                const isPaused = isActive && paused;
+                return (
+                  <div key={voice.id} style={{ background:isActive?`${voice.color}09`:C.glass, border:`1px solid ${isActive?voice.color+"40":C.glassBorder}`, borderRadius:20, padding:18, transition:"all 0.3s ease" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:isActive?14:0 }}>
+                      <div style={{ width:44, height:44, borderRadius:"50%", background:voice.gradient, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 4px 16px ${voice.glow}`, flexShrink:0 }}>
+                        <span style={{ color:C.bg, fontSize:16, fontWeight:600 }}>{voice.label[0]}</span>
+                      </div>
+                      <div style={{ flex:1 }}>
+                        <p style={{ color:C.charcoal, fontSize:14, fontWeight:600 }}>{voice.label}</p>
+                        <p style={{ color:voice.color, fontSize:11, marginTop:2 }}>{voice.subtitle}</p>
+                      </div>
+                      {isPlaying && (
+                        <div style={{ display:"flex", gap:3, alignItems:"flex-end", marginRight:8 }}>
+                          {[0,1,2,3].map(i=><div key={i} style={{ width:3, borderRadius:2, background:voice.color, animation:`dotBounce 1s ease-in-out ${i*0.15}s infinite`, height:14 }} />)}
+                        </div>
+                      )}
+                      <button onClick={()=>toggleAudio(voice)}
+                        style={{ width:44, height:44, borderRadius:"50%", background:isPlaying?voice.color:voice.gradient, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 4px 20px ${voice.glow}`, fontSize:16, transition:"all 0.25s ease", flexShrink:0 }}>
+                        <span style={{ color:C.bg }}>{isPlaying?"⏸":isPaused?"▶":"▶"}</span>
+                      </button>
+                    </div>
+                    {isActive && (
+                      <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:2 }}>
+                          <span style={{ color:C.mid, fontSize:12 }}>Speed</span>
+                          <span style={{ color:C.charcoal, fontSize:12, fontWeight:500 }}>{playbackRate<=0.75?"Very slow":playbackRate<=0.88?"Gentle":playbackRate<=1.0?"Normal":"Brisk"}</span>
+                        </div>
+                        <input type="range" min="0.65" max="1.1" step="0.05" value={playbackRate}
+                          onChange={e=>{ const r=+e.target.value; setPlaybackRate(r); if(audioRef.current) audioRef.current.playbackRate=r; }}
+                          style={{ width:"100%", accentColor:voice.color, marginBottom:4 }} />
+                        <button onClick={stopAudio} style={{ background:"none", border:`1px solid ${C.glassBorder}`, borderRadius:12, padding:"9px", color:C.muted, cursor:"pointer", fontSize:12 }}>■ Stop</button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Sounds Tab ───────────────────────────────────────────────────────────
+    const SOUNDS = [
+      { name:"Pink Noise",   icon:"🌸", type:"pink",     desc:"Classic sleep noise · warm & balanced" },
+      { name:"Brown Noise",  icon:"🌫️", type:"brown",    desc:"Deep low rumble · very soothing" },
+      { name:"White Noise",  icon:"☁️", type:"white",    desc:"Full spectrum · masks all sounds" },
+      { name:"Gentle Rain",  icon:"🌧️", type:"rain",     desc:"Soft rainfall with natural variation" },
+      { name:"Ocean Waves",  icon:"🌊", type:"ocean",    desc:"Rolling waves with slow rhythm" },
+      { name:"Tibetan Bowl", icon:"🔔", type:"sine",     freq:432, desc:"432 Hz pure tone · deeply calming" },
+      { name:"Delta Waves",  icon:"🧠", type:"binaural", freq:2,   desc:"Deep sleep · headphones required" },
+    ];
+
+    function SoundsTab() {
+      const [active, setActive] = useState(null);
+      const [vol, setVol] = useState(0.35);
+      const ctxRef = useRef(null);
+      const gainRef = useRef(null);
+      const nodesRef = useRef([]);
+
+      const stop = () => {
+        nodesRef.current.forEach(n => { try { n.stop(); } catch {} });
+        nodesRef.current = [];
+        try { ctxRef.current?.close(); } catch {}
+        ctxRef.current = null;
+        setActive(null);
+      };
+
+      const makeNoiseBuffer = (ctx, type) => {
+        const sr = ctx.sampleRate;
+        const frames = sr * 2;
+        const buf = ctx.createBuffer(1, frames, sr);
+        const d = buf.getChannelData(0);
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,lo=0;
+        for (let i=0; i<frames; i++) {
+          const w = Math.random()*2-1;
+          if (type==="white") { d[i]=w*0.45; }
+          else if (type==="brown") { lo=(lo+(0.02*w))/1.02; d[i]=lo*3.5; }
+          else { b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;d[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11;b6=w*0.115926; }
+        }
+        return buf;
+      };
+
+      const play = async (s) => {
+        stop();
+        const ctx = new (window.AudioContext||window.webkitAudioContext)();
+        ctxRef.current = ctx;
+        await ctx.resume();
+        const gain = ctx.createGain(); gain.gain.value=vol; gainRef.current=gain;
+        gain.connect(ctx.destination);
+
+        if (["white","pink","brown"].includes(s.type)) {
+          const src = ctx.createBufferSource();
+          src.buffer = makeNoiseBuffer(ctx, s.type);
+          src.loop = true;
+          if (s.type==="brown") {
+            const lpf = ctx.createBiquadFilter();
+            lpf.type="lowpass"; lpf.frequency.value=400; lpf.Q.value=0.5;
+            src.connect(lpf); lpf.connect(gain);
+          } else if (s.type==="pink") {
+            const lpf = ctx.createBiquadFilter();
+            lpf.type="lowpass"; lpf.frequency.value=8000;
+            src.connect(lpf); lpf.connect(gain);
+          } else {
+            src.connect(gain);
+          }
+          src.start();
+          nodesRef.current = [src];
+        } else if (s.type==="rain") {
+          const src = ctx.createBufferSource();
+          src.buffer = makeNoiseBuffer(ctx, "pink");
+          src.loop = true;
+          const hpf = ctx.createBiquadFilter();
+          hpf.type="highpass"; hpf.frequency.value=1200;
+          const lfo = ctx.createOscillator();
+          const lfoGain = ctx.createGain();
+          lfo.frequency.value=0.3; lfo.type="sine";
+          lfoGain.gain.value=0.12;
+          lfo.connect(lfoGain); lfoGain.connect(gain.gain);
+          src.connect(hpf); hpf.connect(gain);
+          src.start(); lfo.start();
+          nodesRef.current = [src, lfo];
+        } else if (s.type==="ocean") {
+          const src = ctx.createBufferSource();
+          src.buffer = makeNoiseBuffer(ctx, "brown");
+          src.loop = true;
+          const lpf = ctx.createBiquadFilter();
+          lpf.type="lowpass"; lpf.frequency.value=600;
+          const lfo = ctx.createOscillator();
+          const lfoGain = ctx.createGain();
+          lfo.frequency.value=0.08; lfo.type="sine";
+          lfoGain.gain.value=0.28;
+          lfo.connect(lfoGain); lfoGain.connect(gain.gain);
+          src.connect(lpf); lpf.connect(gain);
+          src.start(); lfo.start();
+          nodesRef.current = [src, lfo];
+        } else if (s.type==="sine") {
+          const o=ctx.createOscillator(); o.frequency.value=s.freq; o.type="sine"; o.connect(gain); o.start();
+          nodesRef.current = [o];
+        } else if (s.type==="binaural") {
+          const merger=ctx.createChannelMerger(2);
+          merger.connect(gain);
+          const o1=ctx.createOscillator(), o2=ctx.createOscillator();
+          const g1=ctx.createGain(), g2=ctx.createGain();
+          o1.frequency.value=100; o2.frequency.value=100+s.freq;
+          o1.connect(g1); g1.connect(merger,0,0);
+          o2.connect(g2); g2.connect(merger,0,1);
+          o1.start(); o2.start();
+          nodesRef.current = [o1,o2];
+        }
+        setActive(s.name);
+      };
+
+      const changeVol=v=>{setVol(v);if(gainRef.current)gainRef.current.gain.value=v;};
+      useEffect(()=>()=>stop(),[]);
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>Sleep Sounds</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:24 }}>Mask noise and cue your nervous system that it's safe to rest.</p>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:20 }}>
+            {SOUNDS.map(s => (
+              <button key={s.name} onClick={()=>active===s.name?stop():play(s)} className="hover-lift" style={{ background:active===s.name?C.sageDeep:C.glass, border:`1px solid ${active===s.name?C.borderActive:C.glassBorder}`, borderRadius:18, padding:"20px 14px", cursor:"pointer", textAlign:"center" }}>
+                <div style={{ fontSize:28, marginBottom:10 }}>{s.icon}</div>
+                <p style={{ color:active===s.name?C.sage:C.charcoal, fontSize:13, fontWeight:500, marginBottom:4 }}>{s.name}</p>
+                <p style={{ color:active===s.name?C.sageDark:C.muted, fontSize:11 }}>{active===s.name?"▶ Playing":s.desc}</p>
+              </button>
+            ))}
+          </div>
+          <Card>
+            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:14 }}>
+              <span style={{ color:C.mid, fontSize:13 }}>Volume</span>
+              <span style={{ color:C.charcoal, fontSize:13, fontWeight:500 }}>{Math.round(vol*100)}%</span>
+            </div>
+            <input type="range" min="0" max="1" step="0.01" value={vol} onChange={e=>changeVol(+e.target.value)} style={{ width:"100%", accentColor:C.sage }} />
+          </Card>
+          <p style={{ color:C.muted, fontSize:12, marginTop:16, lineHeight:1.7 }}>💡 Use headphones for binaural delta waves. Delta frequencies (0.5–4 Hz) are associated with deep, restorative sleep stages.</p>
+        </div>
+      );
+    }
+
+    // ─── Coach Tab ────────────────────────────────────────────────────────────
+    function CoachTab({ diagnosis }) {
+      const [msgs, setMsgs] = useState([{ role:"assistant", text:"Hello — I'm here as your sleep coach. I draw on CBT-I principles, sleep science, and women's health research. What's on your mind tonight?" }]);
+      const [input, setInput] = useState("");
+      const [loading, setLoading] = useState(false);
+      const bottomRef = useRef(null);
+      useEffect(()=>{ bottomRef.current?.scrollIntoView({ behavior:"smooth" }); },[msgs]);
+
+      const send = async () => {
+        if (!input.trim()||loading) return;
+        const userMsg={role:"user",text:input};
+        const next=[...msgs,userMsg];
+        setMsgs(next); setInput(""); setLoading(true);
+        try {
+          const system=`You are a warm, expert CBT-I sleep therapist and women's health coach. Use evidence-based CBT-I: sleep restriction, stimulus control, cognitive restructuring, sleep hygiene, worry time, progressive muscle relaxation. Be concise (3–5 sentences), empathetic, and practical. Address hormonal and lifestyle factors relevant to women where appropriate. Never diagnose medically. ${diagnosis?`Context: user's sleep assessment found ${diagnosis.type} — ${diagnosis.diagnosis}`:""}`;
+          const res=await fetch("https://restora-api.velaorawomen.workers.dev",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:500, system, messages:next.map(m=>({ role:m.role==="assistant"?"assistant":"user", content:m.text })) }) });
+          const data=await res.json();
+          setMsgs(m=>[...m,{ role:"assistant", text:data.content?.find(b=>b.type==="text")?.text||"I'm here. Tell me more about what's happening for you." }]);
+        } catch { setMsgs(m=>[...m,{ role:"assistant", text:"I'm having trouble connecting just now. While I reconnect, try the 4-7-8 breathing in the Breathe tab — even three cycles can settle the nervous system." }]); }
+        setLoading(false);
+      };
+
+      return (
+        <div style={{ animation:"fadeUp 0.4s ease" }}>
+          <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:30, fontWeight:300, color:C.charcoal, marginBottom:8, letterSpacing:-0.3 }}>Sleep Coach</p>
+          <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:20 }}>AI-powered CBT-I guidance, personalised to you.</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:16, maxHeight:380, overflowY:"auto", paddingRight:4 }}>
+            {msgs.map((m,i) => (
+              <div key={i} style={{ display:"flex", justifyContent:m.role==="user"?"flex-end":"flex-start", animation:"fadeUp 0.3s ease" }}>
+                <div style={{ maxWidth:"86%", background:m.role==="user"?C.sageDeep:C.glass, border:`1px solid ${m.role==="user"?C.borderActive:C.glassBorder}`, borderRadius:m.role==="user"?"20px 20px 5px 20px":"20px 20px 20px 5px", padding:"13px 17px" }}>
+                  <p style={{ color:C.charcoal, fontSize:14, lineHeight:1.8 }}>{m.text}</p>
+                </div>
+              </div>
+            ))}
+            {loading && (
+              <div style={{ display:"flex", gap:6, padding:"14px 18px", background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:"20px 20px 20px 5px", width:"fit-content" }}>
+                {[0,1,2].map(i=><div key={i} style={{ width:7, height:7, borderRadius:"50%", background:C.sage, animation:`dotBounce 1.2s ease-in-out ${i*0.2}s infinite` }} />)}
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+          <div style={{ display:"flex", gap:10 }}>
+            <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask about sleep, anxiety, habits…"
+              style={{ flex:1, background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"14px 18px", color:C.charcoal, fontSize:14, transition:"border-color 0.2s" }}
+              onFocus={e=>e.target.style.borderColor=C.glassBorderHi}
+              onBlur={e=>e.target.style.borderColor=C.glassBorder} />
+            <button onClick={send} disabled={!input.trim()||loading} style={{ background:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`, border:"none", borderRadius:16, padding:"14px 20px", color:C.bg, cursor:"pointer", fontSize:18, opacity:!input.trim()?0.4:1, boxShadow:`0 4px 16px ${C.sageGlow}`, transition:"opacity 0.2s" }}>↑</button>
+          </div>
+          <p style={{ color:C.muted, fontSize:11, marginTop:12, textAlign:"center", lineHeight:1.7 }}>Not a substitute for medical advice. For clinical support, speak with your GP or a registered sleep clinician.</p>
+        </div>
+      );
+    }
+
+    // ─── Onboarding Questions (distinct from the 10-question assessment) ────────
+    const OQ = [
+      { id:"hope",    q:"What matters most to you about sleeping better?",
+        opts:["More energy to do the things I love","Better mood and less anxiety","Stop dreading bedtime","Finally feeling like myself again"] },
+      { id:"waketime",q:"What time do you usually need to wake up?",
+        opts:["Before 6am","6–7am","7–8am","After 8am / it varies"] },
+      { id:"impact",  q:"How does poor sleep most affect your days?",
+        opts:["My mood and patience with people I love","My ability to work and concentrate","My body — I feel physically unwell","Everything — it touches every part of my life"] },
+      { id:"when",    q:"Which part of the night is hardest for you?",
+        opts:["Falling asleep at the start of the night","Middle-of-night wake-ups (1–4am)","Early morning waking (4–6am)","All of it — the whole night is a struggle"] },
+    ];
+
+    function OnboardingModal({ onComplete, onSkip }) {
+      const [step, setStep] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const q = OQ[step];
+      const progress = (step + 1) / OQ.length;
+
+      const select = (opt) => {
+        const updated = { ...answers, [q.id]: opt };
+        setAnswers(updated);
+        if (step < OQ.length - 1) {
+          setStep(step + 1);
+        } else {
+          localStorage.setItem("restora_onboarded", "true");
+          localStorage.setItem("restora_journey_profile", JSON.stringify(updated));
+          onComplete(updated);
+        }
+      };
+
+      return (
+        <div style={{ position:"fixed", inset:0, background:"rgba(9,8,7,0.94)", zIndex:200, display:"flex", alignItems:"center", justifyContent:"center", padding:20, backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)" }}>
+          <div style={{ width:"100%", maxWidth:400, animation:"fadeUp 0.5s ease" }}>
+            <div style={{ textAlign:"center", marginBottom:24 }}>
+              <BreathOrb phase="idle" size={100} />
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:26, color:C.charcoal, marginTop:14, letterSpacing:-0.5 }}>Let's personalise your path</p>
+              <p style={{ color:C.muted, fontSize:13, marginTop:6, lineHeight:1.75 }}>Four quick questions so Restora can suggest the right journey for you.</p>
+            </div>
+            <div style={{ height:3, background:C.glassBorder, borderRadius:2, marginBottom:28, overflow:"hidden" }}>
+              <div style={{ height:"100%", width:`${progress * 100}%`, background:`linear-gradient(90deg, ${C.sage}, ${C.gold})`, borderRadius:2, transition:"width 0.35s ease" }} />
+            </div>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:21, color:C.charcoal, lineHeight:1.5, marginBottom:20, textAlign:"center", fontWeight:400 }}>{q.q}</p>
+            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+              {q.opts.map(opt => (
+                <button key={opt} onClick={()=>select(opt)} className="hover-lift"
+                  style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:16, padding:"14px 18px", color:C.charcoal, fontSize:14, cursor:"pointer", textAlign:"left", lineHeight:1.5 }}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor=`${C.sage}70`;e.currentTarget.style.background=`${C.sage}0D`;}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor=C.glassBorder;e.currentTarget.style.background=C.glass;}}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+            <p style={{ color:C.muted, fontSize:11, marginTop:18, textAlign:"center", opacity:0.55 }}>Question {step + 1} of {OQ.length}</p>
+            {step === 0 && (
+              <button onClick={onSkip} style={{ background:"none", border:"none", color:`${C.muted}`, fontSize:12, width:"100%", marginTop:10, cursor:"pointer", textAlign:"center", padding:8, opacity:0.6 }}>Skip — I'll explore on my own</button>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── 4-Week Journey Data ──────────────────────────────────────────────────
+    const AFFIRMATIONS = [
+      "Calm your mind now. Relax. Sleep is coming.",
+      "You are enough. You are more capable than you think.",
+      "Relaxation is about a calm mind — and a healthy tomorrow.",
+      "Rest is not a reward. It is your right.",
+      "Tonight you don't need to do anything. Simply be.",
+      "Your body knows how to sleep. Tonight, let it.",
+      "It's not easy — but it works. You're doing the work.",
+    ];
+
+    // ─── Day Complete Modal ───────────────────────────────────────────────────
+    function DayCompleteModal({ day, week, nextLabel, onNext, onClose, setTab }) {
+      const [mood, setMood] = useState(null);
+      const [breatheDone, setBreatheDone] = useState(false);
+      const MOODS = [{ e:"😔", l:"Rough" },{ e:"😐", l:"Okay" },{ e:"🙂", l:"Better" },{ e:"😌", l:"Calm" },{ e:"✨", l:"Good" }];
+      const aff = AFFIRMATIONS[(day.day + week.week) % AFFIRMATIONS.length];
+      const TEA_NOTE = "Do you have your sleep tea ready? Chamomile, valerian root, or passionflower — taken 30–60 minutes before bed — gently supports your nervous system's shift toward rest.";
+
+      return (
+        <div style={{ position:"fixed", inset:0, background:"rgba(9,8,7,0.93)", zIndex:300, display:"flex", alignItems:"center", justifyContent:"center", padding:20, backdropFilter:"blur(18px)", WebkitBackdropFilter:"blur(18px)", overflowY:"auto" }}>
+          <div style={{ width:"100%", maxWidth:380, animation:"fadeUp 0.4s ease", paddingBottom:20 }}>
+
+            {/* Week focus reminder */}
+            <div style={{ background:`${week.color}14`, border:`1.5px solid ${week.color}40`, borderRadius:18, padding:"16px 18px", marginBottom:16 }}>
+              <p style={{ background:week.grad, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:10, fontWeight:700, letterSpacing:2.5, textTransform:"uppercase", marginBottom:6 }}>Week {week.week} Focus</p>
+              <p style={{ color:C.charcoal, fontSize:14, lineHeight:1.75, marginBottom:6 }}>{week.focusReminder}</p>
+              <p style={{ color:week.color, fontSize:13, fontStyle:"italic" }}>It's not easy — but it works. You're doing the work.</p>
+            </div>
+
+            {/* Breathing prompt */}
+            <div style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:18, padding:"16px 18px", marginBottom:12 }}>
+              <p style={{ color:C.sage, fontSize:11, fontWeight:700, letterSpacing:2, textTransform:"uppercase", marginBottom:8 }}>Now — breathe</p>
+              <p style={{ color:C.mid, fontSize:14, lineHeight:1.8, marginBottom:12 }}>Before you move on, do three slow rounds of deep breathing. Let your body know it's safe.</p>
+              <div style={{ display:"flex", gap:10 }}>
+                <button onClick={()=>{ setBreatheDone(true); setTab("meditate"); }}
+                  style={{ flex:1, background:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`, border:"none", borderRadius:12, padding:"11px 16px", color:"#0F0D0B", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+                  Open Breathing ›
+                </button>
+                <button onClick={()=>setBreatheDone(true)}
+                  style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:12, padding:"11px 16px", color:C.muted, fontSize:13, cursor:"pointer" }}>
+                  Done ✓
+                </button>
+              </div>
+            </div>
+
+            {/* Tea prompt */}
+            {day.tea && (
+              <div style={{ background:`${C.gold}0D`, border:`1px solid ${C.gold}30`, borderRadius:16, padding:"14px 16px", marginBottom:12, display:"flex", gap:12, alignItems:"flex-start" }}>
+                <span style={{ fontSize:18, flexShrink:0 }}>🍵</span>
+                <p style={{ color:C.charcoal, fontSize:13, lineHeight:1.8 }}>{TEA_NOTE}</p>
+              </div>
+            )}
+
+            {/* Mood check */}
+            <div style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:18, padding:"16px 18px", marginBottom:12 }}>
+              <p style={{ color:C.muted, fontSize:11, fontWeight:700, letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>How are you feeling right now?</p>
+              <div style={{ display:"flex", gap:8, justifyContent:"space-between" }}>
+                {MOODS.map(m => (
+                  <button key={m.e} onClick={()=>setMood(m.e)}
+                    style={{ flex:1, padding:"10px 4px", background:mood===m.e?`${C.sage}20`:C.glass, border:`1px solid ${mood===m.e?C.sage+"70":C.glassBorder}`, borderRadius:12, cursor:"pointer", textAlign:"center", transition:"all 0.2s" }}>
+                    <div style={{ fontSize:20, marginBottom:3 }}>{m.e}</div>
+                    <p style={{ color:mood===m.e?C.sage:C.muted, fontSize:10, fontWeight:500 }}>{m.l}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Meditation nudge */}
+            <div style={{ background:C.glass, border:`1px solid ${C.glassBorder}`, borderRadius:18, padding:"16px 18px", marginBottom:12 }}>
+              <p style={{ color:"#B8A0D8", fontSize:11, fontWeight:700, letterSpacing:2, textTransform:"uppercase", marginBottom:8 }}>Before bed tonight</p>
+              <p style={{ color:C.mid, fontSize:14, lineHeight:1.8, marginBottom:12 }}>Use the guided meditation or body scan to ease into rest. Let the sounds carry you.</p>
+              <button onClick={()=>setTab("meditate")} style={{ background:`linear-gradient(140deg, #B8A0D8, #8A6AAE)`, border:"none", borderRadius:12, padding:"11px 18px", color:"#0F0D0B", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+                Open Meditation ›
+              </button>
+            </div>
+
+            {/* Affirmation */}
+            <div style={{ textAlign:"center", padding:"20px 10px", marginBottom:16 }}>
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:C.charcoal, lineHeight:1.65, fontWeight:300, fontStyle:"italic" }}>"{aff}"</p>
+            </div>
+
+            {/* Next button */}
+            <button onClick={onNext}
+              style={{ width:"100%", padding:"15px", background:`linear-gradient(140deg, ${week.color}, ${week.color}CC)`, border:"none", borderRadius:16, color:"#0F0D0B", fontSize:15, fontWeight:600, cursor:"pointer", letterSpacing:0.3, boxShadow:`0 6px 28px ${week.color}45`, marginBottom:10 }}>
+              {nextLabel} ›
+            </button>
+            <button onClick={onClose}
+              style={{ width:"100%", padding:"12px", background:"none", border:"none", color:C.muted, fontSize:13, cursor:"pointer" }}>
+              Close
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    const JOURNEY_WEEKS = [
+      {
+        week:1, title:"Foundations", subtitle:"Know your sleep", color:C.sage,
+        grad:`linear-gradient(140deg, ${C.sage}, ${C.sageDark})`,
+        focusReminder:"Sleep diary and observation — before changing anything, understand what's actually happening. This is where CBT-I begins.",
+        intro:"This week is about building self-knowledge before changing anything. Sleep is a biological process — understanding yours is the first act of care.",
+        theme:"Sleep diary: track time in bed, time asleep, and wake-ups each night. No changes yet — just observation.",
+        days:[
+          { day:1, title:"Your Sleep Assessment", desc:"Start here. Complete the 10-question assessment to identify your insomnia type — this shapes everything that follows. Take it honestly.", tab:"diagnose", tabLabel:"Go to Assess", icon:"◎", why:"You can't treat what you haven't named. The assessment gives your journey a specific, personalised foundation." },
+          { day:2, title:"Start Your Sleep Diary", desc:"Tonight, begin your nightly log. Each morning write down: (1) What time did you get into bed? (2) How long did it take to fall asleep? (3) Did you wake during the night — how many times, how long? (4) What time did you finally wake up? (5) How did you feel this morning — rate 1–5. Keep it simple: a note in your phone, a notebook by the bed, or a spreadsheet all work. If you have an Oura Ring or Fitbit, use its sleep data alongside your own notes — the combination is more useful than either alone.", icon:"📓", why:"Sleep diaries reveal patterns invisible to tired memory. Most women are surprised by the gap between what they think they sleep and what they actually do. Even rough estimates, tracked consistently, are clinically valuable." },
+          { day:3, title:"Understand Your Sleep Cycles", desc:"Read the CBT-I overview. Learn how sleep cycles work: light sleep, deep sleep, REM. Understanding the architecture of sleep takes away some of the mystery — and the fear.", tab:"cbti", tabLabel:"Open CBT-I", icon:"⏰", why:"People with insomnia tend to overestimate time awake and underestimate time asleep. Understanding cycles reduces catastrophising about 'lost' sleep." },
+          { day:4, title:"Your Chronotype + Magnesium", desc:"Are you a morning lark or a night owl? Write down when you naturally feel sleepiest and most alert — this shapes your sleep window next week. Also worth considering if you haven't already: magnesium glycinate, taken 30–60 minutes before bed, is one of the most widely supported sleep supplements. It supports muscle relaxation, reduces cortisol, and improves deep sleep quality in women. Start with 200–400mg. It doesn't work for everyone — and if it doesn't work for you, don't worry. This programme is all you need.", icon:"🌙", why:"Your chronotype is partly biological. Working with it rather than against it makes sleep restriction more effective. Magnesium glycinate (the glycinate form specifically) is well-tolerated and one of the few supplements with genuine evidence for sleep quality improvement in women." },
+          { day:5, title:"Your First Breathing Practice", desc:"Open the Breathe tab tonight before bed. Try the 4-7-8 pattern — just three rounds. Place one hand on your belly. Notice the shift.", tab:"meditate", tabLabel:"Open Breathe", icon:"○", tea:true, why:"Slow exhalation activates the parasympathetic nervous system, lowering heart rate and cortisol within minutes. This isn't just calming — it's physiological preparation for sleep." },
+          { day:6, title:"Sleep Diary Check-In", desc:"Review your 5 nights of diary entries. When did you sleep best? When was hardest? Look for one pattern — even a small one. Write it down.", icon:"📊", why:"Pattern recognition turns anxious anecdote into useful data. Seeing your sleep clearly — without judgment — is itself therapeutic." },
+          { day:7, title:"Week 1 Reflection", desc:"What surprised you most this week? What felt hardest? Write one insight you'll carry into Week 2. You've done real work — this self-observation is the foundation everything else is built on.", icon:"✦", why:"Reflection consolidates what you've learned. CBT-I works because it builds genuine insight, not just habits." },
+        ]
+      },
+      {
+        week:2, title:"Sleep Restriction", subtitle:"Build the pressure", color:C.gold,
+        grad:`linear-gradient(140deg, ${C.gold}, #B8923A)`,
+        focusReminder:"Sleep restriction — compress your time-in-bed to match your actual sleep. It's the most powerful single CBT-I technique. It's hard for the first few days, then it works.",
+        intro:"This is the week that feels hardest — and produces the most dramatic early results. Sleep restriction builds homeostatic sleep pressure, consolidating fragmented sleep into deeper, more restorative cycles.",
+        theme:"Set your sleep window based on last week's diary average. Keep a fixed wake time, no exceptions.",
+        days:[
+          { day:1, title:"Set Your Sleep Window", desc:"Using your diary average: calculate how many hours you actually slept (not time in bed). Set a fixed wake time. Count backwards — that's when you go to bed. Only enter bed when genuinely sleepy.", icon:"⏰", why:"Aligning time-in-bed with actual sleep time removes the hours of frustrated wakefulness that reinforce insomnia." },
+          { day:2, title:"Your Anchor Wake Time", desc:"Today and every day: get up at the exact same time regardless of how you slept. No exceptions on weekends. This single habit is the anchor of your entire circadian rhythm.", icon:"🌅", why:"A fixed wake time is the most powerful external cue your body has. Within days, your circadian rhythm begins to consolidate around it." },
+          { day:3, title:"Staying Up When Exhausted", desc:"This is the hardest day. If you're tired before your sleep window opens — stay up. Gentle activity only: reading, stretching, a warm shower. Do not nap.", icon:"🕯️", why:"The exhaustion you feel is sleep pressure building. It's biological, not dangerous. This pressure is exactly what will drive deeper sleep tonight." },
+          { day:4, title:"The Caffeine Cutoff", desc:"From today: no caffeine after 2pm. Caffeine's half-life is 5–7 hours — a 4pm coffee is still active at 9pm. Swap afternoon coffee for herbal tea. Your sleep window will thank you.", icon:"☕", tea:true, why:"Caffeine blocks adenosine — the molecule that builds sleep pressure. Even moderate afternoon caffeine delays sleep onset by 40–90 minutes and reduces deep sleep quality." },
+          { day:5, title:"Naps: The Rule", desc:"During sleep restriction, no napping. If you must — under 20 minutes only, before 2pm. Naps rob your sleep window of pressure, undoing the restriction's work.", icon:"🚫", why:"Even a short nap reduces sleep drive significantly. During the consolidation phase of sleep restriction, every minute of pressure matters." },
+          { day:6, title:"Sleep Efficiency Check", desc:"Calculate your sleep efficiency: (hours slept ÷ hours in bed) × 100. If it's above 85%, you'll extend your window by 15 minutes next week. If below, hold steady.", icon:"📊", why:"Sleep efficiency above 85% is the clinical benchmark for successful restriction. Watching this number climb is powerfully motivating." },
+          { day:7, title:"Week 2 Reflection", desc:"How did the restriction feel? Did you notice deeper sleep in the second half of the week? Write what shifted. If nothing shifted yet — that's normal. Persistence across 10–14 days is what drives the change.", icon:"✦", why:"Sleep restriction has a 70–80% success rate in clinical trials — higher than any sleep medication. Persistence is the entire mechanism." },
+        ]
+      },
+      {
+        week:3, title:"Stimulus Control", subtitle:"Rewire the bed", color:C.rose,
+        grad:`linear-gradient(140deg, ${C.rose}, #C07870)`,
+        focusReminder:"Stimulus control — your bed should mean sleep, not wakefulness. Every night you lie awake in bed re-trains the wrong association. This week you break it.",
+        intro:"This week you retrain your brain's association with bed. Months of lying awake have turned your bedroom into a place of worry. Stimulus control reverses that — usually within 1–2 weeks.",
+        theme:"The rule: if you're awake for 20+ minutes, get up. Return only when sleepy. Repeat. No phones in bed.",
+        days:[
+          { day:1, title:"The Bedroom Rules", desc:"From tonight: bed is only for sleep and intimacy. No phones, no TV, no reading in bed, no lying there worrying. If you're awake more than 20 minutes — get up, sit quietly in dim light, return when sleepy.", tab:"cbti", tabLabel:"Open CBT-I", icon:"🛏️", why:"Stimulus control breaks the conditioned wakefulness response built over months. The brain relearns: bed = sleep, not bed = anxious wakefulness." },
+          { day:2, title:"The Get-Up Protocol", desc:"Practice the get-up sequence before you need it tonight: dim light somewhere comfortable (not your bed), something quiet and unstimulating — a book, gentle music, breathing. No screens. Return when eyes are heavy.", icon:"🕯️", why:"Having a clear, practiced plan removes the decision fatigue of 3am. You don't have to think — you just follow the protocol." },
+          { day:3, title:"Sleep Hygiene Audit", desc:"Check your bedroom: cool (16–18°C is optimal), dark (blackout if possible), quiet. Remove anything screen-bright. Address the biggest gap tonight. These are physical sleep conditions, not just suggestions.", tab:"cbti", tabLabel:"Open CBT-I", icon:"🌙", why:"Sleep hygiene alone rarely cures insomnia. But poor hygiene actively undermines every other technique. The bedroom environment is a physiological input." },
+          { day:4, title:"Light and Your Body Clock", desc:"Morning light is your most powerful circadian anchor. Tomorrow morning, go outside or open curtains within 30 minutes of waking. Evening: dim all lights after 8pm. Even phone screens.", icon:"🌤️", tea:true, why:"Light hits photoreceptors directly linked to the suprachiasmatic nucleus — your body clock. Morning light sets the clock. Evening light delays it, pushing melatonin release later." },
+          { day:5, title:"Your Evening Wind-Down", desc:"Design your 30-minute pre-sleep ritual tonight: dim lighting, no harsh tasks, something genuinely calming. This is your transition signal — your body's cue that sleep is approaching. Make it consistent.", tab:"sounds", tabLabel:"Open Sounds", icon:"🌿", tea:true, why:"Cortisol needs a window to fall before melatonin rises. A consistent wind-down ritual speeds that transition and reduces sleep-onset time measurably." },
+          { day:6, title:"Sleep Sounds", desc:"Use sleep sounds tonight as part of your wind-down. Pink noise or delta binaural beats in the background — not as something to focus on, but as a gentle auditory cocoon.", tab:"sounds", tabLabel:"Open Sounds", icon:"♪", why:"Pink noise reduces wake-period activity in the brain, improves slow-wave sleep quality, and — over time — becomes a conditioned sleep cue in itself." },
+          { day:7, title:"Week 3 Reflection", desc:"Are you keeping the bedroom rules? How does it feel to get out of bed when you can't sleep — frustrating, or strangely better? Note what has shifted. Even a slightly shorter wake window is progress.", icon:"✦", why:"Even partial stimulus control compliance produces measurable improvement. Noticing small wins prevents the perfectionism that sabotages this technique." },
+        ]
+      },
+      {
+        week:4, title:"The Quiet Mind", subtitle:"Cognitive restructuring", color:"#B8A0D8",
+        grad:`linear-gradient(140deg, #B8A0D8, #8A6AAE)`,
+        focusReminder:"Cognitive restructuring — the racing, catastrophising mind at 2am is the central driver of chronic insomnia. This week you learn to work with your thoughts, not against them.",
+        intro:"This is the week most women say changed everything. The anxious mind at night — 'I'll never sleep', 'Tomorrow is ruined' — isn't just a symptom of insomnia. It's one of its core causes. This week you change that.",
+        theme:"Identify, challenge, and reframe the thoughts that keep you awake. Schedule your worries. Relax your body deliberately.",
+        days:[
+          { day:1, title:"Name Your Sleep Thoughts", desc:"Tonight, before bed, notice what thoughts arise. Write them down without judgment. Common ones: 'I'll never sleep', 'Something is wrong with me', 'I can't cope tomorrow'. Just name them — don't fight them.", tab:"cbti", tabLabel:"Open CBT-I", icon:"🧠", why:"Naming anxious thoughts activates the prefrontal cortex and reduces amygdala arousal. The brain's threat response quiets when you observe it rather than being inside it." },
+          { day:2, title:"Challenge the Catastrophe", desc:"Take one thought from last night. Ask: What's the actual evidence for this? What would I tell a close friend who said this? What's a more realistic version? Write the reframe.", icon:"💭", why:"Cognitive restructuring doesn't force positivity — it introduces genuine doubt into the catastrophe. Uncertainty is far less activating to the nervous system than certainty of doom." },
+          { day:3, title:"Scheduled Worry Time", desc:"Set 20 minutes today — not near bedtime — as your designated worry window. Write every concern. Note one small action, or accept what's outside your control. When worries rise at night: 'I'll deal with this at worry time tomorrow.'", tab:"cbti", tabLabel:"Open CBT-I", icon:"📓", why:"Worry time works because it gives the anxious mind permission to defer. The mind trusts its concerns won't be forgotten — and releases them at night." },
+          { day:4, title:"Let Go of 'I Must Sleep'", desc:"The pressure to sleep is one of the most potent inhibitors of it. Replace 'I must get 8 hours or tomorrow is ruined' with 'rest has value even without full sleep; I've managed on less before; my body is safe'. Say it aloud. Mean it.", icon:"🌿", tea:true, why:"Sleep performance anxiety is a specific cognitive feedback loop. The effort to control sleep triggers arousal that prevents it. Releasing the effort releases the arousal." },
+          { day:5, title:"Progressive Muscle Relaxation", desc:"Tonight, do the full PMR sequence: lie down, tense each muscle group for 5 seconds, release for 30. Feet → calves → thighs → abdomen → hands → arms → shoulders → jaw → face. Takes 15–20 minutes. Use the Breathe orb.", tab:"meditate", tabLabel:"Open Breathe", icon:"✨", tea:true, why:"PMR targets somatic anxiety — the body tension that co-exists with cognitive hyperarousal. Together they account for most chronic insomnia. PMR severs the physical component." },
+          { day:6, title:"Talk to Your Sleep Coach", desc:"Bring a real, specific sleep concern to the AI coach tonight. Try: 'I wake at 3am and my mind immediately races — what should I do in that exact moment?' Get a personalised response.", tab:"coach", tabLabel:"Open Coach", icon:"◇", why:"CBT-I principles are universal, but how to apply them depends on your specific pattern. Personalised guidance in real moments makes the difference." },
+          { day:7, title:"Week 4 Reflection", desc:"Has your relationship with your thoughts at night shifted at all? Even slightly less panic — even one night of drifting off more easily — is clinically significant. Write it down.", icon:"✦", why:"Micro-progress tracking is protective against perfectionism, which is itself a cognitive pattern that feeds insomnia. Small wins compound." },
+        ]
+      },
+      {
+        week:5, title:"The Female Body", subtitle:"Your hormones and sleep", color:"#7EC8E3",
+        grad:`linear-gradient(140deg, #7EC8E3, #4A8FAA)`,
+        focusReminder:"Hormonal awareness — your biology matters. Poor sleep in women is often biological, not just behavioural. This week you understand why, and what to do about it.",
+        intro:"This week addresses what makes women's sleep uniquely complex. Hormones, cortisol patterns, cycle fluctuations, perimenopause — these are real, physiological factors. Understanding them reframes everything.",
+        theme:"Hormonal awareness and cortisol management. Work with your biology, not against it.",
+        days:[
+          { day:1, title:"Your Cycle and Sleep", desc:"Reflect on your last few cycles. Does your sleep worsen at specific points? After ovulation (days 14–28), progesterone — nature's sedative — rises then drops sharply before your period. That drop is why you lie awake. It's not insomnia. It's biology.", icon:"🌸", why:"Progesterone has direct GABAergic effects — it calms the nervous system. Its withdrawal in the late luteal phase triggers the same neural arousal as stopping a sedative." },
+          { day:2, title:"Cortisol and the Female Evening", desc:"Women tend to have a longer cortisol tail into the evening, especially under chronic stress. Tonight's experiment: stop all task-completion and problem-solving after 8pm. Transition deliberately. Notice what happens to your mind.", icon:"🌙", why:"Cortisol is the primary sleep-antagonist hormone. Cognitive and achievement-oriented activity in the evening prolongs its elevation, delaying melatonin onset." },
+          { day:3, title:"Perimenopause and Sleep", desc:"If you're approaching or in perimenopause: falling oestrogen disrupts REM sleep architecture; progesterone loss removes its sedative effect; night sweats fragment deep sleep. These are physiological — and CBT-I still significantly helps alongside them.", icon:"🌿", why:"CBT-I is first-line recommended treatment for insomnia across all life stages, including perimenopause. It works even when hormonal disruption is part of the picture." },
+          { day:4, title:"Nutrition and Sleep", desc:"Magnesium supports deep sleep — found in leafy greens, nuts, seeds, dark chocolate. Tryptophan (turkey, eggs, oats) supports serotonin → melatonin conversion. Avoid large meals within 3 hours of bed. A warm drink helps.", icon:"🌱", tea:true, why:"Magnesium deficiency (very common in women) is directly linked to poor sleep quality and increased night-time cortisol. Dietary support works alongside CBT-I." },
+          { day:5, title:"Exercise and Sleep Timing", desc:"Regular exercise significantly improves sleep quality — but not within 3 hours of bedtime. Morning or early afternoon movement raises body temperature, which then drops in the evening, triggering sleep. Even a 20-minute walk helps.", icon:"🌤️", why:"Exercise increases adenosine buildup (sleep pressure) and improves slow-wave sleep quality. Timing matters — evening vigorous exercise delays sleep onset by up to 90 minutes." },
+          { day:6, title:"Alcohol and Sleep", desc:"Alcohol feels sedating but fragments sleep. It suppresses REM in the first half of the night, then causes rebound arousal in the second half — which is why you wake at 3–4am after a drink. Even one glass disrupts architecture.", icon:"🌙", why:"Alcohol increases slow-wave sleep initially, but the rebound effect in the second half of the night produces exactly the kind of fragmented, unrefreshing sleep that drives insomnia." },
+          { day:7, title:"Week 5 Reflection", desc:"What did you learn about your own body this week? Has understanding the biology — rather than fighting it — shifted anything? Write your hormone-aware sleep insights.", icon:"✦", why:"Biological literacy is protective. When you understand why a hard night happened, you're less likely to catastrophise it — and less likely to make it chronic." },
+        ]
+      },
+      {
+        week:6, title:"Long Sleep Life", subtitle:"Your practice for life", color:"#D4956A",
+        grad:`linear-gradient(140deg, #D4956A, #A86A40)`,
+        focusReminder:"Maintenance — the techniques are yours now. This week is about making them permanent, handling setbacks without panic, and building a sleep life that lasts.",
+        intro:"This is the final week — and in many ways the most important. You're building a practice that will carry you through life's disruptions: stress, travel, illness, seasonal changes. This isn't an ending. It's a foundation.",
+        theme:"Your personal sleep protocol. Relapse prevention. Long-term flourishing.",
+        days:[
+          { day:1, title:"Write Your Sleep Protocol", desc:"Today, write out your personal sleep protocol: your sleep window, your anchor wake time, your bedroom rules, your wind-down ritual, your go-to technique when you wake at 3am. Make it specific. This is your reference document.", icon:"📓", why:"Written protocols outperform intentions every time. Having a clear plan removes the decision fatigue and catastrophising of difficult nights." },
+          { day:2, title:"Handling Bad Nights", desc:"Bad nights will happen — travel, stress, illness, hormonal shifts. The difference between lapsed and relapsed is how you respond. Tomorrow morning: same wake time. Next night: back to your protocol. Don't compound one bad night into three.", icon:"🌙", why:"The fear of a bad night perpetuating itself is a core cognitive anxiety in insomnia. Having an explicit protocol for 'the morning after' neutralises it before it starts." },
+          { day:3, title:"Seasonal and Life Changes", desc:"Sleep changes across seasons (light), life transitions (new job, children, grief, illness), and decades (hormonal shifts). Your protocol will need adapting. Use the Coach when things shift. Return to Week 2 if fragmentation returns.", icon:"🌿", why:"Chronic insomnia is vulnerable to revival under life stress. Knowing that this is normal — and that you have tools — is the most protective thing you can carry forward." },
+          { day:4, title:"Sleep Diary: Final Review", desc:"Look back across your full diary, if you've kept it. What has changed? Sleep onset time? Night-wake duration? Morning mood? Compare Week 1 to now. Celebrate the data — even modest improvements are clinically meaningful.", icon:"📊", why:"Objective improvement often precedes subjective feeling of improvement in CBT-I. Your diary may show real progress that your tired brain hasn't registered yet." },
+          { day:5, title:"Your Sleep Toolkit", desc:"Everything you've built over six weeks: the diary, the sleep window, stimulus control, breathing, PMR, worry time, cognitive reframes, the coach. These are yours. Use them preventively, not just in crisis.", tab:"meditate", tabLabel:"Open Breathe", icon:"○", tea:true, why:"The goal of CBT-I is not to provide a treatment you keep returning to — it's to give you the tools to manage your own sleep for life. You now have them." },
+          { day:6, title:"Final Coach Session", desc:"Have a closing session with your sleep coach. Ask: 'I've completed the six-week programme. What should I do when I have a setback? What's my long-term maintenance plan?' Get it personalised.", tab:"coach", tabLabel:"Open Coach", icon:"◇", why:"Relapse prevention is a formal part of CBT-I. Having a clear, personalised plan for difficult periods is associated with significantly lower relapse rates." },
+          { day:7, title:"Graduation ✦", desc:"You've completed six weeks of gold-standard CBT-I — adapted for women, grounded in science, and carried by your own commitment. Sleep is changed for you now. Not perfect — but different. You are more capable than you ever thought. Come back whenever you need.", icon:"✦", why:"CBT-I produces durable, lasting improvements because it changes the underlying cognitive, behavioural, and physiological patterns — not just the symptoms. What you've built is real." },
+        ]
+      },
+    ];
+
+    // ─── Journey Tab ──────────────────────────────────────────────────────────
+    function JourneyTab({ setTab, profile }) {
+      const savedWeek = parseInt(localStorage.getItem("restora_journey_week") || "1");
+      const savedCompleted = JSON.parse(localStorage.getItem("restora_journey_completed") || "[]");
+      const TOTAL_DAYS = 42;
+
+      const [currentWeek, setCurrentWeek] = useState(savedWeek);
+      const [completed, setCompleted] = useState(new Set(savedCompleted));
+      const [expandedDay, setExpandedDay] = useState(null);
+      const [completionModal, setCompletionModal] = useState(null); // {day, week}
+      const [weekComplete, setWeekComplete] = useState(false);
+
+      const week = JOURNEY_WEEKS[currentWeek - 1];
+      const totalCompleted = completed.size;
+      const weekKeys = week.days.map(d => `${currentWeek}-${d.day}`);
+      const weekCompleted = weekKeys.filter(k => completed.has(k)).length;
+
+      const markComplete = (d) => {
+        const key = `${currentWeek}-${d.day}`;
+        if (completed.has(key)) {
+          // Unmark
+          const next = new Set(completed); next.delete(key); setCompleted(next);
+          localStorage.setItem("restora_journey_completed", JSON.stringify([...next]));
+        } else {
+          // Mark complete → show guided modal
+          const next = new Set(completed); next.add(key); setCompleted(next);
+          localStorage.setItem("restora_journey_completed", JSON.stringify([...next]));
+          setCompletionModal({ day: d, week });
+          // Check if week is now done
+          const newKeys = week.days.map(dd => `${currentWeek}-${dd.day}`);
+          const newDone = newKeys.filter(k => next.has(k)).length;
+          if (newDone === 7) setWeekComplete(true);
+        }
+      };
+
+      const handleModalNext = () => {
+        const d = completionModal.day;
+        setCompletionModal(null);
+        if (weekComplete && d.day === 7) {
+          // Stay to show week complete banner
+        } else {
+          // Auto-advance to next day
+          const nextDay = d.day < 7 ? `${currentWeek}-${d.day + 1}` : null;
+          if (nextDay) setExpandedDay(nextDay);
+        }
+      };
+
+      const advanceWeek = () => {
+        if (currentWeek < 6) {
+          const next = currentWeek + 1;
+          setCurrentWeek(next); setExpandedDay(`${next}-1`); setWeekComplete(false);
+          localStorage.setItem("restora_journey_week", String(next));
+        }
+      };
+
+      const setWeek = (w) => {
+        setCurrentWeek(w); setExpandedDay(null); setWeekComplete(false);
+        localStorage.setItem("restora_journey_week", String(w));
+      };
+
+      const getJourneyNote = () => {
+        if (!profile) return null;
+        const { hope, impact, when } = profile;
+        if (when && when.includes("1–4am")) return { color:C.rose, text:"Middle-of-night waking is very common. Week 4's cognitive work will be the most transformative for your pattern." };
+        if (impact && impact.includes("mood")) return { color:C.sage, text:"Your mood will shift noticeably as your sleep improves — often by the end of Week 2." };
+        if (hope && hope.includes("dreading bedtime")) return { color:C.gold, text:"Dreading bedtime is sleep anxiety — and CBT-I was designed exactly for this. You are in the right place." };
+        return { color:C.sage, text:"Follow each week in order. Consistency matters more than perfection — even partial effort compounds into real change." };
+      };
+
+      const note = getJourneyNote();
+
+      // Find the first incomplete day to highlight as "up next"
+      const nextIncompleteKey = weekKeys.find(k => !completed.has(k));
+
+      return (
+        <div style={{ animation:"fadeUp 0.45s ease" }}>
+          {/* Completion modal */}
+          {completionModal && (
+            <DayCompleteModal
+              day={completionModal.day}
+              week={completionModal.week}
+              nextLabel={completionModal.day.day < 7 ? `Continue to Day ${completionModal.day.day + 1}` : weekComplete && currentWeek < 6 ? `Start Week ${currentWeek + 1}` : "Close"}
+              onNext={handleModalNext}
+              onClose={()=>setCompletionModal(null)}
+              setTab={setTab}
+            />
+          )}
+
+          {/* Header */}
+          <div style={{ marginBottom:20 }}>
+            <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:32, fontWeight:300, color:C.charcoal, letterSpacing:-0.5, marginBottom:4 }}>Your 6-Week Journey</p>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.8 }}>Gold-standard CBT-I, guided day by day. Designed for women. Follow each step — the path is laid out for you.</p>
+          </div>
+
+          {/* Personalised note */}
+          {note && (
+            <div style={{ background:`${note.color}0D`, border:`1px solid ${note.color}30`, borderRadius:16, padding:"13px 16px", marginBottom:16, display:"flex", gap:12, alignItems:"flex-start" }}>
+              <span style={{ color:note.color, fontSize:15, marginTop:1, flexShrink:0 }}>✦</span>
+              <p style={{ color:C.charcoal, fontSize:13, lineHeight:1.75 }}>{note.text}</p>
+            </div>
+          )}
+
+          {/* Week selector — scrollable */}
+          <div style={{ display:"flex", gap:8, marginBottom:20, overflowX:"auto", paddingBottom:4 }}>
+            {JOURNEY_WEEKS.map(w => {
+              const wKeys = w.days.map(d => `${w.week}-${d.day}`);
+              const wDone = wKeys.filter(k => completed.has(k)).length;
+              const isActive = w.week === currentWeek;
+              const isAllDone = wDone === 7;
+              return (
+                <button key={w.week} onClick={()=>setWeek(w.week)}
+                  style={{ minWidth:82, padding:"11px 8px", background:isActive?`${w.color}18`:isAllDone?`${w.color}0A`:C.glass, border:`1.5px solid ${isActive?w.color+"70":isAllDone?w.color+"40":C.glassBorder}`, borderRadius:14, cursor:"pointer", textAlign:"center", transition:"all 0.22s ease", flexShrink:0, position:"relative" }}>
+                  {isAllDone && <span style={{ position:"absolute", top:-6, right:-4, background:w.grad, borderRadius:"50%", width:16, height:16, fontSize:9, display:"flex", alignItems:"center", justifyContent:"center", color:"#0F0D0B", fontWeight:700 }}>✓</span>}
+                  <p style={{ color:isActive?w.color:C.muted, fontSize:9, fontWeight:700, letterSpacing:2, textTransform:"uppercase", marginBottom:3 }}>Week {w.week}</p>
+                  <p style={{ color:isActive?C.charcoal:C.muted, fontSize:11, fontWeight:500, marginBottom:5, lineHeight:1.3 }}>{w.title}</p>
+                  <div style={{ height:2, background:C.glassBorder, borderRadius:1, overflow:"hidden" }}>
+                    <div style={{ height:"100%", width:`${(wDone/7)*100}%`, background:w.grad, borderRadius:1, transition:"width 0.3s ease" }} />
+                  </div>
+                  <p style={{ color:C.muted, fontSize:9, marginTop:3 }}>{wDone}/7</p>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Week complete banner */}
+          {weekComplete && weekCompleted === 7 && (
+            <div style={{ background:`${week.color}15`, border:`1.5px solid ${week.color}55`, borderRadius:18, padding:"18px 18px", marginBottom:16, textAlign:"center", animation:"fadeUp 0.4s ease" }}>
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:C.charcoal, marginBottom:6 }}>✦ Week {week.week} complete</p>
+              <p style={{ color:C.mid, fontSize:13, lineHeight:1.75, marginBottom:14 }}>You've finished {week.title}. Take a moment — then carry this into next week.</p>
+              {currentWeek < 6 && (
+                <button onClick={advanceWeek} style={{ background:week.grad, border:"none", borderRadius:14, padding:"12px 26px", color:"#0F0D0B", fontSize:14, fontWeight:600, cursor:"pointer", boxShadow:`0 4px 20px ${week.color}45` }}>
+                  Begin Week {currentWeek + 1}: {JOURNEY_WEEKS[currentWeek].title} ›
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Week overview card */}
+          <div style={{ background:`${week.color}0C`, border:`1.5px solid ${week.color}30`, borderRadius:20, padding:"18px 16px", marginBottom:16 }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:10 }}>
+              <div>
+                <p style={{ background:week.grad, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", fontSize:10, fontWeight:700, letterSpacing:2.5, textTransform:"uppercase", marginBottom:3 }}>Week {week.week} of 6</p>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:24, color:C.charcoal, fontWeight:400, letterSpacing:-0.3 }}>{week.title}</p>
+                <p style={{ color:C.muted, fontSize:12, fontStyle:"italic", marginTop:1 }}>{week.subtitle}</p>
+              </div>
+              <div style={{ textAlign:"right" }}>
+                <p style={{ color:week.color, fontSize:20, fontWeight:300, fontFamily:"Cormorant Garamond, serif", lineHeight:1 }}>{weekCompleted}<span style={{ fontSize:12, color:C.muted }}>/7</span></p>
+                <p style={{ color:C.muted, fontSize:10, marginTop:2 }}>days done</p>
+              </div>
+            </div>
+            <p style={{ color:C.mid, fontSize:13, lineHeight:1.8, marginBottom:10 }}>{week.intro}</p>
+            <div style={{ background:`${week.color}10`, borderRadius:11, padding:"9px 13px" }}>
+              <p style={{ color:week.color, fontSize:10, fontWeight:600, letterSpacing:1.5, textTransform:"uppercase", marginBottom:3 }}>This week's focus</p>
+              <p style={{ color:C.charcoal, fontSize:13, lineHeight:1.7 }}>{week.theme}</p>
+            </div>
+          </div>
+
+          {/* Day cards */}
+          <p style={{ color:C.muted, fontSize:10, fontWeight:700, letterSpacing:2.2, textTransform:"uppercase", marginBottom:10 }}>Daily Practice</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:9 }}>
+            {week.days.map((d, idx) => {
+              const key = `${currentWeek}-${d.day}`;
+              const done = completed.has(key);
+              const open = expandedDay === key;
+              const isNext = key === nextIncompleteKey && !done;
+
+              return (
+                <div key={key} style={{ background:done?`${week.color}0A`:isNext?`${week.color}06`:C.glass, border:`1px solid ${done?week.color+"45":isNext?week.color+"30":C.glassBorder}`, borderRadius:17, overflow:"hidden", transition:"all 0.22s ease" }}>
+                  <button onClick={()=>setExpandedDay(open ? null : key)}
+                    style={{ display:"flex", gap:13, alignItems:"center", width:"100%", background:"none", border:"none", padding:"14px 15px", cursor:"pointer", textAlign:"left" }}>
+                    <div style={{ minWidth:33, height:33, borderRadius:10, background:done?week.grad:isNext?`${week.color}20`:`${week.color}12`, border:`1px solid ${week.color}${done?"":isNext?"55":"30"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                      {done
+                        ? <span style={{ color:"#0F0D0B", fontSize:13, fontWeight:700 }}>✓</span>
+                        : <span style={{ color:week.color, fontSize:12 }}>{d.icon}</span>
+                      }
+                    </div>
+                    <div style={{ flex:1 }}>
+                      <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:2 }}>
+                        <p style={{ color:C.muted, fontSize:9, fontWeight:700, letterSpacing:1.8, textTransform:"uppercase" }}>Day {d.day}</p>
+                        {isNext && <span style={{ background:week.grad, borderRadius:8, padding:"1px 8px", fontSize:9, fontWeight:700, color:"#0F0D0B", letterSpacing:0.5 }}>Up next</span>}
+                        {done && <span style={{ color:C.muted, fontSize:9 }}>Done</span>}
+                      </div>
+                      <p style={{ color:done?C.muted:C.charcoal, fontSize:14, fontWeight:500, lineHeight:1.4, textDecoration:done?"line-through":"none", textDecorationColor:`${C.muted}80` }}>{d.title}</p>
+                    </div>
+                    <span style={{ color:C.muted, fontSize:15, transform:open?"rotate(90deg)":"rotate(0deg)", transition:"transform 0.2s ease", flexShrink:0 }}>›</span>
+                  </button>
+
+                  {open && (
+                    <div style={{ padding:"0 15px 16px", animation:"fadeUp 0.2s ease" }}>
+                      <p style={{ color:C.mid, fontSize:14, lineHeight:1.85, marginBottom:13 }}>{d.desc}</p>
+                      <div style={{ background:`${week.color}09`, border:`1px solid ${week.color}1A`, borderRadius:11, padding:"11px 13px", marginBottom:13 }}>
+                        <p style={{ color:week.color, fontSize:9, fontWeight:700, letterSpacing:1.8, textTransform:"uppercase", marginBottom:5 }}>Why this works</p>
+                        <p style={{ color:C.charcoal, fontSize:13, lineHeight:1.8 }}>{d.why}</p>
+                      </div>
+                      <div style={{ display:"flex", gap:9, flexWrap:"wrap" }}>
+                        {d.tab && (
+                          <button onClick={()=>setTab(d.tab)} style={{ background:week.grad, border:"none", borderRadius:11, padding:"10px 16px", color:"#0F0D0B", fontSize:13, fontWeight:600, cursor:"pointer", boxShadow:`0 3px 14px ${week.color}38` }}>
+                            {d.tabLabel} ›
+                          </button>
+                        )}
+                        {!done ? (
+                          <button onClick={()=>markComplete(d)} style={{ background:C.glass, border:`1px solid ${week.color}55`, borderRadius:11, padding:"10px 16px", color:week.color, fontSize:13, fontWeight:500, cursor:"pointer" }}>
+                            Mark complete ✓
+                          </button>
+                        ) : (
+                          <button onClick={()=>markComplete(d)} style={{ background:"none", border:`1px solid ${C.glassBorder}`, borderRadius:11, padding:"10px 16px", color:C.muted, fontSize:12, cursor:"pointer" }}>
+                            Undo
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Overall progress */}
+          <div style={{ marginTop:22, borderTop:`1px solid ${C.glassBorder}`, paddingTop:18 }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+              <p style={{ color:C.muted, fontSize:11, fontWeight:500 }}>Overall programme</p>
+              <p style={{ color:C.charcoal, fontSize:13, fontWeight:600 }}>{totalCompleted} <span style={{ color:C.muted, fontWeight:400 }}>/ {TOTAL_DAYS} days</span></p>
+            </div>
+            <div style={{ height:5, background:C.glassBorder, borderRadius:3, overflow:"hidden" }}>
+              <div style={{ height:"100%", width:`${(totalCompleted/TOTAL_DAYS)*100}%`, background:`linear-gradient(90deg, ${C.sage}, ${C.gold}, ${C.rose}, #B8A0D8, #7EC8E3, #D4956A)`, borderRadius:3, transition:"width 0.5s ease" }} />
+            </div>
+            {totalCompleted === TOTAL_DAYS && (
+              <p style={{ fontFamily:"Cormorant Garamond, serif", color:C.gold, fontSize:19, marginTop:14, textAlign:"center" }}>✦ Six weeks complete. You have done exceptional work. ✦</p>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Main App ─────────────────────────────────────────────────────────────
+    function App() {
+      const [unlocked, setUnlocked] = useState(false);
+      const [tab, setTab] = useState("about");
+      const [diagnosis, setDiagnosis] = useState(null);
+      const [showOnboarding, setShowOnboarding] = useState(false);
+      const [dark, setDark] = useState(() => localStorage.getItem("restora_theme") !== "light");
+      const [journeyProfile, setJourneyProfile] = useState(() => {
+        try { return JSON.parse(localStorage.getItem("restora_journey_profile") || "null"); } catch { return null; }
+      });
+
+      const toggleTheme = () => {
+        const next = !dark;
+        setDark(next);
+        localStorage.setItem("restora_theme", next ? "dark" : "light");
+      };
+
+      const handleUnlock = () => {
+        setUnlocked(true);
+        const alreadyOnboarded = localStorage.getItem("restora_onboarded");
+        if (!alreadyOnboarded) setShowOnboarding(true);
+      };
+
+      const handleOnboardingComplete = (profile) => {
+        setJourneyProfile(profile);
+        setShowOnboarding(false);
+        setTab("journey");
+      };
+
+      const handleOnboardingSkip = () => {
+        localStorage.setItem("restora_onboarded", "true");
+        setShowOnboarding(false);
+      };
+
+      if (!unlocked) return (
+        <div style={{ filter: dark ? "none" : "invert(1) hue-rotate(180deg)" }}>
+          <PasswordGate onUnlock={handleUnlock} />
+        </div>
+      );
+
+      return (
+        <div style={{ minHeight:"100vh", background:C.bg, fontFamily:"Inter, sans-serif", filter: dark ? "none" : "invert(1) hue-rotate(180deg)" }}>
+          <style>{GLOBAL_CSS}</style>
+          <OrbFilters />
+          {showOnboarding && <OnboardingModal onComplete={handleOnboardingComplete} onSkip={handleOnboardingSkip} />}
+          <div style={{ background:"rgba(15,13,11,0.85)", borderBottom:`1px solid ${C.glassBorder}`, padding:"14px 20px", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)", position:"sticky", top:0, zIndex:100 }}>
+            <div style={{ maxWidth:520, margin:"0 auto", display:"flex", alignItems:"center", gap:14 }}>
+              <div style={{ width:34, height:34, position:"relative", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <div style={{ position:"absolute", inset:"-6px", borderRadius:"50%", background:C.sageGlow, filter:"blur(8px)", animation:"glowIdle 5s ease-in-out infinite" }} />
+                <div style={{ width:34, height:34, borderRadius:"50%", background:`radial-gradient(circle at 33% 28%, rgba(200,245,225,0.5), ${C.sage} 45%, ${C.sageDark})`, boxShadow:`0 0 16px ${C.sageGlow}`, animation:"orbIdle 6s ease-in-out infinite" }} />
+              </div>
+              <div style={{ flex:1 }}>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:C.charcoal, fontWeight:400, letterSpacing:-0.2, lineHeight:1 }}>Restora</p>
+                <p style={{ color:C.muted, fontSize:10, letterSpacing:2, textTransform:"uppercase", marginTop:2 }}>by Velaora</p>
+              </div>
+              {diagnosis && <div style={{ background:C.sageDeep, border:`1px solid ${C.sage}45`, borderRadius:20, padding:"5px 13px" }}><span style={{ color:C.sage, fontSize:11, fontWeight:600 }}>✓ Assessed</span></div>}
+              <button onClick={toggleTheme} title={dark ? "Switch to light mode" : "Switch to dark mode"}
+                style={{ background:"none", border:`1px solid ${C.glassBorder}`, borderRadius:10, padding:"6px 10px", cursor:"pointer", color:C.muted, fontSize:15, lineHeight:1, marginLeft:4, transition:"border-color 0.2s" }}
+                onMouseEnter={e=>e.currentTarget.style.borderColor=C.sage}
+                onMouseLeave={e=>e.currentTarget.style.borderColor=C.glassBorder}>
+                {dark ? "☀" : "☾"}
+              </button>
+            </div>
+          </div>
+          <div style={{ background:"rgba(15,13,11,0.70)", borderBottom:`1px solid ${C.glassBorder}`, overflowX:"auto", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", position:"sticky", top:63, zIndex:99 }}>
+            <div style={{ display:"flex", maxWidth:520, margin:"0 auto", minWidth:"max-content" }}>
+              {TABS.map(t => (
+                <button key={t.id} onClick={()=>setTab(t.id)} style={{ background:"none", border:"none", padding:"13px 16px", cursor:"pointer", color:tab===t.id?C.sage:C.muted, fontWeight:tab===t.id?600:400, fontSize:13, whiteSpace:"nowrap", borderBottom:`2px solid ${tab===t.id?C.sage:"transparent"}`, transition:"color 0.22s ease, border-color 0.22s ease", letterSpacing:0.2 }}>
+                  <span style={{ marginRight:5, fontSize:10 }}>{t.icon}</span>{t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div key={tab} style={{ maxWidth:520, margin:"0 auto", padding:"28px 18px 80px", animation:"tabEnter 0.32s ease" }}>
+            {tab==="about"    && <AboutTab setTab={setTab} />}
+            {tab==="journey"  && <JourneyTab setTab={setTab} profile={journeyProfile} />}
+            {tab==="diagnose" && <DiagnoseTab onDiagnosis={d=>setDiagnosis(d)} setTab={setTab} />}
+            {tab==="cbti"     && <CBTITab />}
+            {tab==="meditate" && <MeditateTab />}
+            {tab==="sounds"   && <SoundsTab />}
+            {tab==="coach"    && <CoachTab diagnosis={diagnosis} />}
+          </div>
+          <div style={{ borderTop:`1px solid ${C.glassBorder}`, padding:"20px 18px", textAlign:"center", background:"rgba(9,8,7,0.8)" }}>
+            <p style={{ color:C.muted, fontSize:11 }}>© 2025 Velaora · Restora Sleep Programme · <span style={{ fontStyle:"italic" }}>For women who deserve better rest</span></p>
+            <p style={{ color:C.muted, fontSize:10, marginTop:6, opacity:0.6 }}>
+              <a href="/privacy" style={{ color:C.muted, textDecoration:"none" }} onMouseEnter={e=>e.target.style.color=C.sage} onMouseLeave={e=>e.target.style.color=C.muted}>Privacy Policy</a>
+              {" · "}
+              <a href="/terms" style={{ color:C.muted, textDecoration:"none" }} onMouseEnter={e=>e.target.style.color=C.sage} onMouseLeave={e=>e.target.style.color=C.muted}>Terms of Service</a>
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>

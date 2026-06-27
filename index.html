@@ -1517,6 +1517,7 @@ body::before {
 @media (max-width: 1100px) {
   .pillars-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid[style*="1.8fr 1fr 1fr 1fr 1fr"] { grid-template-columns: 1fr 1fr !important; }
 }
 
 @media (max-width: 900px) {
@@ -4436,7 +4437,7 @@ body::before {
 <footer class="footer">
   <div class="container">
 
-    <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,0.08);">
+    <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,0.08);">
 
       <div>
         <div class="logo-name" style="margin-bottom:6px;">VelaOra</div>
@@ -4479,6 +4480,14 @@ body::before {
           <li><a href="#subscribe">Join Free</a></li>
           <li><a href="#about">Contact</a></li>
           <li><a href="mailto:velaorawomen@gmail.com" style="color:rgba(255,255,255,0.4);font-size:12px;">velaorawomen@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
         </ul>
       </div>
 
