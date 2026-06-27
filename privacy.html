@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | VelaOra</title>
+<meta name="description" content="VelaOra's privacy policy — how we collect, use and protect your information under the NZ Privacy Act 2020.">
+<link rel="canonical" href="https://velaora.co.nz/privacy">
+<meta name="robots" content="noindex">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WS37E8T1E5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WS37E8T1E5');
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ivory: #FDFAF4;
+  --cream: #F5EFE3;
+  --cream-dark: #EDE4D3;
+  --teal: #3D6B61;
+  --teal-light: #5A8C80;
+  --teal-pale: #EAF2F0;
+  --teal-dark: #2C5248;
+  --gold: #B8895A;
+  --gold-light: #D4A96A;
+  --gold-pale: #F7EFE3;
+  --blush: #E8D0C0;
+  --sage: #7A9E7E;
+  --sage-pale: #EFF5EF;
+  --text-dark: #1E1E1A;
+  --text-mid: #444440;
+  --text-light: #7A7A72;
+  --border: #DDD5C8;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(253,250,244,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: box-shadow 0.3s;
+}
+.nav-logo { display: flex; flex-direction: column; text-decoration: none; }
+.nav-logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 500; color: var(--text-dark); letter-spacing: -0.3px;
+}
+.nav-logo-tag { font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a { font-size: 13px; color: var(--text-mid); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+.nav-links a:hover { color: var(--teal); }
+.btn { display: inline-block; padding: 9px 20px; border-radius: 24px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.22s; border: none; cursor: pointer; }
+.btn-teal { background: var(--teal); color: white; }
+.btn-teal:hover { background: var(--teal-dark); transform: translateY(-1px); box-shadow: var(--shadow); }
+
+/* ── Page content ── */
+.page-wrap { padding-top: 100px; padding-bottom: 80px; }
+
+.page-header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.page-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 48px); font-weight: 400;
+  color: var(--text-dark); letter-spacing: -0.5px; margin-bottom: 12px;
+}
+.page-header p { font-size: 14px; color: var(--text-light); }
+
+.legal-body h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-weight: 500; color: var(--text-dark);
+  margin: 40px 0 12px;
+}
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body p { color: var(--text-mid); font-size: 15px; margin-bottom: 16px; line-height: 1.8; }
+.legal-body ul { margin: 0 0 16px 20px; }
+.legal-body li { color: var(--text-mid); font-size: 15px; margin-bottom: 8px; line-height: 1.75; }
+.legal-body a { color: var(--teal); text-decoration: none; }
+.legal-body a:hover { color: var(--gold); }
+
+.highlight-box {
+  background: var(--teal-pale); border-left: 3px solid var(--teal);
+  border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 28px 0;
+}
+.highlight-box p { margin: 0; font-size: 14px; color: var(--teal-dark); }
+
+/* ── Footer ── */
+.footer {
+  background: #1A1A16; color: rgba(255,255,255,0.7);
+  font-family: 'Nunito', sans-serif;
+}
+.footer h5 { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+.footer ul { list-style: none; }
+.footer li { margin-bottom: 10px; }
+.footer a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+.footer a:hover { color: white; }
+.logo-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: -0.3px; }
+.logo-tag { font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.footer-social-btn { display: inline-block; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: rgba(255,255,255,0.55); text-decoration: none; transition: all 0.2s; }
+.footer-social-btn:hover { border-color: rgba(255,255,255,0.4); color: white; }
+
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .footer > .container > div:first-child { grid-template-columns: 1fr 1fr !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-name">VelaOra</div>
+    <span class="nav-logo-tag">navigating life</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#perimenopause">Perimenopause</a></li>
+    <li><a href="/#menopause">Menopause</a></li>
+    <li><a href="/#articles">Articles</a></li>
+    <li><a href="/#wellness-club" style="color:var(--gold);font-weight:600;">Wellness Club ✦</a></li>
+    <li><a href="/#about">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="/#subscribe" class="btn btn-teal">Join VelaOra</a>
+  </div>
+</nav>
+
+<main class="page-wrap">
+  <div class="container">
+    <div class="page-header">
+      <h1>Privacy Policy</h1>
+      <p>Last updated: June 2026 &nbsp;·&nbsp; VelaOra, New Zealand</p>
+    </div>
+
+    <div class="legal-body">
+
+      <div class="highlight-box">
+        <p>VelaOra is committed to protecting your privacy. This policy explains what information we collect, why, and how we use it — in plain language. It is written in accordance with the <strong>New Zealand Privacy Act 2020</strong>.</p>
+      </div>
+
+      <h2>Who We Are</h2>
+      <p>VelaOra is a New Zealand–based women's health platform providing educational content, tools, and wellness resources. We operate at <a href="https://velaora.co.nz">velaora.co.nz</a> and can be contacted at <a href="mailto:velaorawomen@gmail.com">velaorawomen@gmail.com</a>.</p>
+
+      <h2>What Information We Collect</h2>
+      <p>We collect only what is necessary to provide our services:</p>
+      <ul>
+        <li><strong>Email address and name</strong> — when you subscribe to VelaOra, submit a contact form, or sign up for a paid product such as Restora.</li>
+        <li><strong>Website usage data</strong> — anonymous analytics data collected via Google Analytics (pages visited, time on site, device type). This does not identify you personally.</li>
+        <li><strong>Form submissions</strong> — messages sent through our contact and subscription forms are processed by Formspree, our third-party form provider.</li>
+        <li><strong>Payment information</strong> — if you purchase a VelaOra product, payment is processed by our third-party payment provider. We do not store your card details on our servers.</li>
+      </ul>
+      <p>We do not collect sensitive personal information (such as health data, ethnicity, or government identifiers) unless you voluntarily share it with us.</p>
+
+      <h2>How We Use Your Information</h2>
+      <ul>
+        <li>To send you the VelaOra newsletter and articles you have subscribed to.</li>
+        <li>To provide access to paid products or services you have purchased.</li>
+        <li>To respond to enquiries submitted via our contact form.</li>
+        <li>To understand how our website is used and improve our content (via anonymous analytics).</li>
+        <li>To comply with our legal obligations under New Zealand law.</li>
+      </ul>
+      <p>We will not use your information for any purpose other than those listed above without your explicit consent.</p>
+
+      <h2>Who We Share Your Information With</h2>
+      <p>We use a small number of trusted third-party services to operate VelaOra:</p>
+      <ul>
+        <li><strong>Formspree</strong> — processes contact and subscription form submissions. <a href="https://formspree.io/legal/privacy-policy" target="_blank">Formspree Privacy Policy</a>.</li>
+        <li><strong>Google Analytics</strong> — anonymous website usage analytics. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics opt-out browser add-on</a>.</li>
+        <li><strong>Mailchimp / email platform</strong> — used to send newsletters and updates. Your email address is stored on their servers in accordance with their privacy policy.</li>
+        <li><strong>Payment processor</strong> — if applicable, your payment details are handled by our payment provider and subject to their privacy policy.</li>
+      </ul>
+      <p>We do not sell, rent, or trade your personal information to any third party for marketing purposes — ever.</p>
+
+      <h2>How Long We Keep Your Information</h2>
+      <p>We retain your email address and subscription data for as long as you remain subscribed to VelaOra communications. You may unsubscribe at any time using the link at the bottom of any email, or by contacting us directly. We will remove your data within 30 days of your request.</p>
+
+      <h2>Cookies</h2>
+      <p>VelaOra uses cookies to support Google Analytics and basic website function. These are non-identifying and do not track you across other websites. You can disable cookies in your browser settings at any time.</p>
+
+      <h2>Your Rights Under the NZ Privacy Act 2020</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> the personal information we hold about you.</li>
+        <li><strong>Correct</strong> any information that is inaccurate or out of date.</li>
+        <li><strong>Request deletion</strong> of your information (subject to any legal obligations we have to retain it).</li>
+        <li><strong>Withdraw consent</strong> to us using your information at any time.</li>
+        <li><strong>Make a complaint</strong> to the Office of the Privacy Commissioner at <a href="https://www.privacy.org.nz" target="_blank">privacy.org.nz</a> if you believe we have mishandled your information.</li>
+      </ul>
+      <p>To exercise any of these rights, email us at <a href="mailto:velaorawomen@gmail.com">velaorawomen@gmail.com</a>. We will respond within 20 working days.</p>
+
+      <h2>Data Security</h2>
+      <p>We take reasonable steps to protect your information. Our website is served over HTTPS. Third-party services we use maintain their own security standards. However, no system is completely secure, and we cannot guarantee absolute security of data transmitted over the internet.</p>
+
+      <h2>Children</h2>
+      <p>VelaOra is designed for adults. We do not knowingly collect personal information from anyone under the age of 16. If you believe a child has provided us with personal information, please contact us and we will delete it promptly.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>We may update this privacy policy from time to time. When we do, we will update the "Last updated" date at the top of this page. We encourage you to review this policy periodically.</p>
+
+      <h2>Contact Us</h2>
+      <p>If you have any questions about this privacy policy or how we handle your information, please contact us at <a href="mailto:velaorawomen@gmail.com">velaorawomen@gmail.com</a> or via the contact form on our <a href="/">website</a>.</p>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div>
+        <div class="logo-name" style="margin-bottom:6px;">VelaOra</div>
+        <span class="logo-tag" style="display:block;margin-bottom:14px;">navigating life</span>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:20px;">Science-backed women's health for NZ and Australia. Every season, every woman.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="https://velaora.substack.com" target="_blank" class="footer-social-btn">Substack</a>
+          <a href="https://medium.com/@velaora" target="_blank" class="footer-social-btn">Medium</a>
+          <a href="https://www.facebook.com/VelaOra" target="_blank" class="footer-social-btn">Facebook</a>
+          <a href="mailto:velaorawomen@gmail.com" class="footer-social-btn">Email</a>
+        </div>
+      </div>
+      <div>
+        <h5>Health Topics</h5>
+        <ul>
+          <li><a href="/#perimenopause">Perimenopause</a></li>
+          <li><a href="/#menopause">Menopause</a></li>
+          <li><a href="/#fertility">Fertility Over 40</a></li>
+          <li><a href="/#anxiety">Anxiety</a></li>
+          <li><a href="/#wellness-club" style="color:var(--gold);">Wellness Club ✦</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="/#articles">Articles</a></li>
+          <li><a href="/#resources">Resources</a></li>
+          <li><a href="/restora">Restora Sleep App</a></li>
+          <li><a href="https://velaora.substack.com" target="_blank">Substack</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="/privacy" style="color:rgba(255,255,255,0.85);">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/#about">About VelaOra</a></li>
+          <li><a href="mailto:velaorawomen@gmail.com" style="color:rgba(255,255,255,0.4);font-size:12px;">velaorawomen@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:20px 0;flex-wrap:wrap;">
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0;">© 2026 VelaOra. New Zealand &amp; Australia. All rights reserved.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.3);margin:0;max-width:560px;line-height:1.6;">General educational purposes only. Not medical advice. Always consult a healthcare professional. Some links are affiliate links.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
