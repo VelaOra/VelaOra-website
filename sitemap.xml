@@ -137,6 +137,13 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://velaora.co.nz/the-handles-north-shore-nz</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Legal -->
   <url>
     <loc>https://velaora.co.nz/privacy</loc>
