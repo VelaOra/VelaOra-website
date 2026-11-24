@@ -243,3 +243,12 @@ img{max-width:100%}
   table{display:block;overflow-x:auto;max-width:100%}
 }
 @media(max-width:600px){.page-hero{padding-top:104px!important}}
+/* Coming up next + review suggestion box */
+a.vo-upnext{text-decoration:none;color:var(--vo-text);transition:transform .25s,box-shadow .25s;border-top:3px solid var(--vo-gold)}
+a.vo-upnext:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+a.vo-upnext .vo-card-link{margin-top:auto}
+.vo-suggest{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:44px;background:var(--vo-gold-pale);border:1px solid #ead9c2;border-radius:22px;padding:clamp(22px,4vw,40px)}
+.vo-suggest h3{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3vw,34px);font-weight:500;margin:0 0 8px;color:var(--vo-text);line-height:1.15}
+.vo-suggest p{color:var(--vo-light);margin:0}
+.vo-suggest .vo-fine{margin-top:8px}
+@media(max-width:760px){.vo-suggest{grid-template-columns:1fr;gap:16px}}

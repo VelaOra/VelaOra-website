@@ -51,10 +51,11 @@
       var data = new FormData(form);
       data.append('source', form.getAttribute('data-vo-lead'));
       data.append('page', location.pathname);
+      if (data.get('suggestion')) track('review_suggestion', { term: String(data.get('suggestion')).slice(0, 40) });
       if (!data.get('_subject')) data.append('_subject', 'New VelaOra signup: ' + form.getAttribute('data-vo-lead'));
       fetch(FORMSPREE, { method: 'POST', body: data, headers: { Accept: 'application/json' } }).then(function (r) {
         if (!r.ok) throw new Error('bad');
-        store('velaora_gp_unlocked', '1'); store('vo_subscribed', '1');
+        if (form.getAttribute('data-vo-lead') !== 'suggest') { store('velaora_gp_unlocked', '1'); store('vo_subscribed', '1'); }
         track('generate_lead', { source: form.getAttribute('data-vo-lead') });
         var after = form.getAttribute('data-vo-after');
         if (after === 'stay') {

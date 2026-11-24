@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TOOLS = ROOT / 'tools'
 HEADER = (ROOT / 'partials/header.html').read_text()
 FOOTER = (ROOT / 'partials/footer.html').read_text()
+SUGGEST = (ROOT / 'partials/suggest.html').read_text()
 ARTICLES = json.loads((TOOLS / 'articles.json').read_text())
 SITE = 'https://velaora.co.nz'
 SKIP = {'restora.html', 'velaora-article-13-fertility.html', 'velaora-article-bloating.html', 'velaora-article-plastics.html'}
@@ -115,6 +116,7 @@ def apply_layout(s, name):
             s = s[:i] + ftr + s[j:]
     if 'id="main"' not in s:
         s = s.replace('<!--/VO:HEADER-->', '<!--/VO:HEADER-->\n<span id="main"></span>', 1)
+    s = re.sub(r'<!--VO:SUGGEST-->.*?<!--/VO:SUGGEST-->', lambda m: '<!--VO:SUGGEST-->' + SUGGEST + '<!--/VO:SUGGEST-->', s, flags=re.S)
     return fill_articles(s)
 
 
