@@ -233,52 +233,62 @@ strong { font-weight: 700; }
   ]
 }
 </script>
+<link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->
 </head>
 <body>
 
-<nav class="nav" id="main-nav">
-  <a href="/" class="nav-logo">
-    <div class="nav-logo-name">
-      <div class="nav-logo-dots">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-      VelaOra
-    </div>
-    <span class="nav-logo-tag">navigating life</span>
+<!--VO:HEADER-->
+<a class="vo-skip" href="#main">Skip to content</a>
+<header class="vo-header" id="vo-header">
+  <a href="/" class="vo-logo" aria-label="VelaOra home">
+    <span class="vo-logo-name"><span class="vo-logo-dots"><i></i><i></i><i></i><i></i><i></i></span>VelaOra</span>
+    <span class="vo-logo-tag">navigating life</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="/#perimenopause">Perimenopause</a></li>
-    <li><a href="/#menopause">Menopause</a></li>
-    <li><a href="/#anxiety">Anxiety</a></li>
-    <li><a href="/#articles">Articles</a></li>
-    <li><a href="/#wellness-club" style="color:var(--gold);font-weight:600;">Wellness Club ✦</a></li>
-    <li><a href="/#about">About</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="/#subscribe" class="btn btn-teal">Join VelaOra</a>
-  </div>
-  <div class="nav-burger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-
-<div class="mobile-menu" id="mobile-menu">
-  <ul>
-    <li><a href="/#perimenopause" onclick="toggleMenu()">Perimenopause</a></li>
-    <li><a href="/#menopause" onclick="toggleMenu()">Menopause</a></li>
-    <li><a href="/#anxiety" onclick="toggleMenu()">Anxiety</a></li>
-    <li><a href="/#articles" onclick="toggleMenu()">Articles</a></li>
-    <li><a href="/#wellness-club" onclick="toggleMenu()" style="color:var(--gold);font-weight:600;">✦ Wellness Club</a></li>
-    <li><a href="/#about" onclick="toggleMenu()">About</a></li>
-    <li><a href="/#subscribe" onclick="toggleMenu()">Join VelaOra</a></li>
-  </ul>
+  <nav class="vo-nav" aria-label="Main">
+    <div class="vo-dd">
+      <button class="vo-dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Topics
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></button>
+      <div class="vo-dd-menu">
+        <a href="/perimenopause"><span class="vo-dot" style="background:#3D6B61"></span><span><strong>Perimenopause</strong><small>It can start a decade before your periods stop</small></span></a>
+        <a href="/menopause"><span class="vo-dot" style="background:#B8895A"></span><span><strong>Menopause</strong><small>HRT, testosterone, bones, heart and skin</small></span></a>
+        <a href="/fertility"><span class="vo-dot" style="background:#7A9E7E"></span><span><strong>Fertility Over 40</strong><small>The questions to ask and what helps</small></span></a>
+        <a href="/anxiety"><span class="vo-dot" style="background:#6B4E7A"></span><span><strong>Anxiety &amp; Stress</strong><small>Hormonal or clinical, and what actually helps</small></span></a>
+        <a href="/separation"><span class="vo-dot" style="background:#B85C3A"></span><span><strong>Separation &amp; Divorce</strong><small>Plain-English navigation of the NZ process</small></span></a>
+      </div>
+    </div>
+    <a href="/articles">Articles</a>
+    <a href="/picks">Sarah's Picks</a>
+    <a href="/wellness-club" class="vo-gold">Wellness Club ✦</a>
+    <a href="/about">About</a>
+  </nav>
+  <a href="/quiz" class="vo-cta">Free symptom quiz</a>
+  <button class="vo-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="vo-drawer"><span></span><span></span><span></span></button>
+</header>
+<div class="vo-drawer" id="vo-drawer">
+  <h6>Topics</h6>
+  <a href="/perimenopause"><span class="vo-dot" style="background:#3D6B61"></span>Perimenopause</a>
+  <a href="/menopause"><span class="vo-dot" style="background:#B8895A"></span>Menopause</a>
+  <a href="/fertility"><span class="vo-dot" style="background:#7A9E7E"></span>Fertility Over 40</a>
+  <a href="/anxiety"><span class="vo-dot" style="background:#6B4E7A"></span>Anxiety &amp; Stress</a>
+  <a href="/separation"><span class="vo-dot" style="background:#B85C3A"></span>Separation &amp; Divorce</a>
+  <h6>Explore</h6>
+  <a href="/articles">All articles</a>
+  <a href="/gp-guide">Free GP appointment guide</a>
+  <a href="/picks">Sarah's Picks</a>
+  <a href="/wellness-club">Wellness Club ✦</a>
+  <a href="/resources">News &amp; resources</a>
+  <a href="/about">About Sarah</a>
+  <a href="/quiz" class="vo-cta">Take the free symptom quiz</a>
 </div>
+<span id="main-nav" hidden></span><span id="mobile-menu" hidden></span><span class="nav-burger" hidden></span>
+<!--/VO:HEADER-->
+<span id="main"></span>
 
 <main style="padding-top:72px; background:var(--ivory);">
   <div class="container">
     <div class="article-page-body">
 
-      <p class="article-breadcrumb"><a href="/">VelaOra</a> &nbsp;›&nbsp; <a href="/#articles">Articles</a> &nbsp;›&nbsp; Anxiety</p>
+      <p class="article-breadcrumb"><a href="/">VelaOra</a> &nbsp;›&nbsp; <a href="/articles">Articles</a> &nbsp;›&nbsp; Anxiety</p>
 
       <span class="tag tag-teal">Brain Health</span>
 
@@ -537,51 +547,88 @@ strong { font-weight: 700; }
 </section>
 </main>
 
-<footer class="footer">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,0.08);">
+<!--VO:FOOTER-->
+<footer class="vo-footer">
+  <div class="vo-footer-band" id="vo-join">
+    <div class="vo-wrap">
       <div>
-        <div class="logo-name" style="margin-bottom:6px;">VelaOra</div>
-        <span class="logo-tag" style="display:block;margin-bottom:14px;">navigating life</span>
-        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:20px;">Science-backed women's health for NZ and Australia. Every season, every woman.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="https://velaora.substack.com" target="_blank" class="footer-social-btn">Substack</a>
-          <a href="https://medium.com/@velaora" target="_blank" class="footer-social-btn">Medium</a>
-          <a href="https://www.facebook.com/VelaOra" target="_blank" class="footer-social-btn">Facebook</a>
-          <a href="mailto:velaorawomen@gmail.com" class="footer-social-btn">Email</a>
-        </div>
+        <h2>Real information, in your inbox.</h2>
+        <p>Honest, science-backed articles for NZ and Australian women, from Sarah. Free, and you can unsubscribe any time.</p>
       </div>
       <div>
-        <h5 style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;">Health Topics</h5>
-        <ul style="list-style:none;">
-          <li style="margin-bottom:12px;"><a href="/#perimenopause" style="font-size:14px;color:rgba(255,255,255,0.5);">Perimenopause</a></li>
-          <li style="margin-bottom:12px;"><a href="/#menopause" style="font-size:14px;color:rgba(255,255,255,0.5);">Menopause</a></li>
-          <li style="margin-bottom:12px;"><a href="/#anxiety" style="font-size:14px;color:rgba(255,255,255,0.5);">Anxiety</a></li>
-        </ul>
+        <form class="vo-form" action="https://velaora.substack.com/subscribe" method="get" target="_blank" data-vo-track="newsletter_footer">
+          <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+          <button type="submit" class="vo-btn vo-btn-gold">Join free</button>
+        </form>
+        <p class="vo-fine">Prefer something practical first? <a href="/gp-guide">Get the free GP appointment guide</a> or <a href="/quiz">take the 2-minute symptom quiz</a>.</p>
       </div>
-      <div>
-        <h5 style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;">Explore</h5>
-        <ul style="list-style:none;">
-          <li style="margin-bottom:12px;"><a href="/#articles" style="font-size:14px;color:rgba(255,255,255,0.5);">Articles</a></li>
-          <li style="margin-bottom:12px;"><a href="/#wellness-club" style="font-size:14px;color:var(--gold);">Wellness Club ✦</a></li>
-          <li style="margin-bottom:12px;"><a href="https://velaora.substack.com" target="_blank" style="font-size:14px;color:rgba(255,255,255,0.5);">Substack</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;">VelaOra</h5>
-        <ul style="list-style:none;">
-          <li style="margin-bottom:12px;"><a href="/#about" style="font-size:14px;color:rgba(255,255,255,0.5);">About</a></li>
-          <li style="margin-bottom:12px;"><a href="/#subscribe" style="font-size:14px;color:rgba(255,255,255,0.5);">Join Free</a></li>
-          <li style="margin-bottom:12px;"><a href="mailto:velaorawomen@gmail.com" style="font-size:12px;color:rgba(255,255,255,0.4);">velaorawomen@gmail.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:20px 0;flex-wrap:wrap;">
-      <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0;">© 2026 VelaOra. New Zealand &amp; Australia. All rights reserved.</p>
-      <p style="font-size:11px;color:rgba(255,255,255,0.3);margin:0;max-width:560px;line-height:1.6;">General educational purposes only. Not medical advice. Always consult a healthcare professional. Some links are affiliate links.</p>
     </div>
   </div>
+  <div class="vo-wrap vo-footer-main">
+    <div>
+      <span class="vo-logo-name"><span class="vo-logo-dots"><i></i><i></i><i></i><i></i><i></i></span>VelaOra</span>
+      <span class="vo-logo-tag" style="display:block;margin-top:6px;">navigating life</span>
+      <p style="margin:16px 0 0;max-width:340px;">Science-backed women's health for NZ and Australia. Because some journeys no one prepares you for.</p>
+      <div class="vo-social">
+        <a href="https://velaora.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.instagram.com/sarah.velaora" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.pinterest.com/velaorawomen" target="_blank" rel="noopener">Pinterest</a>
+        <a href="https://www.facebook.com/VelaOra" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://medium.com/@velaora" target="_blank" rel="noopener">Medium</a>
+      </div>
+    </div>
+    <div>
+      <h5>Topics</h5>
+      <ul>
+        <li><a href="/perimenopause">Perimenopause</a></li>
+        <li><a href="/menopause">Menopause</a></li>
+        <li><a href="/fertility">Fertility Over 40</a></li>
+        <li><a href="/anxiety">Anxiety &amp; Stress</a></li>
+        <li><a href="/separation">Separation &amp; Divorce</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="/articles">All articles</a></li>
+        <li><a href="/quiz">Symptom quiz</a></li>
+        <li><a href="/gp-guide">GP appointment guide</a></li>
+        <li><a href="/picks">Sarah's Picks</a></li>
+        <li><a href="/resources">News &amp; resources</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>VelaOra</h5>
+      <ul>
+        <li><a href="/about">About Sarah</a></li>
+        <li><a href="/about#contact">Contact</a></li>
+        <li><a href="/wellness-club">Wellness Club ✦</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="vo-wrap vo-footer-legal">
+    <span>© 2026 VelaOra · New Zealand &amp; Australia</span>
+    <p>General educational information only, not medical advice. Always talk to your GP or a qualified health professional about your own situation. Some links are affiliate links: if you buy through them VelaOra may earn a small commission at no extra cost to you. <a href="/picks#disclosure" style="text-decoration:underline">How this works</a>.</p>
+  </div>
 </footer>
+<div class="vo-pop" id="vo-pop" role="dialog" aria-modal="true" aria-labelledby="vo-pop-title">
+  <div class="vo-pop-box">
+    <button class="vo-pop-x" type="button" aria-label="Close">×</button>
+    <span class="vo-eyebrow">Free guide</span>
+    <h3 id="vo-pop-title">Walk into your GP appointment prepared</h3>
+    <p>What to say, what to track, and what to ask for, so you actually get heard. Free, straight away.</p>
+    <form class="vo-form" data-vo-lead="gp-guide-popup">
+      <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+      <button type="submit" class="vo-btn vo-btn-teal">Get the guide</button>
+    </form>
+    <p class="vo-msg" role="status"></p>
+    <button class="vo-pop-no" type="button">No thanks</button>
+  </div>
+</div>
+<script src="/assets/vo.js" defer></script>
+<!--/VO:FOOTER-->
 
 <script>
 window.addEventListener('scroll', function() {

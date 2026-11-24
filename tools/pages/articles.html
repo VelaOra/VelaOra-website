@@ -1,0 +1,44 @@
+title: All Articles — Perimenopause, Menopause, Fertility & More — VelaOra
+description: Every VelaOra article in one place: perimenopause, menopause, fertility over 40, anxiety, sleep, brain fog, nutrition and supplements, for NZ and Australian women.
+---
+<section class="vo-hero" style="padding-bottom:56px">
+  <div class="vo-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=75')"></div>
+  <div class="vo-wrap">
+    <span class="vo-eyebrow">The journal</span>
+    <h1>Real information. <em>No fluff.</em></h1>
+    <p>Science-backed, honestly written, and always from experience. Filter by topic or search for what's on your mind.</p>
+  </div>
+</section>
+<section class="vo-section" style="padding-top:44px;background:var(--vo-cream)">
+  <div class="vo-wrap">
+    <div class="vo-filter" role="group" aria-label="Filter articles by topic">
+      <button class="vo-chip" aria-pressed="true" data-f="all">All</button>
+      <button class="vo-chip" aria-pressed="false" data-f="perimenopause">Perimenopause</button>
+      <button class="vo-chip" aria-pressed="false" data-f="menopause">Menopause</button>
+      <button class="vo-chip" aria-pressed="false" data-f="fertility">Fertility</button>
+      <button class="vo-chip" aria-pressed="false" data-f="anxiety">Anxiety &amp; stress</button>
+      <button class="vo-chip" aria-pressed="false" data-f="sleep">Brain &amp; sleep</button>
+      <button class="vo-chip" aria-pressed="false" data-f="nutrition">Nutrition</button>
+      <button class="vo-chip" aria-pressed="false" data-f="supplements">Supplements</button>
+      <button class="vo-chip" aria-pressed="false" data-f="community">Community</button>
+    </div>
+    <input type="search" class="vo-search" id="art-search" placeholder="Search articles (e.g. sleep, magnesium, HRT)" aria-label="Search articles">
+    <div id="art-list"><!--VO:ARTICLES all--><!--/VO:ARTICLES--></div>
+    <p class="vo-empty" id="art-empty">No articles match that yet. Try another word, or <a href="/about#contact">tell Sarah what you'd like her to write about</a>.</p>
+  </div>
+</section>
+<script>
+(function(){
+  var chips=document.querySelectorAll('.vo-chip'), q=document.getElementById('art-search'), f='all';
+  var cards=document.querySelectorAll('#art-list .vo-card'), empty=document.getElementById('art-empty');
+  var params=new URLSearchParams(location.search); if(params.get('topic')) f=params.get('topic');
+  function apply(){ var t=q.value.trim().toLowerCase(), shown=0;
+    cards.forEach(function(c){ var ok=(f==='all'||c.dataset.topics.split(' ').indexOf(f)>-1)&&(!t||c.dataset.text.indexOf(t)>-1); c.style.display=ok?'':'none'; if(ok)shown++; });
+    chips.forEach(function(ch){ ch.setAttribute('aria-pressed', ch.dataset.f===f?'true':'false'); });
+    empty.style.display=shown?'none':'block'; }
+  chips.forEach(function(ch){ ch.addEventListener('click',function(){ f=ch.dataset.f; apply(); }); });
+  q.addEventListener('input',apply);
+  q.addEventListener('change',function(){ if(typeof gtag==='function'&&q.value) gtag('event','search',{search_term:q.value}); });
+  apply();
+})();
+</script>
