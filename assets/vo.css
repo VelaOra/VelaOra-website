@@ -242,3 +242,4 @@ img{max-width:100%}
   [style*="grid-template-columns:1fr 1fr"],[style*="grid-template-columns: 1fr 1fr"],[style*="grid-template-columns:repeat(2"],[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
   table{display:block;overflow-x:auto;max-width:100%}
 }
+@media(max-width:600px){.page-hero{padding-top:104px!important}}

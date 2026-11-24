@@ -24,7 +24,7 @@ SITE = 'https://velaora.co.nz'
 SKIP = {'restora.html', 'velaora-article-13-fertility.html', 'velaora-article-bloating.html', 'velaora-article-plastics.html'}
 CSS_LINK = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->'
 
-TOPIC_NAMES = {'perimenopause': 'Perimenopause', 'menopause': 'Menopause', 'fertility': 'Fertility', 'anxiety': 'Anxiety & Stress',
+TOPIC_NAMES = {'perimenopause': 'Perimenopause', 'menopause': 'Menopause', 'fertility': 'Fertility', 'anxiety': 'Anxiety & Stress', 'wellbeing': 'Anxiety, Stress & Wellbeing',
                'sleep': 'Brain & Sleep', 'nutrition': 'Nutrition', 'supplements': 'Supplements', 'community': 'Community'}
 
 esc = lambda s: html.escape(s, quote=True)
