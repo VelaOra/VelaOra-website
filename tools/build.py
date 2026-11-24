@@ -22,7 +22,7 @@ FOOTER = (ROOT / 'partials/footer.html').read_text()
 ARTICLES = json.loads((TOOLS / 'articles.json').read_text())
 SITE = 'https://velaora.co.nz'
 SKIP = {'restora.html', 'velaora-article-13-fertility.html', 'velaora-article-bloating.html', 'velaora-article-plastics.html'}
-CSS_LINK = '<link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->'
+CSS_LINK = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->'
 
 TOPIC_NAMES = {'perimenopause': 'Perimenopause', 'menopause': 'Menopause', 'fertility': 'Fertility', 'anxiety': 'Anxiety & Stress',
                'sleep': 'Brain & Sleep', 'nutrition': 'Nutrition', 'supplements': 'Supplements', 'community': 'Community'}
@@ -86,6 +86,8 @@ def fix_links(s):
 
 def apply_layout(s, name):
     s = fix_links(s)
+    if '<!--vo-css-->' in s and 'favicon.svg' not in s:
+        s = s.replace('<link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->', CSS_LINK, 1)
     if '<!--vo-css-->' not in s:
         s = s.replace('</head>', CSS_LINK + '\n</head>', 1)
     hdr = '<!--VO:HEADER-->\n' + HEADER + '<!--/VO:HEADER-->'
@@ -138,7 +140,7 @@ HEAD = '''<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/vo-base.css">
-<link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->
 </head>
 <body>
 '''

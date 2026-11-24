@@ -88,7 +88,7 @@
 
 /* ---------- EMAIL FORMS ---------- */
 .vo-form{display:flex;gap:10px;max-width:480px;flex-wrap:wrap}
-.vo-form input[type=email],.vo-form input[type=text]{flex:1 1 200px;min-width:0;padding:14px 18px;border:1.5px solid var(--vo-border);border-radius:30px;font-family:'Nunito',sans-serif;font-size:15px;background:#fff;color:var(--vo-text)}
+.vo-form input[type=email],.vo-form input[type=text]{flex:1 1 200px;min-width:0;padding:14px 18px;border:1.5px solid var(--vo-border);border-radius:30px;font-family:'Nunito',sans-serif;font-size:16px;background:#fff;color:var(--vo-text)}
 .vo-form input:focus{outline:2px solid var(--vo-gold);outline-offset:1px}
 .vo-form button{flex:0 0 auto}
 .vo-fine{font-size:12.5px;color:var(--vo-light);margin-top:10px}
@@ -178,7 +178,7 @@
 .vo-filter{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
 .vo-chip{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;padding:9px 16px;border-radius:24px;border:1.5px solid var(--vo-border);background:#fff;color:var(--vo-mid);cursor:pointer}
 .vo-chip[aria-pressed="true"]{background:var(--vo-teal);border-color:var(--vo-teal);color:#fff}
-.vo-search{display:block;width:100%;max-width:440px;margin:0 auto 36px;padding:13px 20px;border:1.5px solid var(--vo-border);border-radius:30px;font-family:'Nunito',sans-serif;font-size:15px;background:#fff}
+.vo-search{display:block;width:100%;max-width:440px;margin:0 auto 36px;padding:13px 20px;border:1.5px solid var(--vo-border);border-radius:30px;font-family:'Nunito',sans-serif;font-size:16px;background:#fff}
 .vo-empty{text-align:center;color:var(--vo-light);display:none;padding:30px 0}
 
 /* ---------- QUIZ ---------- */
@@ -223,3 +223,22 @@
 .vo-footer p{color:rgba(255,255,255,.62)}
 .vo-footer .vo-footer-legal p{color:rgba(255,255,255,.5)}
 .vo-footer-band p{color:rgba(255,255,255,.85)}
+/* Phone: stop iOS zooming into form fields, full-width buttons, comfy tap targets */
+@media(max-width:600px){
+  input,select,textarea{font-size:16px!important}
+  .vo-form{flex-direction:column}
+  .vo-form input[type=email],.vo-form input[type=text],.vo-form button{width:100%;flex:0 0 auto;justify-content:center}
+  .vo-hero-actions .vo-btn{width:100%;justify-content:center;text-align:center}
+  .vo-hero{padding:120px 0 56px}
+  .vo-home-hero{padding:130px 0 70px}
+  .vo-section{padding:56px 0}
+  .vo-footer li a{display:inline-block;padding:4px 0}
+  .vo-chip{padding:10px 16px}
+  .vo-exit{right:12px;bottom:12px;padding:12px 16px}
+  .vo-pop-box{padding:30px 22px 24px}
+}
+img{max-width:100%}
+@media(max-width:600px){
+  [style*="grid-template-columns:1fr 1fr"],[style*="grid-template-columns: 1fr 1fr"],[style*="grid-template-columns:repeat(2"],[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  table{display:block;overflow-x:auto;max-width:100%}
+}
