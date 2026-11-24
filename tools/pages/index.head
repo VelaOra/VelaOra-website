@@ -1,0 +1,66 @@
+<meta name="p:domain_verify" content="d64116390e7e69585a67f6c09f4d6f74"/>
+<meta name="commission-factory-verification" content="f700e40601a7437395a9e1491c555857" />
+<meta name="google-site-verification" content="lrcAb8eFR4w0p1RvjbyfnCkViudx7rQaGApUIU5q88s" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://velaora.co.nz/#organization",
+      "name": "VelaOra",
+      "url": "https://velaora.co.nz",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://velaora.co.nz/og-image.png"
+      },
+      "description": "VelaOra is a New Zealand science-backed women's health platform providing real, evidence-based guidance on perimenopause, menopause, fertility, anxiety, and separation. Created for NZ and Australian women.",
+      "foundingLocation": {
+        "@type": "Place",
+        "addressCountry": "NZ",
+        "addressRegion": "Auckland"
+      },
+      "email": "hello@velaora.co.nz",
+      "sameAs": [
+        "https://velaora.substack.com",
+        "https://www.instagram.com/sarah.velaora"
+      ],
+      "knowsAbout": [
+        "Perimenopause",
+        "Menopause",
+        "Women's fertility",
+        "Women's anxiety",
+        "Separation support",
+        "Women's health supplements",
+        "Science-backed women's health"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://velaora.co.nz/#website",
+      "url": "https://velaora.co.nz",
+      "name": "VelaOra — Navigating Life",
+      "description": "Science-backed women's health for NZ and Australian women navigating perimenopause, menopause, fertility, anxiety, and separation.",
+      "publisher": {
+        "@id": "https://velaora.co.nz/#organization"
+      },
+      "inLanguage": "en-NZ",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://velaora.co.nz/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://velaora.co.nz/#webpage",
+      "url": "https://velaora.co.nz",
+      "name": "VelaOra — Navigating Life. Because Some Journeys No One Prepares You For.",
+      "isPartOf": { "@id": "https://velaora.co.nz/#website" },
+      "about": { "@id": "https://velaora.co.nz/#organization" },
+      "description": "Real, science-backed guidance for the seasons of a woman's life — perimenopause, menopause, fertility, anxiety, and separation.",
+      "inLanguage": "en-NZ"
+    }
+  ]
+}
+</script>

@@ -119,25 +119,56 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
 @media(max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.two-col,.footer-inner{grid-template-columns:1fr;gap:32px;}.nut-grid,.articles-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.container{padding:0 20px;}.nut-grid,.articles-grid{grid-template-columns:1fr;}.subscribe-form{flex-direction:column;}.footer-inner{grid-template-columns:1fr;}}
 </style>
+<link rel="canonical" href="https://velaora.co.nz/fertility">
+<link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->
 </head>
 <body>
-<nav class="nav" id="main-nav">
-  <a href="index.html" style="text-decoration:none;"><span class="nav-logo-name">VelaOra</span><span class="nav-logo-sub">Navigating Life</span></a>
-  <ul class="nav-links">
-    <li><a href="perimenopause.html">Perimenopause</a></li>
-    <li><a href="fertility.html" class="active">Fertility</a></li>
-    <li><a href="anxiety.html">Anxiety</a></li>
-    <li><a href="articles.html">Articles</a></li>
-    <li><a href="index.html#wellness" style="color:var(--gold);border:1px solid rgba(184,137,90,0.3);border-radius:20px;padding:8px 14px;">Wellness Club ✦</a></li>
-  </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <a href="index.html#subscribe" class="btn btn-teal">Join VelaOra</a>
-    <button class="mobile-menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="currentColor"/><rect y="10" width="22" height="2" rx="1" fill="currentColor"/><rect y="16" width="22" height="2" rx="1" fill="currentColor"/></svg></button>
-  </div>
-</nav>
-<div id="mobile-menu" class="mobile-menu">
-  <a href="index.html">Home</a><a href="perimenopause.html">Perimenopause &amp; Menopause</a><a href="fertility.html">Fertility</a><a href="anxiety.html">Anxiety</a><a href="articles.html">Articles</a><a href="index.html#subscribe">Join VelaOra →</a>
+<!--VO:HEADER-->
+<a class="vo-skip" href="#main">Skip to content</a>
+<header class="vo-header" id="vo-header">
+  <a href="/" class="vo-logo" aria-label="VelaOra home">
+    <span class="vo-logo-name"><span class="vo-logo-dots"><i></i><i></i><i></i><i></i><i></i></span>VelaOra</span>
+    <span class="vo-logo-tag">navigating life</span>
+  </a>
+  <nav class="vo-nav" aria-label="Main">
+    <div class="vo-dd">
+      <button class="vo-dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Topics
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></button>
+      <div class="vo-dd-menu">
+        <a href="/perimenopause"><span class="vo-dot" style="background:#3D6B61"></span><span><strong>Perimenopause</strong><small>It can start a decade before your periods stop</small></span></a>
+        <a href="/menopause"><span class="vo-dot" style="background:#B8895A"></span><span><strong>Menopause</strong><small>HRT, testosterone, bones, heart and skin</small></span></a>
+        <a href="/fertility"><span class="vo-dot" style="background:#7A9E7E"></span><span><strong>Fertility Over 40</strong><small>The questions to ask and what helps</small></span></a>
+        <a href="/anxiety"><span class="vo-dot" style="background:#6B4E7A"></span><span><strong>Anxiety &amp; Stress</strong><small>Hormonal or clinical, and what actually helps</small></span></a>
+        <a href="/separation"><span class="vo-dot" style="background:#B85C3A"></span><span><strong>Separation &amp; Divorce</strong><small>Plain-English navigation of the NZ process</small></span></a>
+      </div>
+    </div>
+    <a href="/articles">Articles</a>
+    <a href="/picks">Sarah's Picks</a>
+    <a href="/wellness-club" class="vo-gold">Wellness Club ✦</a>
+    <a href="/about">About</a>
+  </nav>
+  <a href="/quiz" class="vo-cta">Free symptom quiz</a>
+  <button class="vo-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="vo-drawer"><span></span><span></span><span></span></button>
+</header>
+<div class="vo-drawer" id="vo-drawer">
+  <h6>Topics</h6>
+  <a href="/perimenopause"><span class="vo-dot" style="background:#3D6B61"></span>Perimenopause</a>
+  <a href="/menopause"><span class="vo-dot" style="background:#B8895A"></span>Menopause</a>
+  <a href="/fertility"><span class="vo-dot" style="background:#7A9E7E"></span>Fertility Over 40</a>
+  <a href="/anxiety"><span class="vo-dot" style="background:#6B4E7A"></span>Anxiety &amp; Stress</a>
+  <a href="/separation"><span class="vo-dot" style="background:#B85C3A"></span>Separation &amp; Divorce</a>
+  <h6>Explore</h6>
+  <a href="/articles">All articles</a>
+  <a href="/gp-guide">Free GP appointment guide</a>
+  <a href="/picks">Sarah's Picks</a>
+  <a href="/wellness-club">Wellness Club ✦</a>
+  <a href="/resources">News &amp; resources</a>
+  <a href="/about">About Sarah</a>
+  <a href="/quiz" class="vo-cta">Take the free symptom quiz</a>
 </div>
+<span id="main-nav" hidden></span><span id="mobile-menu" hidden></span><span class="nav-burger" hidden></span>
+<!--/VO:HEADER-->
+<span id="main"></span>
 
 <div class="page-hero">
   <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1600&q=80');"></div>
@@ -156,7 +187,7 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
   </div>
 </div>
 
-<div class="breadcrumb"><div class="container breadcrumb-inner"><a href="index.html">Home</a><span>/</span><span style="color:var(--gold);font-weight:600;">Fertility Over 40</span></div></div>
+<div class="breadcrumb"><div class="container breadcrumb-inner"><a href="/">Home</a><span>/</span><span style="color:var(--gold);font-weight:600;">Fertility Over 40</span></div></div>
 
 <section id="what-science-says" class="section-anchor section-pad">
   <div class="container">
@@ -245,39 +276,8 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
       <h2 style="color:var(--text-dark);margin-bottom:12px;">Fertility — Read On</h2>
       <p style="max-width:480px;margin:0 auto;color:var(--text-light);">Science-backed articles on fertility, egg quality, and navigating the IVF process.</p>
     </div>
-    <div class="articles-grid">
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80" alt="Oura ring fertility tracking" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-gold">Fertility &amp; Tech</span>
-          <h4>Know Your Body — How Fertility Trackers and the Oura Ring Are Changing Women's Health</h4>
-          <div class="read-time">⏱ 7 min read</div>
-          <p>What you can learn about your cycle, fertility and perimenopause from a ring on your finger while you sleep.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=600&q=80" alt="Fertility over 40 guidance" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-gold">Fertility</span>
-          <h4>IVF Over 40 — The Questions Your Clinic Might Not Answer Unless You Ask</h4>
-          <div class="read-time">⏱ 8 min read</div>
-          <p>What to ask, what the statistics actually mean, and how to advocate for yourself in the system.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="CoQ10 egg quality" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-sage">Supplements</span>
-          <h4>CoQ10 and Egg Quality — The Supplement That Changed the Conversation</h4>
-          <div class="read-time">⏱ 6 min read</div>
-          <p>The mitochondria story, the ubiquinol difference, and why dosing matters more than most people realise.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-    </div>
-    <div style="text-align:center;margin-top:24px;"><a href="articles.html" class="btn btn-gold">View All Articles →</a></div>
+    <!--VO:ARTICLES topic fertility--><div class="vo-grid"><a class="vo-card" href="/fertility-trackers-oura-ring-women" data-topics="fertility" data-text="know your body — how fertility trackers and the oura ring are changing women&#x27;s health what you can learn about your cycle, fertility and perimenopause from a ring on your finger while you sleep. fertility &amp; tech"><img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Oura ring fertility tracking" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Fertility &amp; Tech</span><span>7 min read</span></div><h3>Know Your Body — How Fertility Trackers and the Oura Ring Are Changing Women&#x27;s Health</h3><p>What you can learn about your cycle, fertility and perimenopause from a ring on your finger while you sleep.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/fertility-over-40-supplements-nz" data-topics="fertility supplements" data-text="i had a baby at 40. here&#x27;s every single thing that finally helped — and why you can&#x27;t wait. i worked inside a fertility clinic and still spent two years trying. the exact supplements, doses, and honest science. fertility over 40"><img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Fertility over 40 NZ" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Fertility Over 40</span><span>12 min read</span></div><h3>I Had a Baby at 40. Here&#x27;s Every Single Thing That Finally Helped — And Why You Can&#x27;t Wait.</h3><p>I worked inside a fertility clinic and still spent two years trying. The exact supplements, doses, and honest science.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/microplastics-womens-hormones-nz" data-topics="fertility nutrition" data-text="the plastic problem — what every new zealand woman needs to know about plastics, microplastics, and your hormones every week you ingest around five grams of plastic. emerging science suggests women face particular risks. the practical steps that make a real difference. women&#x27;s health"><img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Microplastics women&#x27;s health NZ" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Women&#x27;s Health</span><span>11 min read</span></div><h3>The Plastic Problem — What Every New Zealand Woman Needs to Know About Plastics, Microplastics, and Your Hormones</h3><p>Every week you ingest around five grams of plastic. Emerging science suggests women face particular risks. The practical steps that make a real difference.</p><span class="vo-card-link">Read article →</span></div></a></div><!--/VO:ARTICLES-->
+    <div style="text-align:center;margin-top:24px;"><a href="/articles" class="btn btn-gold">View All Articles →</a></div>
   </div>
 </section>
 
@@ -299,17 +299,88 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
   </div>
 </section>
 
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand"><span class="footer-brand-name">VelaOra</span><span class="footer-brand-sub">Navigating Life</span><p>Science-backed women's health for NZ and Australian women.</p></div>
-      <div class="footer-col"><h5>Topics</h5><a href="perimenopause.html">Perimenopause</a><a href="perimenopause.html#menopause">Menopause</a><a href="fertility.html">Fertility Over 40</a><a href="anxiety.html">Anxiety</a></div>
-      <div class="footer-col"><h5>Content</h5><a href="articles.html">All Articles</a><a href="index.html#wellness">Wellness Club</a><a href="index.html#subscribe">Join Free</a></div>
-      <div class="footer-col"><h5>VelaOra</h5><a href="index.html#about">About Sarah</a><a href="https://velaora.substack.com" target="_blank">Substack</a><a href="https://www.instagram.com/sarah.velaora" target="_blank">Instagram</a><a href="mailto:hello@velaora.co.nz">Contact</a></div>
+<!--VO:FOOTER-->
+<footer class="vo-footer">
+  <div class="vo-footer-band" id="vo-join">
+    <div class="vo-wrap">
+      <div>
+        <h2>Real information, in your inbox.</h2>
+        <p>Honest, science-backed articles for NZ and Australian women, from Sarah. Free, and you can unsubscribe any time.</p>
+      </div>
+      <div>
+        <form class="vo-form" action="https://velaora.substack.com/subscribe" method="get" target="_blank" data-vo-track="newsletter_footer">
+          <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+          <button type="submit" class="vo-btn vo-btn-gold">Join free</button>
+        </form>
+        <p class="vo-fine">Prefer something practical first? <a href="/gp-guide">Get the free GP appointment guide</a> or <a href="/quiz">take the 2-minute symptom quiz</a>.</p>
+      </div>
     </div>
-    <div class="footer-bottom"><span>© 2026 VelaOra. Navigating Life.</span><span><a href="#affiliate-disclosure">Affiliate disclosure</a> · <a href="mailto:hello@velaora.co.nz">hello@velaora.co.nz</a></span></div>
+  </div>
+  <div class="vo-wrap vo-footer-main">
+    <div>
+      <span class="vo-logo-name"><span class="vo-logo-dots"><i></i><i></i><i></i><i></i><i></i></span>VelaOra</span>
+      <span class="vo-logo-tag" style="display:block;margin-top:6px;">navigating life</span>
+      <p style="margin:16px 0 0;max-width:340px;">Science-backed women's health for NZ and Australia. Because some journeys no one prepares you for.</p>
+      <div class="vo-social">
+        <a href="https://velaora.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.instagram.com/sarah.velaora" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.pinterest.com/velaorawomen" target="_blank" rel="noopener">Pinterest</a>
+        <a href="https://www.facebook.com/VelaOra" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://medium.com/@velaora" target="_blank" rel="noopener">Medium</a>
+      </div>
+    </div>
+    <div>
+      <h5>Topics</h5>
+      <ul>
+        <li><a href="/perimenopause">Perimenopause</a></li>
+        <li><a href="/menopause">Menopause</a></li>
+        <li><a href="/fertility">Fertility Over 40</a></li>
+        <li><a href="/anxiety">Anxiety &amp; Stress</a></li>
+        <li><a href="/separation">Separation &amp; Divorce</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="/articles">All articles</a></li>
+        <li><a href="/quiz">Symptom quiz</a></li>
+        <li><a href="/gp-guide">GP appointment guide</a></li>
+        <li><a href="/picks">Sarah's Picks</a></li>
+        <li><a href="/resources">News &amp; resources</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>VelaOra</h5>
+      <ul>
+        <li><a href="/about">About Sarah</a></li>
+        <li><a href="/about#contact">Contact</a></li>
+        <li><a href="/wellness-club">Wellness Club ✦</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="vo-wrap vo-footer-legal">
+    <span>© 2026 VelaOra · New Zealand &amp; Australia</span>
+    <p>General educational information only, not medical advice. Always talk to your GP or a qualified health professional about your own situation. Some links are affiliate links: if you buy through them VelaOra may earn a small commission at no extra cost to you. <a href="/picks#disclosure" style="text-decoration:underline">How this works</a>.</p>
   </div>
 </footer>
+<div class="vo-pop" id="vo-pop" role="dialog" aria-modal="true" aria-labelledby="vo-pop-title">
+  <div class="vo-pop-box">
+    <button class="vo-pop-x" type="button" aria-label="Close">×</button>
+    <span class="vo-eyebrow">Free guide</span>
+    <h3 id="vo-pop-title">Walk into your GP appointment prepared</h3>
+    <p>What to say, what to track, and what to ask for, so you actually get heard. Free, straight away.</p>
+    <form class="vo-form" data-vo-lead="gp-guide-popup">
+      <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+      <button type="submit" class="vo-btn vo-btn-teal">Get the guide</button>
+    </form>
+    <p class="vo-msg" role="status"></p>
+    <button class="vo-pop-no" type="button">No thanks</button>
+  </div>
+</div>
+<script src="/assets/vo.js" defer></script>
+<!--/VO:FOOTER-->
 <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 <script>
 window.addEventListener('scroll',function(){document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>20);var btn=document.getElementById('back-to-top');if(btn)btn.style.display=window.scrollY>600?'flex':'none';});

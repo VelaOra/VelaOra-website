@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perimenopause & Menopause — VelaOra</title>
-<meta name="description" content="Real, science-backed guidance on perimenopause and menopause for NZ and Australian women. Symptoms, HRT, nutrition, supplements and how to navigate the NZ medical system.">
+<title>Perimenopause: Symptoms, Science & Getting Heard — VelaOra</title>
+<meta name="description" content="Real, science-backed perimenopause guidance for NZ and Australian women: early symptoms, what helps, supplements, and how to get your GP to listen.">
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Perimenopause & Menopause — VelaOra" />
+<meta property="og:title" content="Perimenopause — VelaOra" />
 <meta property="og:description" content="What nobody warned you was coming. Real perimenopause and menopause guidance for NZ women." />
 <meta property="og:image" content="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=80" />
 
@@ -231,54 +231,71 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
   .subscribe-form{flex-direction:column;}
 }
 </style>
+<link rel="canonical" href="https://velaora.co.nz/perimenopause">
+<link rel="stylesheet" href="/assets/vo.css"><!--vo-css-->
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="nav" id="main-nav">
-  <a href="index.html" class="nav-logo">
-    <span class="nav-logo-name">VelaOra</span>
-    <span class="nav-logo-sub">Navigating Life</span>
+<!--VO:HEADER-->
+<a class="vo-skip" href="#main">Skip to content</a>
+<header class="vo-header" id="vo-header">
+  <a href="/" class="vo-logo" aria-label="VelaOra home">
+    <span class="vo-logo-name"><span class="vo-logo-dots"><i></i><i></i><i></i><i></i><i></i></span>VelaOra</span>
+    <span class="vo-logo-tag">navigating life</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="perimenopause.html" class="active">Perimenopause</a></li>
-    <li><a href="perimenopause.html#menopause">Menopause</a></li>
-    <li><a href="fertility.html">Fertility</a></li>
-    <li><a href="anxiety.html">Anxiety</a></li>
-    <li><a href="articles.html">Articles</a></li>
-    <li class="wellness-link"><a href="index.html#wellness">Wellness Club ✦</a></li>
-  </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <a href="index.html#subscribe" class="btn btn-teal">Join VelaOra</a>
-    <button class="mobile-menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="currentColor"/><rect y="10" width="22" height="2" rx="1" fill="currentColor"/><rect y="16" width="22" height="2" rx="1" fill="currentColor"/></svg>
-    </button>
-  </div>
-</nav>
-<div id="mobile-menu" class="mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="perimenopause.html">Perimenopause</a>
-  <a href="perimenopause.html#menopause">Menopause</a>
-  <a href="fertility.html">Fertility</a>
-  <a href="anxiety.html">Anxiety</a>
-  
-  <a href="articles.html">Articles</a>
-  <a href="index.html#subscribe">Join VelaOra →</a>
+  <nav class="vo-nav" aria-label="Main">
+    <div class="vo-dd">
+      <button class="vo-dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Topics
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></button>
+      <div class="vo-dd-menu">
+        <a href="/perimenopause"><span class="vo-dot" style="background:#3D6B61"></span><span><strong>Perimenopause</strong><small>It can start a decade before your periods stop</small></span></a>
+        <a href="/menopause"><span class="vo-dot" style="background:#B8895A"></span><span><strong>Menopause</strong><small>HRT, testosterone, bones, heart and skin</small></span></a>
+        <a href="/fertility"><span class="vo-dot" style="background:#7A9E7E"></span><span><strong>Fertility Over 40</strong><small>The questions to ask and what helps</small></span></a>
+        <a href="/anxiety"><span class="vo-dot" style="background:#6B4E7A"></span><span><strong>Anxiety &amp; Stress</strong><small>Hormonal or clinical, and what actually helps</small></span></a>
+        <a href="/separation"><span class="vo-dot" style="background:#B85C3A"></span><span><strong>Separation &amp; Divorce</strong><small>Plain-English navigation of the NZ process</small></span></a>
+      </div>
+    </div>
+    <a href="/articles">Articles</a>
+    <a href="/picks">Sarah's Picks</a>
+    <a href="/wellness-club" class="vo-gold">Wellness Club ✦</a>
+    <a href="/about">About</a>
+  </nav>
+  <a href="/quiz" class="vo-cta">Free symptom quiz</a>
+  <button class="vo-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="vo-drawer"><span></span><span></span><span></span></button>
+</header>
+<div class="vo-drawer" id="vo-drawer">
+  <h6>Topics</h6>
+  <a href="/perimenopause"><span class="vo-dot" style="background:#3D6B61"></span>Perimenopause</a>
+  <a href="/menopause"><span class="vo-dot" style="background:#B8895A"></span>Menopause</a>
+  <a href="/fertility"><span class="vo-dot" style="background:#7A9E7E"></span>Fertility Over 40</a>
+  <a href="/anxiety"><span class="vo-dot" style="background:#6B4E7A"></span>Anxiety &amp; Stress</a>
+  <a href="/separation"><span class="vo-dot" style="background:#B85C3A"></span>Separation &amp; Divorce</a>
+  <h6>Explore</h6>
+  <a href="/articles">All articles</a>
+  <a href="/gp-guide">Free GP appointment guide</a>
+  <a href="/picks">Sarah's Picks</a>
+  <a href="/wellness-club">Wellness Club ✦</a>
+  <a href="/resources">News &amp; resources</a>
+  <a href="/about">About Sarah</a>
+  <a href="/quiz" class="vo-cta">Take the free symptom quiz</a>
 </div>
+<span id="main-nav" hidden></span><span id="mobile-menu" hidden></span><span class="nav-burger" hidden></span>
+<!--/VO:HEADER-->
+<span id="main"></span>
 
 <!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1600&q=80');"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content container">
-    <span class="tag">Perimenopause &amp; Menopause</span>
+    <span class="tag">Perimenopause</span>
     <h1>What Nobody Warned You Was Coming</h1>
     <p>It can start a decade before your periods stop — and look nothing like you expected. Real guidance for NZ and Australian women.</p>
     <div class="page-hero-nav">
       <a href="#perimenopause" class="active">Perimenopause</a>
-      <a href="#menopause">Menopause</a>
-      <a href="#hrt">HRT Guide</a>
-      <a href="#supplements">Supplements</a>
+      <a href="/menopause">Menopause →</a>
+            <a href="#supplements">Supplements</a>
       <a href="#articles-section">Articles</a>
       <a href="#gp-guide">GP Guide</a>
     </div>
@@ -288,11 +305,10 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
 <!-- BREADCRUMB -->
 <div class="breadcrumb">
   <div class="container breadcrumb-inner">
-    <a href="index.html">Home</a><span>/</span>
-    <span style="color:var(--teal);font-weight:600;">Perimenopause &amp; Menopause</span>
+    <a href="/">Home</a><span>/</span>
+    <span style="color:var(--teal);font-weight:600;">Perimenopause</span>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════
      PERIMENOPAUSE
      ═══════════════════════════════════════ -->
@@ -414,115 +430,6 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
 <div class="section-divider"></div>
 
 <!-- ═══════════════════════════════════════
-     MENOPAUSE
-     ═══════════════════════════════════════ -->
-<section id="menopause" class="section-anchor menopause-section">
-  <div class="page-hero" style="min-height:50vh;">
-    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1600&q=80');"></div>
-    <div class="page-hero-overlay" style="background:linear-gradient(to top,rgba(44,82,72,0.85) 0%,rgba(61,107,97,0.5) 60%,rgba(0,0,0,0.1) 100%);"></div>
-    <div class="page-hero-content container">
-      <span class="tag" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:white;">Menopause</span>
-      <h2 style="color:white;font-size:clamp(28px,4vw,52px);margin-bottom:12px;">Menopause Is Not an Ending</h2>
-      <p>For many women, it is the beginning of the most powerful chapter of their lives. With the right information and support.</p>
-    </div>
-  </div>
-
-  <div class="section-pad" style="background:var(--cream);">
-    <div class="container">
-      <div class="two-col" style="direction:rtl;">
-        <div class="two-col-img" style="direction:ltr;">
-          <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80" alt="Confident midlife woman" loading="lazy">
-        </div>
-        <div class="content-body" style="direction:ltr;">
-          <span class="content-label" id="hrt">Understanding Menopause</span>
-          <h2>What Nobody Told You About HRT</h2>
-          <p>Menopause is defined as 12 consecutive months without a period. It's a hormonal milestone, not a diagnosis — yet millions of women reach it undertreated, underinformed, and unnecessarily suffering.</p>
-          <p>The old fear of HRT — driven by a 2002 study that has since been substantially reinterpreted — left a generation of women without treatment they were entitled to. The current evidence, led by specialists like Dr Louise Newson and reflected in the Australian Senate Inquiry into Menopause, tells a different story.</p>
-
-          <h3>Modern HRT — The Facts</h3>
-          <p>Body-identical oestrogen patches (transdermal oestrogen) are considered the gold standard — they bypass the liver and carry significantly different risk profiles to older oral HRT. Progesterone, testosterone, and topical oestrogen for vaginal health are all part of the modern menopause toolkit that NZ women deserve access to and information about.</p>
-
-          <h3>Testosterone — The Conversation NZ Isn't Having</h3>
-          <p>Testosterone therapy for women — low libido, energy, cognitive function — is prescribed routinely in the UK and increasingly in Australia. In NZ, many GPs will not prescribe it simply because they haven't been trained in it. This is not a safety issue. It is a knowledge gap. You are entitled to ask, and to seek a specialist if your GP won't discuss it.</p>
-
-          <div class="callout">
-            <h4>Questions to ask your GP</h4>
-            <p>Have you considered body-identical (transdermal) oestrogen? What is your view on testosterone for women? Can you refer me to a menopause specialist if this isn't your area? Is there a reason I shouldn't try HRT for three months and see how I feel?</p>
-          </div>
-
-          <a href="https://velaora.substack.com" target="_blank" class="btn btn-teal" style="margin-top:20px;">Read Our Menopause Articles →</a>
-        </div>
-      </div>
-
-      <!-- NUTRITION BOX — MENOPAUSE -->
-      <div class="nutrition-box" style="margin-top:56px;">
-        <span class="nut-label">🥗 Nutrition for Menopause</span>
-        <h3>Nourishing your body through and beyond menopause</h3>
-        <p>Post-menopause brings specific nutritional priorities. Bone density, cardiovascular health, and cognitive function all benefit from targeted nutritional support.</p>
-        <div class="nut-grid">
-          <div class="nut-item">
-            <strong>Bone Health Stack</strong>
-            <span>Calcium (1200mg/day from food), Vitamin D3 + K2 (supplement), and weight-bearing exercise. NZ fracture rates in postmenopausal women are among the highest in the developed world.</span>
-          </div>
-          <div class="nut-item">
-            <strong>Heart Health</strong>
-            <span>Cardiovascular risk increases post-menopause. Mediterranean diet principles — olive oil, fish, legumes, vegetables — have the strongest evidence base.</span>
-          </div>
-          <div class="nut-item">
-            <strong>Collagen Support</strong>
-            <span>Skin, joint, and connective tissue changes are real. Vitamin C (for collagen synthesis), collagen peptides, and adequate protein all support structural integrity.</span>
-          </div>
-          <div class="nut-item">
-            <strong>Gut Health</strong>
-            <span>Hormonal changes shift gut microbiome composition. Fermented foods (yoghurt, kefir, sauerkraut), prebiotic vegetables, and fibre support gut health and reduce inflammation.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- VELAORA PICKS — MENOPAUSE -->
-      <div class="picks-panel" style="margin-top:40px;">
-        <div class="picks-header">
-          <div class="picks-label-wrap">
-            <div class="picks-dot"></div>
-            <span class="picks-title">VelaOra Picks — Menopause</span>
-          </div>
-          <span class="picks-disclosure">Affiliate links — <a href="#affiliate-disclosure">how this works</a></span>
-        </div>
-        <div class="picks-grid">
-          <div class="pick-card">
-            <span class="pick-brand">Life Extension</span>
-            <span class="pick-name">Vitamin D3 + K2 (MK-7)</span>
-            <span class="pick-why">Post-menopause bone loss accelerates significantly. D3 and K2 together direct calcium where it belongs — bones, not arteries. MK-7 is the most bioavailable K2 form.</span>
-            <a href="https://nz.iherb.com/pr/life-extension-vitamins-d-and-k-with-sea-iodine-60-capsules/78779?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
-          </div>
-          <div class="pick-card">
-            <span class="pick-brand">Nordic Naturals</span>
-            <span class="pick-name">Ultimate Omega</span>
-            <span class="pick-why">Cardiovascular risk increases post-menopause as oestrogen's protective effect reduces. High-potency EPA/DHA in triglyceride form — the most bioavailable and oxidation-resistant option.</span>
-            <a href="https://nz.iherb.com/pr/nordic-naturals-ultimate-omega-2x-lemon-60-softgels-1-075-mg-per-softgel/65085?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
-          </div>
-          <div class="pick-card">
-            <span class="pick-brand">Vital Proteins</span>
-            <span class="pick-name">Collagen Peptides</span>
-            <span class="pick-why">Skin, joint, and connective tissue changes are real post-menopause. Hydrolysed collagen peptides with vitamin C have meaningful evidence for skin elasticity and joint comfort.</span>
-            <a href="https://nz.iherb.com/pr/vital-proteins-collagen-peptides-unflavored-20-oz-567-g/71356?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
-          </div>
-          <div class="pick-card">
-            <span class="pick-brand">Doctor's Best</span>
-            <span class="pick-name">Magnesium Glycinate</span>
-            <span class="pick-why">Sleep disruption, mood changes, and bone loss are all linked to magnesium status. Glycinate form crosses the blood-brain barrier — calming without sedation. 300–400mg before bed.</span>
-            <a href="https://nz.iherb.com/pr/doctor-s-best-high-absorption-magnesium-lysinate-glycinate-chelated-albion-traacs-240-tablets-100-mg-per-tablet/16567?rcode=MWM3566" class="pick-link" target="_blank">View on iHerb</a>
-          </div>
-        </div>
-        <p class="pick-note">Chosen for evidence quality and formulation. VelaOra earns a small commission on iHerb purchases at no extra cost to you. Always discuss new supplements with your GP or specialist, particularly if you are on HRT or other medication.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ═══════════════════════════════════════
      GP GUIDE
      ═══════════════════════════════════════ -->
 <section id="gp-guide" class="section-anchor" style="background:var(--ivory);padding:80px 0;">
@@ -538,7 +445,7 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
           <span class="gp-guide-perk">Your rights as a patient</span>
           <span class="gp-guide-perk">What a normal FSH does and doesn't mean</span>
         </div>
-        <a href="index.html#subscribe" class="btn btn-white">Get the Free Guide →</a>
+        <a href="/gp-guide" class="btn btn-white">Get the Free Guide →</a>
       </div>
       <div style="text-align:center;opacity:0.9;">
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -560,79 +467,11 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;">
       <span class="tag tag-teal">From the Journal</span>
-      <h2 style="color:var(--text-dark);margin-bottom:12px;">Perimenopause &amp; Menopause — Read On</h2>
-      <p style="max-width:520px;margin:0 auto;color:var(--text-light);">Science-backed articles, honestly written. Also on Substack.</p>
+      <h2 style="color:var(--text-dark);margin-bottom:12px;">Perimenopause — Read On</h2>
+      <p style="max-width:520px;margin:0 auto;color:var(--text-light);">Every VelaOra article on this topic, newest first.</p>
     </div>
-
-    <div class="articles-grid">
-      <a href="https://velaora.substack.com/p/perimenopause-starts-earlier-than" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80" alt="Perimenopause NZ" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-teal">Perimenopause</span>
-          <h4>Perimenopause Starts Earlier Than You Think — And NZ Women Are Being Missed</h4>
-          <div class="read-time">⏱ 8 min read</div>
-          <p>Three doctors. All women. Not one said the word. What I learned after I worked it out myself.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="Brain fog perimenopause" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-plum">Brain Health</span>
-          <h4>Brain Fog, Forgetfulness and Perimenopause — You Are Not Getting Dementia</h4>
-          <div class="read-time">⏱ 6 min read</div>
-          <p>You lost a word mid-sentence. You forgot why you walked in. Please read this first.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Vitamin D NZ women" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-gold">Vitamins</span>
-          <h4>The Vitamin D Problem Nobody Is Talking About — And Why It Hits NZ Women Hardest</h4>
-          <div class="read-time">⏱ 5 min read</div>
-          <p>Great sun safety culture, unexpected consequence. NZ women's vitamin D levels are consistently below optimal.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-    </div>
-
-    <div class="articles-grid" style="margin-top:0;">
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80" alt="Magnesium perimenopause" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-sage">Supplements</span>
-          <h4>The Magnesium Gap — Why Most NZ Women in Perimenopause Are Deficient</h4>
-          <div class="read-time">⏱ 6 min read</div>
-          <p>Oestrogen helps your cells hold magnesium. As it drops, so does magnesium — right when you need it most.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Omega-3 fish oil" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-gold">Supplements</span>
-          <h4>Omega-3s and Perimenopause — Why Your Fish Oil Probably Isn't Working</h4>
-          <div class="read-time">⏱ 6 min read</div>
-          <p>The oxidation problem, TG vs EE form, and why Nordic Naturals sets the benchmark.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-      <a href="https://velaora.substack.com" target="_blank" class="article-card">
-        <img class="article-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80" alt="Creatine women over 40" loading="lazy">
-        <div class="article-body">
-          <span class="tag tag-sage">Women Over 40</span>
-          <h4>Creatine — The Super Supplement Every Women's Health Expert Is Raving About</h4>
-          <div class="read-time">⏱ 10 min read</div>
-          <p>Stacy Sims calls it number one. The 2025 science for women over 40 is extraordinary.</p>
-          <span class="article-link">Read Article</span>
-        </div>
-      </a>
-    </div>
-
-    <div style="text-align:center;margin-top:36px;">
-      <a href="articles.html" class="btn btn-teal">View All Articles →</a>
-    </div>
+    <!--VO:ARTICLES topic perimenopause--><div class="vo-grid"><a class="vo-card" href="/oestrogen-gel-joints-frozen-shoulder" data-topics="menopause perimenopause" data-text="i&#x27;m rubbing my oestrogen gel on my achilles. here&#x27;s what the science says two weeks of trialling it on a stubborn achilles, plus what the research on hrt and joints actually shows. hormones &amp; joints"><img src="/images/card_oestrogen_joints_2611a.png" alt="Oestrogen gel on sore joints? What the science says" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Hormones &amp; Joints</span><span>5 min read</span></div><h3>I&#x27;m Rubbing My Oestrogen Gel on My Achilles. Here&#x27;s What the Science Says</h3><p>Two weeks of trialling it on a stubborn Achilles, plus what the research on HRT and joints actually shows.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/perimenopause-sugar-cravings" data-topics="perimenopause nutrition" data-text="the 2pm sugar crash: why perimenopause hijacks your blood sugar it&#x27;s not a willpower problem. it&#x27;s a cortisol and oestrogen problem — and once you understand that, everything changes. blood sugar"><img src="sugar-cravings-hero.webp" alt="Sugar cravings perimenopause blood sugar" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Blood Sugar</span><span>14 min read</span></div><h3>The 2pm Sugar Crash: Why Perimenopause Hijacks Your Blood Sugar</h3><p>It&#x27;s not a willpower problem. It&#x27;s a cortisol and oestrogen problem — and once you understand that, everything changes.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/perimenopause-brain-fog-memory" data-topics="perimenopause sleep" data-text="brain fog &amp; sleep: what&#x27;s actually going on — and what can help i was desperate, so here&#x27;s the facts. the science, the supplements, and what actually moves the needle. brain health"><img src="brain-fog-sleep.jpg" alt="Brain fog and sleep perimenopause" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Brain Health</span><span>15 min read</span></div><h3>Brain Fog &amp; Sleep: What&#x27;s Actually Going On — and What Can Help</h3><p>I was desperate, so here&#x27;s the facts. The science, the supplements, and what actually moves the needle.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/sleep-perimenopause-nz" data-topics="sleep perimenopause anxiety" data-text="why can&#x27;t i sleep? perimenopause, insomnia &amp; what actually works lying awake with a brain that won&#x27;t switch off. what&#x27;s happening, what actually helps, and what i built when nothing else was good enough. sleep"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Peaceful sleep, perimenopause insomnia" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Sleep</span><span>10 min read</span></div><h3>Why Can&#x27;t I Sleep? Perimenopause, Insomnia &amp; What Actually Works</h3><p>Lying awake with a brain that won&#x27;t switch off. What&#x27;s happening, what actually helps, and what I built when nothing else was good enough.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/perimenopause-starts-earlier-nz" data-topics="perimenopause" data-text="perimenopause starts earlier than you think — and nz women are being missed three doctors. all women. not one said the word. what i learned after i worked it out myself. perimenopause"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Perimenopause NZ" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Perimenopause</span><span>8 min read</span></div><h3>Perimenopause Starts Earlier Than You Think — And NZ Women Are Being Missed</h3><p>Three doctors. All women. Not one said the word. What I learned after I worked it out myself.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/magnesium-perimenopause-nz" data-topics="perimenopause supplements sleep" data-text="the magnesium gap — why most nz women in perimenopause are deficient oestrogen helps your cells hold magnesium. as it drops, so does magnesium — right when you need it most. supplements"><img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Magnesium perimenopause" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Supplements</span><span>6 min read</span></div><h3>The Magnesium Gap — Why Most NZ Women in Perimenopause Are Deficient</h3><p>Oestrogen helps your cells hold magnesium. As it drops, so does magnesium — right when you need it most.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/vitamin-d-perimenopause-nz" data-topics="perimenopause supplements" data-text="the vitamin d problem nobody is talking about — and why it hits nz women hardest great sun safety culture, unexpected consequence. nz women&#x27;s vitamin d levels are consistently below optimal. vitamins"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Vitamin D NZ women" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Vitamins</span><span>5 min read</span></div><h3>The Vitamin D Problem Nobody Is Talking About — And Why It Hits NZ Women Hardest</h3><p>Great sun safety culture, unexpected consequence. NZ women&#x27;s vitamin D levels are consistently below optimal.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/creatine-women-perimenopause" data-topics="perimenopause supplements" data-text="creatine — the super supplement every women&#x27;s health expert is raving about stacy sims calls it number one. steven bartlett devoted two episodes to it. the 2025 science is extraordinary. women over 40"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Creatine women over 40" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Women Over 40</span><span>10 min read</span></div><h3>Creatine — The Super Supplement Every Women&#x27;s Health Expert Is Raving About</h3><p>Stacy Sims calls it number one. Steven Bartlett devoted two episodes to it. The 2025 science is extraordinary.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/women-over-40-supplement-stack" data-topics="supplements perimenopause menopause" data-text="the complete women over 40 supplement stack — what works, what doesn&#x27;t, where to start four years of reading the actual science. the honest, evidence-ranked guide to supplements that matter. supplements"><img src="https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Complete supplement stack women over 40" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Supplements</span><span>9 min read</span></div><h3>The Complete Women Over 40 Supplement Stack — What Works, What Doesn&#x27;t, Where to Start</h3><p>Four years of reading the actual science. The honest, evidence-ranked guide to supplements that matter.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/omega-3-perimenopause" data-topics="supplements perimenopause" data-text="omega-3s and perimenopause — why your fish oil probably isn&#x27;t working the oxidation problem nobody talks about, tg vs ee form, and what to actually look for in a fish oil. supplements"><img src="omega-3-hero.jpg" alt="Omega-3 fish oil capsules" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Supplements</span><span>6 min read</span></div><h3>Omega-3s and Perimenopause — Why Your Fish Oil Probably Isn&#x27;t Working</h3><p>The oxidation problem nobody talks about, TG vs EE form, and what to actually look for in a fish oil.</p><span class="vo-card-link">Read article →</span></div></a><a class="vo-card" href="/velaora-article-anxiety-perimenopause" data-topics="anxiety perimenopause" data-text="is it anxiety or perimenopause? how i spent two years being treated for the wrong thing the 3am dread. the racing heart. the objectless doom. i was prescribed an ssri. it wasn&#x27;t anxiety. what your symptoms are really telling you. perimenopause"><img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Anxiety or perimenopause symptoms women" loading="lazy" width="600" height="380"><div class="vo-card-body"><div class="vo-card-meta"><span>Perimenopause</span><span>12 min read</span></div><h3>Is It Anxiety or Perimenopause? How I Spent Two Years Being Treated for the Wrong Thing</h3><p>The 3am dread. The racing heart. The objectless doom. I was prescribed an SSRI. It wasn&#x27;t anxiety. What your symptoms are really telling you.</p><span class="vo-card-link">Read article →</span></div></a></div><!--/VO:ARTICLES-->
+    <div style="text-align:center;margin-top:36px;"><a href="/articles" class="btn btn-teal">View All Articles →</a></div>
   </div>
 </section>
 
@@ -661,42 +500,88 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.6);padding:48px 0 28
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="footer-brand-name">VelaOra</span>
-        <span class="footer-brand-sub">Navigating Life</span>
-        <p>Science-backed women's health for NZ and Australian women.</p>
+<!--VO:FOOTER-->
+<footer class="vo-footer">
+  <div class="vo-footer-band" id="vo-join">
+    <div class="vo-wrap">
+      <div>
+        <h2>Real information, in your inbox.</h2>
+        <p>Honest, science-backed articles for NZ and Australian women, from Sarah. Free, and you can unsubscribe any time.</p>
       </div>
-      <div class="footer-col">
-        <h5>Topics</h5>
-        <a href="perimenopause.html">Perimenopause</a>
-        <a href="perimenopause.html#menopause">Menopause</a>
-        <a href="fertility.html">Fertility Over 40</a>
-        <a href="anxiety.html">Anxiety</a>
-        
+      <div>
+        <form class="vo-form" action="https://velaora.substack.com/subscribe" method="get" target="_blank" data-vo-track="newsletter_footer">
+          <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+          <button type="submit" class="vo-btn vo-btn-gold">Join free</button>
+        </form>
+        <p class="vo-fine">Prefer something practical first? <a href="/gp-guide">Get the free GP appointment guide</a> or <a href="/quiz">take the 2-minute symptom quiz</a>.</p>
       </div>
-      <div class="footer-col">
-        <h5>Content</h5>
-        <a href="articles.html">All Articles</a>
-        <a href="index.html#wellness">Wellness Club</a>
-        <a href="index.html#subscribe">Join Free</a>
-      </div>
-      <div class="footer-col">
-        <h5>VelaOra</h5>
-        <a href="index.html#about">About Sarah</a>
-        <a href="https://velaora.substack.com" target="_blank">Substack</a>
-        <a href="https://www.instagram.com/sarah.velaora" target="_blank">Instagram</a>
-        <a href="https://www.pinterest.com/velaora" target="_blank">Pinterest</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 VelaOra. Science-backed women's health for NZ &amp; Australia.</span>
-      <span><a href="#affiliate-disclosure">Affiliate disclosure</a> · <a href="mailto:hello@velaora.co.nz">hello@velaora.co.nz</a></span>
     </div>
   </div>
+  <div class="vo-wrap vo-footer-main">
+    <div>
+      <span class="vo-logo-name"><span class="vo-logo-dots"><i></i><i></i><i></i><i></i><i></i></span>VelaOra</span>
+      <span class="vo-logo-tag" style="display:block;margin-top:6px;">navigating life</span>
+      <p style="margin:16px 0 0;max-width:340px;">Science-backed women's health for NZ and Australia. Because some journeys no one prepares you for.</p>
+      <div class="vo-social">
+        <a href="https://velaora.substack.com" target="_blank" rel="noopener">Substack</a>
+        <a href="https://www.instagram.com/sarah.velaora" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.pinterest.com/velaorawomen" target="_blank" rel="noopener">Pinterest</a>
+        <a href="https://www.facebook.com/VelaOra" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://medium.com/@velaora" target="_blank" rel="noopener">Medium</a>
+      </div>
+    </div>
+    <div>
+      <h5>Topics</h5>
+      <ul>
+        <li><a href="/perimenopause">Perimenopause</a></li>
+        <li><a href="/menopause">Menopause</a></li>
+        <li><a href="/fertility">Fertility Over 40</a></li>
+        <li><a href="/anxiety">Anxiety &amp; Stress</a></li>
+        <li><a href="/separation">Separation &amp; Divorce</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="/articles">All articles</a></li>
+        <li><a href="/quiz">Symptom quiz</a></li>
+        <li><a href="/gp-guide">GP appointment guide</a></li>
+        <li><a href="/picks">Sarah's Picks</a></li>
+        <li><a href="/resources">News &amp; resources</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>VelaOra</h5>
+      <ul>
+        <li><a href="/about">About Sarah</a></li>
+        <li><a href="/about#contact">Contact</a></li>
+        <li><a href="/wellness-club">Wellness Club ✦</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="vo-wrap vo-footer-legal">
+    <span>© 2026 VelaOra · New Zealand &amp; Australia</span>
+    <p>General educational information only, not medical advice. Always talk to your GP or a qualified health professional about your own situation. Some links are affiliate links: if you buy through them VelaOra may earn a small commission at no extra cost to you. <a href="/picks#disclosure" style="text-decoration:underline">How this works</a>.</p>
+  </div>
 </footer>
+<div class="vo-pop" id="vo-pop" role="dialog" aria-modal="true" aria-labelledby="vo-pop-title">
+  <div class="vo-pop-box">
+    <button class="vo-pop-x" type="button" aria-label="Close">×</button>
+    <span class="vo-eyebrow">Free guide</span>
+    <h3 id="vo-pop-title">Walk into your GP appointment prepared</h3>
+    <p>What to say, what to track, and what to ask for, so you actually get heard. Free, straight away.</p>
+    <form class="vo-form" data-vo-lead="gp-guide-popup">
+      <input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+      <button type="submit" class="vo-btn vo-btn-teal">Get the guide</button>
+    </form>
+    <p class="vo-msg" role="status"></p>
+    <button class="vo-pop-no" type="button">No thanks</button>
+  </div>
+</div>
+<script src="/assets/vo.js" defer></script>
+<!--/VO:FOOTER-->
 
 <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
